@@ -20,8 +20,7 @@ public class OwnerDBContext extends DBContext {
 
     public Owner getOwner(String oname, String password) {
         try {
-            String sql = "SELECT oname, [password] from Owner\n"
-                    + "WHERE oname = ? and password=?";
+            String sql = "SELECT oname, password from Owner WHERE oname = ? and password=?";
             PreparedStatement stm = connection.prepareStatement(sql);
 
             stm.setString(1, oname);
@@ -31,8 +30,8 @@ public class OwnerDBContext extends DBContext {
 
             if (rs.next()) {
                 Owner owner = new Owner();
-                owner.setOname(rs.getString(oname));
-                owner.setPassword(rs.getString(password));
+                owner.setOname(rs.getString("oname"));
+                owner.setPassword(rs.getString("password"));
                 return owner;
             }
         } catch (SQLException ex) {
