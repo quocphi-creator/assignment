@@ -4,9 +4,17 @@
         <servlet-name>OwnerLoginControler</servlet-name>
         <servlet-class>controler.owner.OwnerLoginControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchControler</servlet-name>
+        <servlet-class>controler.bill.SearchControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/owner/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchControler</servlet-name>
+        <url-pattern>/bill/search</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
