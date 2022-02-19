@@ -35,12 +35,12 @@ public class SearchControler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String raw_year = request.getParameter("year");
-        if (raw_year==null) {
-            raw_year == 
-        } else {
-        }
-        request.getRequestDispatcher("../view/bill/search.jsp").forward(request, response);
+//        String raw_year = request.getParameter("year");
+//        if (raw_year==null) {
+//            raw_year == 
+//        } else {
+//        }
+//        request.getRequestDispatcher("../view/bill/search.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
