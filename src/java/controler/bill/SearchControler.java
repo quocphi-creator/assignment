@@ -40,7 +40,7 @@ public class SearchControler extends HttpServlet {
 //            raw_year == 
 //        } else {
 //        }
-//        request.getRequestDispatcher("../view/bill/search.jsp").forward(request, response);
+        request.getRequestDispatcher("../view/bill/search.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
