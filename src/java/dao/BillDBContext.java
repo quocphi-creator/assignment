@@ -25,11 +25,16 @@ public class BillDBContext extends DBContext {
         ArrayList<Bill> bills = new ArrayList<>();
         try {
 
-            String sql = "SELECT B.bid, B.cname, B.componentCategory, B.unitprice, B.quantity, B.totalMoney, B.inputDate, B.supplierName, B.address, B.contact, B.origin, B.oname \n"
-                    + "FROM owner O INNER JOIN Bill B ON O.oname = B.oname WHERE YEAR(B.inputDate) = ?";
-            //check if owner search data in the year
-            if (month > 0) {
-                sql += "and MONTH(B.inputDate) = ?";
+            String sql = "SELECT B.bid, B.cname, B.componentCategory, B.unitprice, B.quantity, B.totalMoney, B.inputDate, B.supplierName, B.address, B.contact, B.origin, B.oname, O.[password] \n"
+                    + "FROM owner O INNER JOIN Bill B ON O.oname = B.oname ";
+            //check if owner search one year
+            if (year > 0) {
+                sql += " WHERE YEAR(B.inputDate) = ? ";
+                //check if owner search data in the year
+                if (month > 0) {
+                    sql += " and MONTH(B.inputDate) = ?";
+                }
+
             }
 
             PreparedStatement stm = connection.prepareStatement(sql);

@@ -36,10 +36,24 @@ public class SearchControler extends HttpServlet {
             throws ServletException, IOException {
         
         String raw_year = request.getParameter("year");
-        if (raw_year==null) {
-            raw_year = null;
-        } else {
+        String raw_month = request.getParameter("month");
+        raw_year = (raw_year==null || raw_year.length()==0)?"-1":raw_year;
+        raw_month = (raw_month==null || raw_month.length()==0)?"-1":raw_month;
+        
+        int year = Integer.parseInt(raw_year);
+        int month = Integer.parseInt(raw_month);
+        
+        BillDBContext billDB = new BillDBContext();
+        ArrayList<Bill> bills = billDB.getBill(month, year);
+        
+        ArrayList<Integer> monthList = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            monthList.add(i);
         }
+        request.setAttribute("monthList", monthList);
+        request.setAttribute("bills", bills);
+        request.setAttribute("month", month);
+        request.setAttribute("year", year);
         request.getRequestDispatcher("../view/bill/search.jsp").forward(request, response);
     }
 

@@ -19,6 +19,7 @@ public class Bill {
     private int unitPrice;
     private int quantity;
     private int total;
+
     private Date inputDate;
     private String supplierName;
     private String address;
@@ -119,5 +120,9 @@ public class Bill {
 
     public void setCname(String cname) {
         this.cname = cname;
+    }
+    
+    public String getCname() {
+        return cname;
     }
 }
