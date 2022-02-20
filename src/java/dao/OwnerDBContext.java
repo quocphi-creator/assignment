@@ -8,6 +8,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Owner;
@@ -39,5 +40,25 @@ public class OwnerDBContext extends DBContext {
         }
         return null;
 
+    }
+    
+    public ArrayList<Owner> getOwnerList() {
+        
+        ArrayList<Owner> ownerList = new ArrayList<>();
+            
+        try {          
+            String sql = "SELECT oname, [password] FROM [owner]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {                
+                Owner o = new Owner();
+                o.setOname(rs.getString("oname"));
+                o.setPassword(rs.getString("password"));
+                ownerList.add(o);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ownerList;
     }
 }

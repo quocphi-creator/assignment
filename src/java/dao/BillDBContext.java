@@ -73,6 +73,73 @@ public class BillDBContext extends DBContext {
             Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return bills;
+    }
 
+    public void insertBill(Bill b) {
+        String sql = "INSERT INTO [Bill]\n"
+                + "           ([bid]\n"
+                + "           ,[cname]\n"
+                + "           ,[componentCategory]\n"
+                + "           ,[unitprice]\n"
+                + "           ,[quantity]\n"
+                + "           ,[totalMoney]\n"
+                + "           ,[inputDate]\n"
+                + "           ,[supplierName]\n"
+                + "           ,[address]\n"
+                + "           ,[contact]\n"
+                + "           ,[origin]\n"
+                + "           ,[oname])\n"
+                + "     VALUES\n"
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?)";
+        
+        PreparedStatement stm = null;
+        
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, b.getBid());
+            stm.setString(2, b.getCname());
+            stm.setString(3, b.getCategory());
+            stm.setInt(4, b.getUnitPrice());
+            stm.setInt(5, b.getQuantity());
+            stm.setInt(6, b.getTotal());
+            stm.setDate(7, b.getInputDate());
+            stm.setString(8, b.getSupplierName());
+            stm.setString(9, b.getAddress());
+            stm.setString(10, b.getContact());
+            stm.setString(11, b.getOrigin());
+            stm.setString(12, b.getOwner().getOname());
+            
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
     }
 }

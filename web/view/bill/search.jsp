@@ -60,6 +60,7 @@
                         <tr>
                             <th scope="col">Mã Đơn hàng</th>
                             <th scope="col">Tên linh kiện</th>
+                            <th scope="col">Thể loại</th>
                             <th scope="col">Đơn gía</th>
                             <th scope="col">Số lượng</th>
                             <th scope="col">Tổng tiền</th>
@@ -76,6 +77,7 @@
                         <tr>
                             <td scope="col"><%=b.getBid()%></td>
                             <td scope="col"><%=b.getCname()%></td>
+                            <td scope="col"><%=b.getCategory() %></td>
                             <td scope="col"><%=b.getUnitPrice()%></td>
                             <td scope="col"><%=b.getQuantity()%></td>
                             <td scope="col"><%=b.getTotal()%></td>
