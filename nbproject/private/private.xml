@@ -5,9 +5,9 @@
         <group>
             <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/bill/InsertControler.java</file>
             <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/dao/BillDBContext.java</file>
+            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/bill/EditControler.java</file>
             <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/WEB-INF/web.xml</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/bill/insert.jsp</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/dao/OwnerDBContext.java</file>
+            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/bill/edit.jsp</file>
         </group>
     </open-files>
 </project-private>

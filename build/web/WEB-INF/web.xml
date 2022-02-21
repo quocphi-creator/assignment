@@ -12,6 +12,14 @@
         <servlet-name>InsertBillControler</servlet-name>
         <servlet-class>controler.bill.InsertControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditBillControler</servlet-name>
+        <servlet-class>controler.bill.EditControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteBillControler</servlet-name>
+        <servlet-class>controler.bill.DeleteControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/owner/login</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>InsertBillControler</servlet-name>
         <url-pattern>/bill/insert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditBillControler</servlet-name>
+        <url-pattern>/bill/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBillControler</servlet-name>
+        <url-pattern>/bill/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

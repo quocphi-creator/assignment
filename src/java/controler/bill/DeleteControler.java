@@ -5,23 +5,18 @@
  */
 package controler.bill;
 
-import com.sun.faces.util.CollectionsUtils;
-import dao.BillDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Bill;
 
 /**
  *
  * @author ADMIN
  */
-public class SearchControler extends HttpServlet {
+public class DeleteControler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,27 +29,19 @@ public class SearchControler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String raw_year = request.getParameter("year");
-        String raw_month = request.getParameter("month");
-        raw_year = (raw_year==null || raw_year.length()==0)?"-1":raw_year;
-        raw_month = (raw_month==null || raw_month.length()==0)?"-1":raw_month;
-        
-        int year = Integer.parseInt(raw_year);
-        int month = Integer.parseInt(raw_month);
-        
-        BillDBContext billDB = new BillDBContext();
-        ArrayList<Bill> bills = billDB.getBills(month, year);
-        
-        ArrayList<Integer> monthList = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            monthList.add(i);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet DeleteControler</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet DeleteControler at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        request.setAttribute("monthList", monthList);
-        request.setAttribute("bills", bills);
-        request.setAttribute("month", month);
-        request.setAttribute("year", year);
-        request.getRequestDispatcher("../view/bill/search.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

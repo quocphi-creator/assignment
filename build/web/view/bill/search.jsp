@@ -58,7 +58,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">Mã Đơn hàng</th>
+                            <th scope="col">Mã Đơn</th>
                             <th scope="col">Tên linh kiện</th>
                             <th scope="col">Thể loại</th>
                             <th scope="col">Đơn gía</th>
@@ -70,6 +70,7 @@
                             <th scope="col">Địa chỉ</th>
                             <th scope="col">Liên hệ</th>
                             <th scope="col">Bên mua</th>
+                            <th scope="col" colspan="2">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,6 +88,10 @@
                             <td scope="col"><%=b.getAddress()%></td>
                             <td scope="col"><%=b.getContact()%></td>
                             <td scope="col"><%=b.getOwner().getOname()%></td>
+                            
+                            <td scope="col"><a href="#">Xóa</a></td>
+                            <td scope="col"><a href="edit?bid=<%=b.getBid()%>">Chỉnh sửa</a></td>
+                            
                         </tr>
                         <%}%>
                     </tbody>
@@ -95,7 +100,7 @@
             <%} else {%>
             <h2>No record to display</h2>
             <%}%>
-
+            <a href="insert">Insert
         </div>
     </body>
 </html>

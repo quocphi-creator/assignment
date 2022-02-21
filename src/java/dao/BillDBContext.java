@@ -20,7 +20,7 @@ import model.Owner;
  */
 public class BillDBContext extends DBContext {
 
-    public ArrayList<Bill> getBill(int month, int year) {
+    public ArrayList<Bill> getBills(int month, int year) {
 
         ArrayList<Bill> bills = new ArrayList<>();
         try {
@@ -102,9 +102,9 @@ public class BillDBContext extends DBContext {
                 + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?)";
-        
+
         PreparedStatement stm = null;
-        
+
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, b.getBid());
@@ -119,7 +119,7 @@ public class BillDBContext extends DBContext {
             stm.setString(10, b.getContact());
             stm.setString(11, b.getOrigin());
             stm.setString(12, b.getOwner().getOname());
-            
+
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,7 +131,7 @@ public class BillDBContext extends DBContext {
                     Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
+
             if (connection != null) {
                 try {
                     connection.close();
@@ -140,6 +140,132 @@ public class BillDBContext extends DBContext {
                 }
             }
         }
-        
+
+    }
+
+    public Bill getBill(int bid) {
+        try {
+
+            String sql = "SELECT B.bid, B.cname, B.componentCategory, B.unitprice, B.quantity, B.totalMoney, B.inputDate, B.supplierName, B.address, B.contact, B.origin, B.oname, O.[password] \n"
+                    + "FROM owner O INNER JOIN Bill B ON O.oname = B.oname where [B].bid = ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, bid);
+            ResultSet rs = stm.executeQuery();
+
+            if (rs.next()) {
+                Bill b = new Bill();
+                b.setBid(rs.getInt("bid"));
+                b.setCname(rs.getString("cname"));
+                b.setCategory(rs.getString("componentCategory"));
+                b.setUnitPrice(rs.getInt("unitprice"));
+                b.setQuantity(rs.getInt("quantity"));
+                b.setTotal(rs.getInt("totalMoney"));
+                b.setInputDate(rs.getDate("inputDate"));
+                b.setSupplierName(rs.getString("supplierName"));
+                b.setAddress(rs.getString("address"));
+                b.setContact(rs.getString("contact"));
+                b.setOrigin(rs.getString("origin"));
+
+                Owner o = new Owner();
+                o.setOname(rs.getString("oname"));
+                o.setPassword(rs.getString("password"));
+
+                b.setOwner(o);
+                return b;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void updateBill(Bill b) {
+
+        String sql = "UPDATE [Bill]\n"
+                + "   SET [cname] = ?\n"
+                + "      ,[componentCategory] = ?\n"
+                + "      ,[unitprice] = ?\n"
+                + "      ,[quantity] = ?\n"
+                + "      ,[totalMoney] = ?\n"
+                + "      ,[inputDate] = ?\n"
+                + "      ,[supplierName] = ?\n"
+                + "      ,[address] = ?\n"
+                + "      ,[contact] = ?\n"
+                + "      ,[origin] = ?\n"
+                + "      ,[oname] = ?\n"
+                + " WHERE [bid] = ?";
+
+        PreparedStatement stm = null;
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(12, b.getBid());
+            stm.setString(1, b.getCname());
+            stm.setString(2, b.getCategory());
+            stm.setInt(3, b.getUnitPrice());
+            stm.setInt(4, b.getQuantity());
+            stm.setInt(5, b.getTotal());
+            stm.setDate(6, b.getInputDate());
+            stm.setString(7, b.getSupplierName());
+            stm.setString(8, b.getAddress());
+            stm.setString(9, b.getContact());
+            stm.setString(10, b.getOrigin());
+            stm.setString(11, b.getOwner().getOname());
+
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void deleteBill(int bid) {
+
+        String sql = "UPDATE [Bill]\n"
+                + "   SET [quantity] = ?\n"
+                + " WHERE [bid] = ?";
+
+        PreparedStatement stm = null;
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, bid);
+
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 }

@@ -93,7 +93,8 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Insert</button>
+            <button type="submit" class="btn btn-primary">Save</button>
         </form>
+                        
     </body>
 </html>
