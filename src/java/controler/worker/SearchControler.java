@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler.bill;
+package controler.worker;
 
-import com.sun.faces.util.CollectionsUtils;
-import dao.BillDBContext;
+import dao.WorkerDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Bill;
+import model.Worker;
 
 /**
  *
@@ -36,26 +34,18 @@ public class SearchControler extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        String raw_year = request.getParameter("year");
-        String raw_month = request.getParameter("month");
-        raw_year = (raw_year==null || raw_year.length()==0)?"-1":raw_year;
-        raw_month = (raw_month==null || raw_month.length()==0)?"-1":raw_month;
         
-        int year = Integer.parseInt(raw_year);
-        int month = Integer.parseInt(raw_month);
+        WorkerDBContext db = new WorkerDBContext();
+        ArrayList<Worker> workers = db.getWorkers();
+        request.setAttribute("workers", workers);
         
-        BillDBContext billDB = new BillDBContext();
-        ArrayList<Bill> bills = billDB.getBills(month, year);
-        
-        ArrayList<Integer> monthList = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            monthList.add(i);
+        ArrayList<Integer> totalSalaryList = new ArrayList<>();
+        for (int i = 0; i < workers.size(); i++) {
+            int salary = 
         }
-        request.setAttribute("monthList", monthList);
-        request.setAttribute("bills", bills);
-        request.setAttribute("month", month);
-        request.setAttribute("year", year);
-        request.getRequestDispatcher("../view/bill/search.jsp").forward(request, response);
+        
+        int productCount = db.countProductByWid(0)
+        request.getRequestDispatcher("../view/worker/search.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

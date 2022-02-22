@@ -23,3 +23,25 @@ FROM owner O INNER JOIN Bill B ON O.oname = B.oname
 -- Delete Bill Infomation --
 DELETE FROM [dbo].[Bill]
       WHERE bid = ?
+
+-- Search Workers --
+SELECT [wid]
+      ,[wname]
+      ,[phoneNumber]
+      ,[monthSalary]
+      ,[productSalary]
+  FROM [dbo].[Worker]
+
+-- Count Product by Wid --
+SELECT COUNT(pid) AS 'count' FROM Product
+where wid = 1
+GROUP BY wid
+
+
+
+-- Calculat total salary for each worker --
+SELECT W.wid, W.wname, W.phoneNumber, W.monthSalary, W.productSalary, (W.monthSalary 
++ SUM(W.monthSalary*COUNT(P.pid))) AS TOTAL 
+FROM Worker W INNER JOIN Product P ON P.wid = W.wid 
+WHERE MONTH(P.manufactureDate) = 12
+GROUP BY W.wid, W.wname, W.phoneNumber, W.monthSalary, W.productSalary

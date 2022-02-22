@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Search bill</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
         <%
             ArrayList<Bill> bills = (ArrayList<Bill>) request.getAttribute("bills");
             ArrayList<Integer> monthList = (ArrayList<Integer>) request.getAttribute("monthList");
@@ -78,7 +79,7 @@
                         <tr>
                             <td scope="col"><%=b.getBid()%></td>
                             <td scope="col"><%=b.getCname()%></td>
-                            <td scope="col"><%=b.getCategory() %></td>
+                            <td scope="col"><%=b.getCategory()%></td>
                             <td scope="col"><%=b.getUnitPrice()%></td>
                             <td scope="col"><%=b.getQuantity()%></td>
                             <td scope="col"><%=b.getTotal()%></td>
@@ -88,10 +89,10 @@
                             <td scope="col"><%=b.getAddress()%></td>
                             <td scope="col"><%=b.getContact()%></td>
                             <td scope="col"><%=b.getOwner().getOname()%></td>
-                            
+
                             <td scope="col"><a href="#">Xóa</a></td>
                             <td scope="col"><a href="edit?bid=<%=b.getBid()%>">Chỉnh sửa</a></td>
-                            
+
                         </tr>
                         <%}%>
                     </tbody>

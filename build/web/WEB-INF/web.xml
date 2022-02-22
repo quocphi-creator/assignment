@@ -20,6 +20,10 @@
         <servlet-name>DeleteBillControler</servlet-name>
         <servlet-class>controler.bill.DeleteControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchWorkerControler</servlet-name>
+        <servlet-class>controler.worker.SearchControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/owner/login</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>DeleteBillControler</servlet-name>
         <url-pattern>/bill/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchWorkerControler</servlet-name>
+        <url-pattern>/worker/search</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

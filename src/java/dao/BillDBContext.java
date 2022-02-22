@@ -235,7 +235,7 @@ public class BillDBContext extends DBContext {
         }
     }
 
-    public void deleteBill(int bid) {
+    public void deleteBill(int bid ) {
 
         String sql = "UPDATE [Bill]\n"
                 + "   SET [quantity] = ?\n"
