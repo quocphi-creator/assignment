@@ -8,7 +8,7 @@ SELECT B.bid, B.cname, B.componentCategory, B.unitprice, B.quantity, B.totalMone
 FROM owner O INNER JOIN Bill B ON O.oname = B.oname WHERE YEAR(B.inputDate) = 2015 and MONTH(B.inputDate) = 1 ;
 
 -- get owner list --
-select oname, password from owner
+select oname, [password] from [owner];
 
 -- Insert new bill --
 INSERT INTO [Bill]([bid] ,[cname] ,[componentCategory] ,[unitprice] ,[quantity] ,[totalMoney] ,[inputDate] ,[supplierName] ,[address] ,[contact] ,[origin] ,[oname])
@@ -31,17 +31,40 @@ SELECT [wid]
       ,[monthSalary]
       ,[productSalary]
   FROM [dbo].[Worker]
+  WHERE [wname] like '%Ngu%'
 
 -- Count Product by Wid --
 SELECT COUNT(pid) AS 'count' FROM Product
 where wid = 1
 GROUP BY wid
 
+-- Insert Worker --
+INSERT INTO [dbo].[Worker]
+           ([wid]
+           ,[wname]
+           ,[phoneNumber]
+           ,[monthSalary]
+           ,[productSalary])
+     VALUES
+           (?
+           ,?
+           ,?
+           ,?
+           ,?)
 
+-- GET WORKER BY ID --
+SELECT [wid]
+      ,[wname]
+      ,[phoneNumber]
+      ,[monthSalary]
+      ,[productSalary]
+  FROM [dbo].[Worker]
+  WHERE wid = 1
 
--- Calculat total salary for each worker --
-SELECT W.wid, W.wname, W.phoneNumber, W.monthSalary, W.productSalary, (W.monthSalary 
-+ SUM(W.monthSalary*COUNT(P.pid))) AS TOTAL 
-FROM Worker W INNER JOIN Product P ON P.wid = W.wid 
-WHERE MONTH(P.manufactureDate) = 12
-GROUP BY W.wid, W.wname, W.phoneNumber, W.monthSalary, W.productSalary
+-- UPDATE WORKER INFOMATION --
+UPDATE [dbo].[Worker]
+   SET [wname] = ?
+      ,[phoneNumber] = ?
+      ,[monthSalary] = ?
+      ,[productSalary] = ?
+ WHERE wid = ?

@@ -8,7 +8,6 @@ package controler.worker;
 import dao.WorkerDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,28 +18,7 @@ import model.Worker;
  *
  * @author ADMIN
  */
-public class SearchControler extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        
-        WorkerDBContext db = new WorkerDBContext();
-        ArrayList<Worker> workers = db.getWorkers();
-        request.setAttribute("workers", workers);
-        
-        request.getRequestDispatcher("../view/worker/search.jsp").forward(request, response);
-    }
+public class EditControler extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -54,7 +32,14 @@ public class SearchControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        
+        int wid = Integer.parseInt(request.getParameter("wid"));      
+        WorkerDBContext workerDB = new WorkerDBContext();
+        Worker worker = workerDB.getWorker(wid);
+        request.setAttribute("worker", worker);
+        request.getRequestDispatcher("../view/worker/edit.jsp").forward(request, response);
     }
 
     /**
@@ -68,7 +53,31 @@ public class SearchControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        
+        String raw_wid = request.getParameter("wid");
+        String raw_wname = request.getParameter("wname");
+        String raw_phoneNumber = request.getParameter("phoneNumber");
+        String raw_monthSalary = request.getParameter("monthSalary");
+        String raw_productSalary = request.getParameter("productSalary");
+        
+        int wid = Integer.parseInt(raw_wid);
+        String wname = raw_wname;
+        String phoneNumber = raw_phoneNumber;
+        int monthSalary = Integer.parseInt(raw_monthSalary);
+        int productSalary = Integer.parseInt(raw_productSalary);
+        
+        Worker w = new Worker();
+        w.setWid(wid);
+        w.setWname(wname);
+        w.setPhoneNumber(phoneNumber);
+        w.setMonthSalary(monthSalary);
+        w.setProductSalary(productSalary);
+        
+        WorkerDBContext workerDB = new WorkerDBContext();
+        workerDB.updateWorker(w);
+        response.sendRedirect("search");
     }
 
     /**

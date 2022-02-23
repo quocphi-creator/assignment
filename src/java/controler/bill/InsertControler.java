@@ -36,6 +36,8 @@ public class InsertControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         OwnerDBContext ownerDB = new OwnerDBContext();
         ArrayList<Owner> ownerList = ownerDB.getOwnerList();
         request.setAttribute("ownerList", ownerList);
@@ -53,7 +55,8 @@ public class InsertControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         String raw_bid = request.getParameter("bid");
         String raw_cname = request.getParameter("cname");
         String raw_category = request.getParameter("category");

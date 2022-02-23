@@ -21,12 +21,11 @@
     </head>
     <body>
         <div class="topnav">
-            <a class="active" href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+            <p2 class="active" href="#home>Thông tin công nhân</p2>
+            
             <div class="search-container">
                 <form action="search" method="POST">
-                    <input type="text" placeholder="Search name" name="search">
+                    <input type="text" placeholder="Search name" name="wname">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
@@ -42,7 +41,6 @@
                         <th scope="col">Số điện thoại</th>
                         <th scope="col">Lương/tháng</th>
                         <th scope="col">Lương/Sản phẩm</th>
-                        <th scope="col">Lương được trả</th>
                         <th scope="col" colspan="2">Action</th>
                     </tr>
                 </thead>
@@ -55,10 +53,8 @@
                         <td scope="col"><%=w.getMonthSalary()%></td>
                         <td scope="col"><%=w.getProductSalary()%>(VNĐ/SP)</td>
 
-                        <td scope="col">Chuẩn bị tính</td>
-
                         <td scope="col"><a href="#">Xóa</a></td>
-                        <td scope="col"><a href="edit?bid=<%=w.getWid()%>">Chỉnh sửa</a></td>
+                        <td scope="col"><a href="edit?wid=<%=w.getWid()%>">Chỉnh sửa</a></td>
 
                     </tr>
                     <%}%>

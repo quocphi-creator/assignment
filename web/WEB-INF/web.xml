@@ -24,6 +24,14 @@
         <servlet-name>SearchWorkerControler</servlet-name>
         <servlet-class>controler.worker.SearchControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>InsertWorkerControler</servlet-name>
+        <servlet-class>controler.worker.InsertControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditWorkerControler</servlet-name>
+        <servlet-class>controler.worker.EditControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/owner/login</url-pattern>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>SearchWorkerControler</servlet-name>
         <url-pattern>/worker/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertWorkerControler</servlet-name>
+        <url-pattern>/worker/insert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditWorkerControler</servlet-name>
+        <url-pattern>/worker/edit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
