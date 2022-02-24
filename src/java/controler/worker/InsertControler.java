@@ -35,6 +35,7 @@ public class InsertControler extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
+        int wid = Integer.parseInt(request.getParameter("wid"));
         request.getRequestDispatcher("../view/worker/insert.jsp").forward(request, response);
     }
 

@@ -52,9 +52,9 @@
         <h3>Chỉnh Sửa Thông Tin Nhân Viên</h3>
 
         <div>
-            <form action="insert" method="POST">
+            <form action="edit" method="POST">
                 <label for="wid">Worker ID: <%=worker.getWid()%></label>
-                <input type="hidden" name="wid" placeholder="Nhập mã nhân viên">
+                <input type="hidden" name="wid" value="<%=worker.getWid()%>" placeholder="Nhập mã nhân viên">
             <br>
                 <label for="wname">Worker Name</label>
                 <input type="text" name="wname" placeholder="Nhập tên nhân viên">

@@ -50,7 +50,7 @@
                         <td scope="col"><%=w.getWid()%></td>
                         <td scope="col"><%=w.getWname()%></td>
                         <td scope="col"><%=w.getPhoneNumber()%></td>                          
-                        <td scope="col"><%=w.getMonthSalary()%></td>
+                        <td scope="col"><%=w.getMonthSalary()%>  (VNĐ/Tháng)</td>
                         <td scope="col"><%=w.getProductSalary()%>(VNĐ/SP)</td>
 
                         <td scope="col"><a href="#">Xóa</a></td>
