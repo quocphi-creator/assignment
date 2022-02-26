@@ -18,6 +18,17 @@
         <%
             ArrayList<Worker> workers = (ArrayList<Worker>) request.getAttribute("workers");
         %>
+        <script>
+            function deleteWorker(wid)
+            {
+                var result = confirm("Bạn có chắc muốn xóa nhân viên này?");
+                if(result)
+                {
+                    window.location.href = "delete?wid="+wid;
+                }
+            }
+        </script>
+        
     </head>
     <body>
         <div class="topnav">
@@ -53,7 +64,7 @@
                         <td scope="col"><%=w.getMonthSalary()%>  (VNĐ/Tháng)</td>
                         <td scope="col"><%=w.getProductSalary()%>(VNĐ/SP)</td>
 
-                        <td scope="col"><a href="#">Xóa</a></td>
+                        <td scope="col"><a href="#" onclick="deleteWorker(<%=w.getWid()%>);">Xóa</a></td>
                         <td scope="col"><a href="edit?wid=<%=w.getWid()%>">Chỉnh sửa</a></td>
 
                     </tr>

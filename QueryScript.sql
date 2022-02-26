@@ -68,3 +68,25 @@ UPDATE [dbo].[Worker]
       ,[monthSalary] = ?
       ,[productSalary] = ?
  WHERE wid = ?
+
+
+ -- delete worker --
+ DELETE FROM [dbo].[Worker]
+      WHERE wid = ?
+
+-- select product --
+SELECT p.[pid]
+      ,p.[pname]
+      ,p.[productCategory]
+      ,p.[model]
+	  ,p.[price]
+      ,p.[manufactureDate]
+      ,p.[expireDate]
+      ,p.[guid]
+      ,p.[wid]
+	  ,w.wname
+	  ,w.phoneNumber
+	  ,w.monthSalary
+	  ,w.productSalary
+  FROM [Product] p left JOIN [Worker] w ON p.wid = w.wid
+  WHERE YEAR(manufactureDate) = ? and MONTH(manufactureDate)= ?

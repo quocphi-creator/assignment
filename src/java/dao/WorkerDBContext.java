@@ -166,13 +166,44 @@ public class WorkerDBContext extends DBContext {
 
         try {
             stm = connection.prepareStatement(sql);
-            
+
             stm.setInt(5, w.getWid());
             stm.setNString(1, w.getWname());
             stm.setString(2, w.getPhoneNumber());
             stm.setInt(3, w.getMonthSalary());
             stm.setInt(4, w.getProductSalary());
 
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(WorkerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(WorkerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void deleteWorker(int wid) {
+        String sql = "DELETE FROM [dbo].[Worker]\n"
+                + "      WHERE wid = ?";
+
+        PreparedStatement stm = null;
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, wid);            
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(WorkerDBContext.class.getName()).log(Level.SEVERE, null, ex);

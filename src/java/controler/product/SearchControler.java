@@ -3,23 +3,55 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler.worker;
+package controler.product;
 
-import dao.WorkerDBContext;
+import dao.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Month;
+import java.time.YearMonth;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Owner;
-import model.Worker;
+import model.Product;
 
 /**
  *
  * @author ADMIN
  */
-public class InsertControler extends HttpServlet {
+public class SearchControler extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        
+        String raw_ym = request.getParameter("month");
+        if (raw_ym == null) {
+            raw_ym = "0001-01";
+        }
+        YearMonth ym = YearMonth.parse(raw_ym);
+        
+        int year = ym.getYear();
+        int month = ym.getMonth().getValue();
+        
+        ProductDBContext productDB = new ProductDBContext();
+        ArrayList<Product> products = productDB.getProducts(month, year);
+        request.setAttribute("products", products);
+        request.setAttribute("ym", ym);
+        request.getRequestDispatcher("../view/product/search.jsp").forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -33,10 +65,7 @@ public class InsertControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        
-        request.getRequestDispatcher("../view/worker/insert.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -50,32 +79,7 @@ public class InsertControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        
-        String raw_wid = request.getParameter("wid");
-        String raw_wname = request.getParameter("wname");
-        String raw_phoneNumber = request.getParameter("phoneNumber");
-        String raw_monthSalary = request.getParameter("monthSalary");
-        String raw_productSalary = request.getParameter("productSalary");
-        
-        int wid = Integer.parseInt(raw_wid);
-        String wname = raw_wname;
-        String phoneNumber = raw_phoneNumber;
-        int monthSalary = Integer.parseInt(raw_monthSalary);
-        int productSalary = Integer.parseInt(raw_productSalary);
-        
-        Worker w = new Worker();
-        
-        w.setWid(wid);
-        w.setWname(wname);
-        w.setPhoneNumber(phoneNumber);
-        w.setMonthSalary(monthSalary);
-        w.setProductSalary(productSalary);
-        
-        WorkerDBContext workerDB = new WorkerDBContext();
-        workerDB.insertWorker(w);
-        response.sendRedirect("search");
+        processRequest(request, response);
     }
 
     /**
