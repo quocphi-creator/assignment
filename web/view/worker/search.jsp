@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="../asset/css/WorkerSearchBar.css">
         <%
             ArrayList<Worker> workers = (ArrayList<Worker>) request.getAttribute("workers");
+            ArrayList<Worker> workersByName = (ArrayList<Worker>)request.getAttribute("workersname");
         %>
         <script>
             function deleteWorker(wid)
@@ -42,7 +43,7 @@
             </div>
         </div>
 
-        <%if (workers.size() > 0) {%>
+        <%if (workersByName.size() > 0) {%>
         <div>
             <table class="table table-bordered">
                 <thead>
@@ -56,7 +57,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%for (Worker w : workers) {%>
+                    <%for (Worker w : workersByName) {%>
                     <tr>
                         <td scope="col"><%=w.getWid()%></td>
                         <td scope="col"><%=w.getWname()%></td>

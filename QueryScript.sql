@@ -90,3 +90,36 @@ SELECT p.[pid]
 	  ,w.productSalary
   FROM [Product] p left JOIN [Worker] w ON p.wid = w.wid
   WHERE YEAR(manufactureDate) = ? and MONTH(manufactureDate)= ?
+
+
+-- insert product --
+INSERT INTO [dbo].[Product]
+           ([pid]
+           ,[pname]
+           ,[productCategory]
+           ,[model]
+           ,[price]
+           ,[manufactureDate]
+           ,[expireDate]
+           ,[guid]
+           ,[wid])
+     VALUES
+           (?
+           ,?
+           ,?
+           ,?
+           ,?
+           ,?
+           ,?
+           ,?
+           ,?)
+
+
+-- get worker by a part of name --
+SELECT [wid]
+      ,[wname]
+      ,[phoneNumber]
+      ,[monthSalary]
+      ,[productSalary]
+  FROM [dbo].[Worker]
+  WHERE [wname] LIKE '%Hà%'

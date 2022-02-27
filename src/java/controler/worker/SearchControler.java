@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Product;
 import model.Worker;
 
 /**
@@ -39,6 +40,11 @@ public class SearchControler extends HttpServlet {
         ArrayList<Worker> workers = db.getWorkers();
         request.setAttribute("workers", workers);
         
+        String raw_wname = request.getParameter("wname");
+        String wname = raw_wname;
+        ArrayList<Worker> workersByName = db.getWorkerByName(wname);
+        
+        request.setAttribute("workersname", workersByName);
         request.getRequestDispatcher("../view/worker/search.jsp").forward(request, response);
     }
 
@@ -54,6 +60,8 @@ public class SearchControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         processRequest(request, response);
     }
 
@@ -68,6 +76,8 @@ public class SearchControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         processRequest(request, response);
     }
 

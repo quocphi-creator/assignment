@@ -86,4 +86,63 @@ public class ProductDBContext extends DBContext {
         return products;
     }
 
+    public void insertProduct(Product p) {
+        String sql = "INSERT INTO [dbo].[Product]\n"
+                + "           ([pid]\n"
+                + "           ,[pname]\n"
+                + "           ,[productCategory]\n"
+                + "           ,[model]\n"
+                + "           ,[price]\n"
+                + "           ,[manufactureDate]\n"
+                + "           ,[expireDate]\n"
+                + "           ,[guid]\n"
+                + "           ,[wid])\n"
+                + "     VALUES\n"
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?)";
+
+        PreparedStatement stm = null;
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, p.getPid());
+            stm.setNString(2, p.getPname());
+            stm.setNString(3, p.getCategory());
+            stm.setNString(4, p.getModel());
+            stm.setInt(5, p.getPrice());
+            stm.setDate(6, p.getManufactureDate());
+            stm.setDate(7, p.getExpireDate());
+            stm.setNString(8, p.getGuid());
+            stm.setInt(9, p.getWorker().getWid());
+            
+            stm.executeQuery();
+//            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+    }
 }

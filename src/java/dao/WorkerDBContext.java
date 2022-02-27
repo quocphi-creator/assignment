@@ -5,6 +5,7 @@
  */
 package dao;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -203,7 +204,7 @@ public class WorkerDBContext extends DBContext {
 
         try {
             stm = connection.prepareStatement(sql);
-            stm.setInt(1, wid);            
+            stm.setInt(1, wid);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(WorkerDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,5 +225,42 @@ public class WorkerDBContext extends DBContext {
                 }
             }
         }
+    }
+
+    public ArrayList<Worker> getWorkerByName(String wname) {
+
+        ArrayList<Worker> workers = new ArrayList<>();
+
+        try {
+            String sql = "SELECT [wid]\n"
+                    + "      ,[wname]\n"
+                    + "      ,[phoneNumber]\n"
+                    + "      ,[monthSalary]\n"
+                    + "      ,[productSalary]\n"
+                    + "  FROM [dbo].[Worker] ";
+
+            if (wname != null) {
+                sql += "   WHERE [wname] LIKE N'%"+wname+"%'";
+            }
+            PreparedStatement stm = connection.prepareStatement(sql);
+            
+            
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Worker w = new Worker();
+                w.setWid(rs.getInt("wid"));
+                w.setWname(rs.getNString("wname"));
+                w.setPhoneNumber(rs.getString("phoneNumber"));
+                w.setMonthSalary(rs.getInt("monthSalary"));
+                w.setProductSalary(rs.getInt("productSalary"));
+                
+                workers.add(w);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(WorkerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return workers;
+
     }
 }

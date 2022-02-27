@@ -4,12 +4,18 @@
     Author     : ADMIN
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Worker"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        
+        <%
+            ArrayList<Worker> workers = (ArrayList<Worker>) request.getAttribute("workers");
+        %>
     </head>
     <style>
         body {font-family: Arial, Helvetica, sans-serif;}
@@ -72,12 +78,17 @@
                 </div>
 
                 <div class="form-row">
+                    <label for="price">Đơn giá</label>
+                    <input type="text" name="model" placeholder="Nhập đơn giá sản phẩm">
+                </div>
+
+                <div class="form-row">
                     <div>
                         <label for="manufactureDate">Ngày sản xuất</label>
                         <input type="date" name="manufactureDate" class="form-control" value="">
                     </div>
                     <div>
-                        <label for="expireDate">Hạn sử dụng</label>
+                        <label for="expireDate">Hạn bảo hành</label>
                         <input type="date" name="expireDate" class="form-control" value="">
                     </div>
                 </div>
@@ -89,8 +100,27 @@
                 </div>
 
                 <div>
-                    <label for="month">Search month</label>
+                    <div class="form-row">
 
+
+                        <div class="form-group col-md-4">
+                            <label for="wname">Nhân viên</label>
+                            <select name="oname" class="form-control">
+
+                                <%for (Worker w : workers) {%>
+                                <option 
+                                    <%=(w.getW.getOname() == o.getOname()) ? "selected=\"selected\"" : ""%>
+                                    value="<%=o.getOname()%>">
+                                    <%=o.getOname()%>
+                                </option>
+                                <%}%>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="month">Search month</label>
                     <input type="month" name="month" value="2018-05">
                 </div>
 
