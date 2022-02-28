@@ -38,7 +38,7 @@ public class SearchControler extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         
         String raw_ym = request.getParameter("month");
-        if (raw_ym == null) {
+        if (raw_ym == null || raw_ym.length()==0) {
             raw_ym = "0001-01";
         }
         YearMonth ym = YearMonth.parse(raw_ym);

@@ -7,6 +7,7 @@ package controler.product;
 
 import dao.BillDBContext;
 import dao.OwnerDBContext;
+import dao.ProductDBContext;
 import dao.WorkerDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Bill;
 import model.Owner;
+import model.Product;
 import model.Worker;
 
 /**
@@ -62,52 +64,43 @@ public class InsertControler extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        String raw_bid = request.getParameter("bid");
-        String raw_cname = request.getParameter("cname");
+        
+        String raw_pid = request.getParameter("pid");
+        String raw_pname = request.getParameter("pname");
         String raw_category = request.getParameter("category");
-        String raw_quantity = request.getParameter("quantity");
-        String raw_unitprice = request.getParameter("unitprice");
-        String raw_total = request.getParameter("total");
-        String raw_inputdate = request.getParameter("inputDate");
-        String raw_origin = request.getParameter("origin");
-        String raw_supplier = request.getParameter("supplier");
-        String raw_contact = request.getParameter("contact");
-        String raw_address = request.getParameter("address");
-        String raw_oname = request.getParameter("oname");
-        
-        int bid = Integer.parseInt(raw_bid);
-        String cname = raw_cname;
+        String raw_model = request.getParameter("model");
+        String raw_price = request.getParameter("price");
+        String raw_manuDate = request.getParameter("manufactureDate");
+        String raw_expireDate = request.getParameter("expireDate");
+        String raw_guid = request.getParameter("guid");
+        String raw_wid = request.getParameter("wid");
+         
+        int pid = Integer.parseInt(raw_pid);
+        String pname = raw_pname;
         String category = raw_category;
-        int quantity = Integer.parseInt(raw_quantity);
-        int unitprice = Integer.parseInt(raw_unitprice);
-        int total = Integer.parseInt(raw_total);
-        Date inputDate = Date.valueOf(raw_inputdate);
-        String origin = raw_origin;
-        String supplier = raw_supplier;
-        String contact = raw_contact;
-        String address = raw_address;
-        String oname = raw_oname;
+        String model = raw_model;
+        int price = Integer.parseInt(raw_price);
+        Date manufactureDate = Date.valueOf(raw_manuDate);
+        Date expireDate = Date.valueOf(raw_expireDate);
+        String guid = raw_guid;
+        int wid = Integer.parseInt(raw_wid);
         
-        Owner o = new Owner();
-        o.setOname(oname);
+        Worker w = new Worker();
+        w.setWid(wid);        
         
-        Bill b = new Bill();
-        b.setBid(bid);
-        b.setCname(cname);
-        b.setCategory(category);
-        b.setQuantity(quantity);
-        b.setUnitPrice(unitprice);
-        b.setTotal(total);
-        b.setInputDate(inputDate);
-        b.setOrigin(origin);
-        b.setSupplierName(supplier);
-        b.setContact(contact);
-        b.setAddress(address);
-        b.setOwner(o);
+        Product p = new Product();
+        p.setPid(pid);
+        p.setPname(pname);
+        p.setCategory(category);
+        p.setModel(model);
+        p.setPrice(price);
+        p.setManufactureDate(manufactureDate);
+        p.setExpireDate(expireDate);
+        p.setGuid(guid);
         
-        BillDBContext db = new BillDBContext();
-        db.insertBill(b);
-        
+        p.setWorker(w);
+        ProductDBContext productDB = new ProductDBContext();
+        productDB.insertProduct(p);
         response.sendRedirect("search");
     }
 

@@ -11,8 +11,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        
+        <title>Product | Insert</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
         <%
             ArrayList<Worker> workers = (ArrayList<Worker>) request.getAttribute("workers");
         %>
@@ -55,7 +55,7 @@
         <h3>Contact Form</h3>
 
         <div class="container">
-            <form action="search" method="POST">
+            <form action="insert" method="POST">
 
                 <div class="form-row">
                     <label for="pid">Mã sản phẩm</label>
@@ -69,34 +69,36 @@
 
                 <div class="form-row">
                     <label for="category">Thể loại</label>
-                    <input type="text" name="model" placeholder="Nhập thể loại sản phẩm">
+                    <input type="text" name="category" placeholder="Nhập thể loại sản phẩm">
                 </div>
 
                 <div class="form-row">
                     <label for="model">Mẫu mã</label>
-                    <input type="text" name="model" placeholder="Nhập thể loại sản phẩm">
+                    <input type="text" name="model" placeholder="Nhập mẫu mã sản phẩm">
                 </div>
 
                 <div class="form-row">
                     <label for="price">Đơn giá</label>
-                    <input type="text" name="model" placeholder="Nhập đơn giá sản phẩm">
+                    <input type="text" name="price" placeholder="Nhập đơn giá sản phẩm">
                 </div>
 
                 <div class="form-row">
-                    <div>
+                    <div class="col">
                         <label for="manufactureDate">Ngày sản xuất</label>
                         <input type="date" name="manufactureDate" class="form-control" value="">
                     </div>
-                    <div>
+                    <div class="col">
                         <label for="expireDate">Hạn bảo hành</label>
                         <input type="date" name="expireDate" class="form-control" value="">
                     </div>
                 </div>
 
-                <div>
-                    <label for="guide">Hướng dẫn sử dụng</label>
-                    <textarea name="model" placeholder="Nhập hướng dẫn sử dụng" style="height:200px"></textarea>
 
+                <div class="form-row">
+                    <div class="col">
+                        <label for="guide">Hướng dẫn sử dụng</label>
+                        <textarea name="guid" placeholder="Nhập hướng dẫn sử dụng" style="height:200px"></textarea>
+                    </div>
                 </div>
 
                 <div>
@@ -104,14 +106,13 @@
 
 
                         <div class="form-group col-md-4">
-                            <label for="wname">Nhân viên</label>
-                            <select name="oname" class="form-control">
+                            <label for="wid">Nhân viên</label>
+                            <select name="wid" class="form-control">
 
                                 <%for (Worker w : workers) {%>
                                 <option 
-                                    <%=(w.getW.getOname() == o.getOname()) ? "selected=\"selected\"" : ""%>
-                                    value="<%=o.getOname()%>">
-                                    <%=o.getOname()%>
+                                    value="<%=w.getWid()%>">
+                                    <%=w.getWname()%>
                                 </option>
                                 <%}%>
 
@@ -119,10 +120,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <label for="month">Search month</label>
-                    <input type="month" name="month" value="2018-05">
-                </div>
+
 
                 <div>
                     <input type="submit" value="Submit">

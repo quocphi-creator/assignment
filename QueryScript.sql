@@ -1,4 +1,4 @@
-use [Assignment]
+﻿use [Assignment]
 
 -- get owner authentication by oname, password and factoryID--
 SELECT oname, [password] from Owner WHERE oname = N'phi' and password='123456789'
@@ -122,4 +122,4 @@ SELECT [wid]
       ,[monthSalary]
       ,[productSalary]
   FROM [dbo].[Worker]
-  WHERE [wname] LIKE '%H�%'
+  WHERE [wname] LIKE N'%Nguyễn%'
