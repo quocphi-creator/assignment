@@ -44,6 +44,14 @@
         <servlet-name>InsertProductControler</servlet-name>
         <servlet-class>controler.product.InsertControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditProductControler</servlet-name>
+        <servlet-class>controler.product.EditControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteProductControler</servlet-name>
+        <servlet-class>controler.product.DeleteControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/owner/login</url-pattern>
@@ -87,6 +95,14 @@
     <servlet-mapping>
         <servlet-name>InsertProductControler</servlet-name>
         <url-pattern>/product/insert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProductControler</servlet-name>
+        <url-pattern>/product/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteProductControler</servlet-name>
+        <url-pattern>/product/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

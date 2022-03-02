@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Producr | Search</title>
+        <title>Product | Search</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
         <%
@@ -20,7 +20,14 @@
             YearMonth ym = (YearMonth) request.getAttribute("ym");
         %>
 
-
+        <script>
+            function deleteProduct(pid) {
+                var result = confirm("Bạn có chắc muốn xóa sản phẩm này ?");
+                if (result) {
+                    window.location.href = "delete?pid="+pid;
+                }
+            }
+        </script>
     </head>
     <body>
         <div class="justify-content-center">
@@ -29,7 +36,7 @@
 
                 <div class="form-group">
                     <label for="month">Nhập tháng cần báo cáo:</label>
-                    <input type="month"  name="month" value="<%=(ym.getYear()==1) ? "":ym%>" selected="selected">
+                    <input type="month"  name="month" value="<%=(ym.getYear() == 1) ? "" : ym%>" selected="selected">
                 </div>
 
                 <div class="form-group">               
@@ -68,10 +75,10 @@
                         <td scope="col"><%=p.getManufactureDate()%></td>
                         <td scope="col"><%=p.getExpireDate()%></td>
                         <td scope="col"><%=p.getGuid()%></td>
-                        <td scope="col"><%=p.getWorker().getWname()%></td>
 
-                        <td scope="col"><a href="#">Xóa</a></td>
-                        <td scope="col"><a href="edit?bid=<%=p.getPid()%>">Chỉnh sửa</a></td>
+                        <td scope="col"><%=p.getWorker().getWname()%></td>
+                        <td scope="col"><a href="#" onclick="deleteProduct(<%=p.getPid()%>)">Xóa</a></td>
+                        <td scope="col"><a href="edit?pid=<%=p.getPid()%>">Chỉnh sửa</a></td>
 
                     </tr>
                     <%}%>

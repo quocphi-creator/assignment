@@ -5,8 +5,6 @@
  */
 package controler.product;
 
-import dao.BillDBContext;
-import dao.OwnerDBContext;
 import dao.ProductDBContext;
 import dao.WorkerDBContext;
 import java.io.IOException;
@@ -17,8 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Bill;
-import model.Owner;
 import model.Product;
 import model.Worker;
 
@@ -26,7 +22,7 @@ import model.Worker;
  *
  * @author ADMIN
  */
-public class InsertControler extends HttpServlet {
+public class EditControler extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -42,10 +38,23 @@ public class InsertControler extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
+        
+        String raw_pid = request.getParameter("pid");
+
+        int pid = Integer.parseInt(raw_pid);
         WorkerDBContext workerDB = new WorkerDBContext();
         ArrayList<Worker> workers = workerDB.getWorkers();
         request.setAttribute("workers", workers);
-        request.getRequestDispatcher("../view/product/insert.jsp").forward(request, response);
+
+        ProductDBContext productDB = new ProductDBContext();
+        Product product = productDB.getProduct(pid);
+        if (product == null) {
+            response.sendRedirect("../view/workernotfound.jsp");
+        } else {
+            request.setAttribute("product", product);
+            request.getRequestDispatcher("../view/product/edit.jsp").forward(request, response);
+
+        }
     }
 
     /**
@@ -59,7 +68,6 @@ public class InsertControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         
@@ -68,23 +76,25 @@ public class InsertControler extends HttpServlet {
         String raw_category = request.getParameter("category");
         String raw_model = request.getParameter("model");
         String raw_price = request.getParameter("price");
-        String raw_manuDate = request.getParameter("manufactureDate");
+        String raw_manufactureDate = request.getParameter("manufactureDate");
         String raw_expireDate = request.getParameter("expireDate");
         String raw_guid = request.getParameter("guid");
         String raw_wid = request.getParameter("wid");
-         
-        int pid = Integer.parseInt(raw_pid);
+        
+        
+        
+        int pid = Integer.parseInt(raw_wid);
         String pname = raw_pname;
         String category = raw_category;
         String model = raw_model;
         int price = Integer.parseInt(raw_price);
-        Date manufactureDate = Date.valueOf(raw_manuDate);
+        Date manufactureDate = Date.valueOf(raw_manufactureDate);
         Date expireDate = Date.valueOf(raw_expireDate);
         String guid = raw_guid;
         int wid = Integer.parseInt(raw_wid);
         
         Worker w = new Worker();
-        w.setWid(wid);        
+        w.setWid(wid);
         
         Product p = new Product();
         p.setPid(pid);
@@ -97,8 +107,9 @@ public class InsertControler extends HttpServlet {
         p.setGuid(guid);
         
         p.setWorker(w);
-        ProductDBContext productDB = new ProductDBContext();
-        productDB.insertProduct(p);
+        
+        ProductDBContext db = new ProductDBContext();
+        db.updateProduct(p);
         response.sendRedirect("search");
     }
 

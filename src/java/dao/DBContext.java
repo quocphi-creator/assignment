@@ -24,7 +24,7 @@ public class DBContext {
             //sql server name
             String user = "SE1616";
             //sql password
-            String pass = "22012001";
+            String pass = "12345";
             //sql database url
             String url = "jdbc:sqlserver://DESKTOP-01NQ3KO:1433;databaseName=Assignment";
             

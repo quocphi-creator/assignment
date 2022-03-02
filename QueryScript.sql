@@ -123,3 +123,38 @@ SELECT [wid]
       ,[productSalary]
   FROM [dbo].[Worker]
   WHERE [wname] LIKE N'%Nguyễn%'
+
+
+-- get product by id --
+SELECT p.[pid]
+      ,p.[pname]
+      ,p.[productCategory]
+      ,p.[model]
+      ,p.[price]
+      ,p.[manufactureDate]
+      ,p.[expireDate]
+      ,p.[guid]
+      ,p.[wid]
+	  ,w.[wname]
+	  ,w.[phoneNumber]
+	  ,w.[monthSalary]
+	  ,w.[productSalary]
+  FROM [dbo].[Product] p left join [Worker] w on w.wid = p.wid
+  WHERE [pid] = 1
+
+-- update product --
+UPDATE [dbo].[Product]
+   SET [pname] = ?
+      ,[productCategory] = ?
+      ,[model] = ?
+      ,[price] = ?
+      ,[manufactureDate] = ?
+      ,[expireDate] = ?
+      ,[guid] = ?
+      ,[wid] = ?
+ WHERE pid = ?
+
+
+-- delete product --
+DELETE FROM [dbo].[Product]
+      WHERE pid = ?
