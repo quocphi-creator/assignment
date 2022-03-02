@@ -169,7 +169,7 @@ CREATE TABLE [dbo].[Worker](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_Bill_owner] FOREIGN KEY([oname])
+ALTER TABLE [dbo].[Bill] WITH CHECK ADD  CONSTRAINT [FK_Bill_owner] FOREIGN KEY([oname])
 REFERENCES [dbo].[owner] ([oname])
 GO
 ALTER TABLE [dbo].[Bill] CHECK CONSTRAINT [FK_Bill_owner]
@@ -188,10 +188,13 @@ ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_Worker] FORE
 REFERENCES [dbo].[Worker] ([wid]) 
 GO
 
+
 ALTER TABLE [Product] DROP CONSTRAINT [FK_Product_Worker]
 GO
 
 Alter Table [Product] Add Constraint [FK_Product_Worker] Foreign Key (wid) References [Worker] (wid) On Update Cascade On Delete set null
+
+
 
 ----
 ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Worker]

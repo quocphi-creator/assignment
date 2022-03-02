@@ -158,3 +158,28 @@ UPDATE [dbo].[Product]
 -- delete product --
 DELETE FROM [dbo].[Product]
       WHERE pid = ?
+
+-- GET MANUFACTURE LIST --
+SELECT M.[orderID]
+      ,M.[bid]
+      ,M.[wid]
+      ,M.[producted]
+      ,M.[removed]
+      ,M.[outputDate]
+	  ,B.[cname]
+	  ,B.[componentCategory]
+	  ,B.[unitprice]
+	  ,B.[quantity]
+	  ,B.[totalMoney]
+	  ,B.[inputDate]
+	  ,B.[supplierName]
+	  ,B.[address]
+	  ,B.[contact]
+	  ,B.[origin]
+	  ,B.[oname]
+	  ,W.[wname]
+	  ,W.[phoneNumber]
+	  ,W.[monthSalary]
+	  ,W.[productSalary]
+  FROM [dbo].[Manufactoring] M INNER JOIN [Bill] B ON B.bid = M.bid LEFT JOIN [Worker] W ON W.wid = M.wid 
+  WHERE MONTH(outputDate) = 9 AND YEAR(outputDate)=2019

@@ -52,6 +52,10 @@
         <servlet-name>DeleteProductControler</servlet-name>
         <servlet-class>controler.product.DeleteControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchManufactorControler</servlet-name>
+        <servlet-class>controler.manufactor.SearchControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/owner/login</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>DeleteProductControler</servlet-name>
         <url-pattern>/product/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchManufactorControler</servlet-name>
+        <url-pattern>/manufactor/search</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

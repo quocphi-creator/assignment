@@ -45,7 +45,6 @@
             </form>
         </div>
 
-
         <%if (products.size() > 0) {%>
         <div>
             <table class="table table-bordered">
@@ -75,7 +74,6 @@
                         <td scope="col"><%=p.getManufactureDate()%></td>
                         <td scope="col"><%=p.getExpireDate()%></td>
                         <td scope="col"><%=p.getGuid()%></td>
-
                         <td scope="col"><%=p.getWorker().getWname()%></td>
                         <td scope="col"><a href="#" onclick="deleteProduct(<%=p.getPid()%>)">Xóa</a></td>
                         <td scope="col"><a href="edit?pid=<%=p.getPid()%>">Chỉnh sửa</a></td>
