@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author ADMIN
@@ -15,18 +17,22 @@ public class ManufactureDetail {
     private Worker worker;
     private int producted;
     private int removed;
+    private Date outputDate;
+
 
     public ManufactureDetail() {
     }
 
-    public ManufactureDetail(String orderID, Bill bill, Worker worker, int producted, int removed) {
+    public ManufactureDetail(String orderID, Bill bill, Worker worker, int producted, int removed, Date productedDate) {
         this.orderID = orderID;
         this.bill = bill;
         this.worker = worker;
         this.producted = producted;
         this.removed = removed;
+        this.outputDate = productedDate;
     }
 
+    
     public String getOrderID() {
         return orderID;
     }
@@ -65,6 +71,14 @@ public class ManufactureDetail {
 
     public void setRemoved(int removed) {
         this.removed = removed;
+    }
+
+    public Date getOutputDate() {
+        return outputDate;
+    }
+
+    public void setOutputDate(Date outputDate) {
+        this.outputDate = outputDate;
     }
     
     

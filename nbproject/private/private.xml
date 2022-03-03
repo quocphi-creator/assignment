@@ -12,16 +12,8 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/product/search.jsp</file>
             <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/dao/BillDBContext.java</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/bill/EditControler.java</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/product/edit.jsp</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/product/EditControler.java</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/bill/edit.jsp</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/dao/ProductDBContext.java</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/product/SearchControler.java</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/product/InsertControler.java</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/worker/EditControler.java</file>
+            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/manufactor/SearchControler.java</file>
         </group>
     </open-files>
 </project-private>

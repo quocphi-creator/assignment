@@ -4,14 +4,76 @@
     Author     : ADMIN
 --%>
 
+<%@page import="java.time.YearMonth"%>
+<%@page import="model.ManufactureDetail"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Manufacturing | Search</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+        <%
+            ArrayList<ManufactureDetail> manuList = (ArrayList<ManufactureDetail>) request.getAttribute("manuList");
+            YearMonth ym = (YearMonth) request.getAttribute("ym");
+        %>
     </head>
     <body>
-        <h1>Hello World!</h1>
-    </body>
+        <div class="justify-content-center">
+            <h1>Chi Tiết Sản Xuất</h1>
+            <form action="search" method="POST">
+
+                <div class="form-group">
+                    <label for="month">Nhập tháng cần báo cáo:</label>
+                    <input type="month"  name="month" value="<%=(ym.getYear() == 1) ? "" : ym%>" selected="selected">
+                </div>
+
+                <div class="form-group">               
+                    <input type="submit" value="Search">
+                </div>
+            </form>
+        </div>
+
+        <%if (manuList.size() > 0) {%>
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Mã SX</th>
+                        <th scope="col">Tên Sản Phẩm</th>
+                        <th scope="col">Thể loại</th>
+                        <th scope="col">Số lượng nhập</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Người phụ trách</th>
+                        <th scope="col">Ngày xuất kho</th>
+                        <th scope="col">Đã SX</th>
+                        <th scope="col">Bị hỏng</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <%for (ManufactureDetail m : manuList) {%>
+                    <tr>
+                        <td scope="col"><%=m.getOrderID()%></td>
+                        <td scope="col"><%=m.getBill().getCname()%></td>
+                        <td scope="col"><%=m.getBill().getCategory()%></td>
+                        <td scope="col"><%=m.getBill().getQuantity()%></td>
+                        <td scope="col"><%=m.getBill().getUnitPrice()%></td>
+                        <td scope="col"><%=m.getWorker().getWname()%></td>
+                        <td scope="col"><%=m.getOutputDate()%></td>
+                        <td scope="col"><%=m.getProducted()%></td>
+                        <td scope="col"><%=m.getRemoved()%></td>
+                    </tr>
+                    <%}%>
+                </tbody>
+            </table>
+        </div>
+        <%} else {%>
+        <h2>No record to display</h2>
+        <%}%>
+        <a href="insert">Insert
+        </div>
+</body>
 </html>

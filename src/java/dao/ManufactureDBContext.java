@@ -11,8 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Bill;
 import model.Manufacture;
 import model.ManufactureDetail;
+import model.Owner;
+import model.Worker;
 
 /**
  *
@@ -20,7 +23,7 @@ import model.ManufactureDetail;
  */
 public class ManufactureDBContext extends DBContext{
 
-    public ArrayList<Manufacture> getManuList(int month, int year) {
+    public ArrayList<ManufactureDetail> getManuList(int month, int year) {
         ArrayList<ManufactureDetail> ManuList = new ArrayList<>();
         try {
             String sql = "SELECT M.[orderID]\n"
@@ -55,12 +58,49 @@ public class ManufactureDBContext extends DBContext{
             }
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {                
-                ManufactureDetail 
+                ManufactureDetail manuDetail = new ManufactureDetail();
+                
+                manuDetail.setOrderID(rs.getString("orderID"));
+                manuDetail.setProducted(rs.getInt("producted"));
+                manuDetail.setRemoved(rs.getInt("removed"));
+                manuDetail.setOutputDate(rs.getDate("outputDate"));
+                
+                Worker w = new Worker();
+                w.setWid(rs.getInt("wid"));
+                w.setWname(rs.getNString("wname"));
+                w.setPhoneNumber(rs.getString("phoneNumber"));
+                w.setMonthSalary(rs.getInt("monthSalary"));
+                w.setProductSalary(rs.getInt("productSalary"));
+                
+                Bill b = new Bill();
+                b.setBid(rs.getInt("bid"));
+                b.setCname(rs.getNString("cname"));
+                b.setCategory(rs.getNString("componentCategory"));
+                b.setUnitPrice(rs.getInt("unitprice"));
+                b.setTotal(rs.getInt("totalMoney"));
+                b.setQuantity(rs.getInt("quantity"));
+                b.setInputDate(rs.getDate("inputDate"));
+                b.setSupplierName(rs.getNString("supplierName"));
+                b.setAddress(rs.getNString("address"));
+                b.setContact(rs.getString("contact"));
+                b.setOrigin(rs.getNString("origin"));
+                
+                Owner o = new Owner();
+                o.setOname(rs.getString("oname"));
+                o.setPassword(rs.getString("wname"));
+                
+                b.setOwner(o);
+                
+                manuDetail.setWorker(w);
+                manuDetail.setBill(b);
+                
+                ManuList.add(manuDetail);
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return ManuList;
     }
 
 }

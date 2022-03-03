@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Manufacture;
+import model.ManufactureDetail;
 
 /**
  *
@@ -45,7 +46,7 @@ public class SearchControler extends HttpServlet {
         int month = ym.getMonth().getValue();
         
         ManufactureDBContext manuDB = new ManufactureDBContext();
-        ArrayList<Manufacture> manuList = manuDB.getManuList(month, year);
+        ArrayList<ManufactureDetail> manuList = manuDB.getManuList(month, year);
         request.setAttribute("manuList", manuList);
         request.setAttribute("ym", ym);
         request.getRequestDispatcher("../view/manufacture/search.jsp").forward(request, response);
