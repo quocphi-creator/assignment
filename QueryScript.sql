@@ -183,3 +183,21 @@ SELECT M.[orderID]
 	  ,W.[productSalary]
   FROM [dbo].[Manufactoring] M INNER JOIN [Bill] B ON B.bid = M.bid LEFT JOIN [Worker] W ON W.wid = M.wid 
   WHERE MONTH(outputDate) = 9 AND YEAR(outputDate)=2019
+
+
+-- get bill list by name - 
+SELECT b.[bid]
+      ,b.[cname]
+      ,b.[componentCategory]
+      ,b.[unitprice]
+      ,b.[quantity]
+      ,b.[totalMoney]
+      ,b.[inputDate]
+      ,b.[supplierName]
+      ,b.[address]
+      ,b.[contact]
+      ,b.[origin]
+      ,b.[oname]
+	  ,o.[password]
+  FROM [dbo].[Bill] B INNER JOIN [owner] o ON b.oname = o.oname 
+  WHERE cname LIKE '%Linh%'

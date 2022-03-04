@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Bill;
 import model.Owner;
+import model.Worker;
 
 /**
  *
@@ -235,7 +236,7 @@ public class BillDBContext extends DBContext {
         }
     }
 
-    public void deleteBill(int bid ) {
+    public void deleteBill(int bid) {
 
         String sql = "UPDATE [Bill]\n"
                 + "   SET [quantity] = ?\n"
@@ -267,5 +268,59 @@ public class BillDBContext extends DBContext {
                 }
             }
         }
+    }
+
+    public ArrayList<Bill> getBillsByName(String bname) {
+        ArrayList<Bill> bills = new ArrayList<>();
+
+        try {
+            String sql = "SELECT b.[bid]\n"
+                    + "      ,b.[cname]\n"
+                    + "      ,b.[componentCategory]\n"
+                    + "      ,b.[unitprice]\n"
+                    + "      ,b.[quantity]\n"
+                    + "      ,b.[totalMoney]\n"
+                    + "      ,b.[inputDate]\n"
+                    + "      ,b.[supplierName]\n"
+                    + "      ,b.[address]\n"
+                    + "      ,b.[contact]\n"
+                    + "      ,b.[origin]\n"
+                    + "      ,b.[oname]\n"
+                    + "	  ,o.[password]\n"
+                    + "  FROM [dbo].[Bill] B INNER JOIN [owner] o ON b.oname = o.oname ";
+
+            if (bname != null) {
+                sql += "  WHERE cname LIKE N'%"+bname+"%'";
+            }
+            PreparedStatement stm = connection.prepareStatement(sql);
+
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Bill b = new Bill();
+                b.setBid(rs.getInt("bid"));
+                b.setCname(rs.getNString("cname"));
+                b.setCategory(rs.getNString("componentCategory"));
+                b.setUnitPrice(rs.getInt("unitprice"));
+                b.setQuantity(rs.getInt("quantity"));
+                b.setTotal(rs.getInt("totalMoney"));
+                b.setInputDate(rs.getDate("inputDate"));
+                b.setSupplierName(rs.getNString("supplierName"));
+                b.setAddress(rs.getNString("address"));
+                b.setContact(rs.getString("contact"));
+                b.setOrigin(rs.getNString("origin"));
+                
+                Owner o = new Owner();
+                o.setOname(rs.getString("oname"));
+                o.setPassword(rs.getString("password"));
+                
+                b.setOwner(o);
+                
+                bills.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bills;
     }
 }

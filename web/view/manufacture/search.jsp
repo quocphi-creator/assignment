@@ -42,7 +42,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Mã SX</th>
-                        <th scope="col">Tên Sản Phẩm</th>
+                        <th scope="col">ID-Tên Sản Phẩm</th>
                         <th scope="col">Thể loại</th>
                         <th scope="col">Số lượng nhập</th>
                         <th scope="col">Đơn giá</th>
@@ -57,7 +57,7 @@
                     <%for (ManufactureDetail m : manuList) {%>
                     <tr>
                         <td scope="col"><%=m.getOrderID()%></td>
-                        <td scope="col"><%=m.getBill().getCname()%></td>
+                        <td scope="col">(ID = <%=m.getBill().getBid()%>) <%=m.getBill().getCname()%></td>
                         <td scope="col"><%=m.getBill().getCategory()%></td>
                         <td scope="col"><%=m.getBill().getQuantity()%></td>
                         <td scope="col"><%=m.getBill().getUnitPrice()%></td>
