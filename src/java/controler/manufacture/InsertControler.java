@@ -5,12 +5,18 @@
  */
 package controler.manufacture;
 
+import dao.ManufactureDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Bill;
+import model.ManufactureDetail;
+import model.Worker;
 
 /**
  *
@@ -29,7 +35,7 @@ public class InsertControler extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException {     
         
     }
 
@@ -44,7 +50,43 @@ public class InsertControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("search");
+        
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        HttpSession session = request.getSession();
+        
+        int bid = (int) session.getAttribute("bid");
+        String raw_mid = request.getParameter("mid");
+        String raw_producted = request.getParameter("producted");
+        String raw_removed = request.getParameter("removed");
+        String raw_outdate = request.getParameter("outputdate");
+        String raw_wid = request.getParameter("wid");
+        
+        String mid = raw_mid;
+        int producted = Integer.parseInt(raw_producted);
+        int removed = Integer.parseInt(raw_removed);
+        Date outdate = Date.valueOf(raw_outdate);
+        int wid = Integer.parseInt(raw_wid);
+        
+        Bill b = new Bill();
+        b.setBid(bid);
+        
+        Worker w = new Worker();
+        w.setWid(wid);
+        
+        ManufactureDetail detail = new ManufactureDetail();
+        detail.setOrderID(mid);
+        detail.setProducted(producted);
+        detail.setRemoved(removed);
+        detail.setOutputDate(outdate);
+        detail.setBill(b);
+        detail.setWorker(w);
+        
+        ManufactureDBContext manuDB = new ManufactureDBContext();
+        manuDB.insertManuDetails(detail);
+        
+        
+        response.sendRedirect("list");
     }
 
     /**

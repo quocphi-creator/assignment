@@ -18,6 +18,9 @@
 
         <%
             ArrayList<Bill> bills = (ArrayList<Bill>) request.getAttribute("bills");
+            Integer productedDetail = (Integer)session.getAttribute("productedDetail");
+            Integer removedDetail = (Integer)session.getAttribute("removedDetail");
+            Integer inventory = (Integer)session.getAttribute("inventory");
         %>
         <style>
 
@@ -137,9 +140,9 @@
                     <td scope="col"><%=b.getCategory()%></td>
                     <td scope="col"><%=b.getUnitPrice()%></td>
                     <td scope="col"><%=b.getQuantity()%></td>
-                    <td scope="col"></td>
-                    <td scope="col"></td>
-                    <td scope="col"></td>
+                    <td scope="col"><%=productedDetail%></td>
+                    <td scope="col"><%=removedDetail%></td>
+                    <td scope="col"><%=inventory%></td>
                     <td scope="col">
                         <form action="export" method="POST">
                             <input type="hidden" name="bid" value="<%=b.getBid()%>">

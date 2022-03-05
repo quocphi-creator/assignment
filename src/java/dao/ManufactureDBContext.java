@@ -208,8 +208,8 @@ public class ManufactureDBContext extends DBContext {
             stm.setInt(4, detail.getProducted());
             stm.setInt(5, detail.getRemoved());
             stm.setDate(6, detail.getOutputDate());
-            
-            stm.executeQuery();
+
+            stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -230,6 +230,49 @@ public class ManufactureDBContext extends DBContext {
             }
         }
 
+    }
+
+    public int getProductedDetailByBid(int bid) {
+        int productedTotal = 0;
+        try {
+            String sql = "SELECT [bid]\n"
+                    + "      ,SUM(producted) AS [prductedTotal]\n"
+                    + "	  \n"
+                    + "  FROM [dbo].[Manufactoring] GROUP BY bid\n"
+                    + "  having bid = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, bid);
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                productedTotal = rs.getInt("prductedTotal");
+            }
+            return productedTotal;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return productedTotal;
+    }
+
+    public int getRemovedDetailByBid(int bid) {
+        int RemovedDetail = 0;
+        try {
+            String sql = "SELECT [bid]\n"
+                    + "      ,SUM(removed) as [removedTotal]\n"
+                    + "  FROM [dbo].[Manufactoring] GROUP BY [bid]\n"
+                    + "  having [bid]=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, bid);
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                RemovedDetail = rs.getInt("removedTotal");
+            }
+            return RemovedDetail;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return RemovedDetail;
     }
 
 }

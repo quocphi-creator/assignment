@@ -6,6 +6,7 @@
 package controler.manufacture;
 
 import dao.BillDBContext;
+import dao.ManufactureDBContext;
 import dao.WorkerDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,15 +38,26 @@ public class ExportControler extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String raw_bid = request.getParameter("bid");
-        int bid = Integer.parseInt(raw_bid);        
+        int bid = Integer.parseInt(raw_bid);
         HttpSession session = request.getSession();
         session.setAttribute("bid", bid);
+
         WorkerDBContext workerDB = new WorkerDBContext();
         ArrayList<Worker> workers = workerDB.getWorkers();
-        
+
+        ManufactureDBContext manuDB = new ManufactureDBContext();
+        int productedTotal = manuDB.getProductedDetailByBid(bid);
+        int removedTotal = manuDB.getRemovedDetailByBid(bid);
+
         BillDBContext billDB = new BillDBContext();
-        
+        Bill b = billDB.getBill(bid);
+
+        int inventory = b.getQuantity() - (productedTotal + removedTotal);
+
         request.setAttribute("workers", workers);
+        request.setAttribute("productedDetail", productedTotal);
+        request.setAttribute("removedDetail", removedTotal);
+        request.setAttribute("inventory", inventory);
         request.getRequestDispatcher("../view/manufacture/insert.jsp").forward(request, response);
     }
 
@@ -62,14 +74,14 @@ public class ExportControler extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         HttpSession session = request.getSession();
-        
+
         WorkerDBContext workerDB = new WorkerDBContext();
         ArrayList<Worker> workers = workerDB.getWorkers();
-        
+
         BillDBContext billDB = new BillDBContext();
-        
+
         request.setAttribute("workers", workers);
         request.getRequestDispatcher("../view/manufacture/insert.jsp").forward(request, response);
     }
