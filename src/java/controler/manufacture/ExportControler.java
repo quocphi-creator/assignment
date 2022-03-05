@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler.manufactor;
+package controler.manufacture;
 
 import dao.BillDBContext;
+import dao.WorkerDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -13,13 +14,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Bill;
+import model.Worker;
 
 /**
  *
  * @author ADMIN
  */
-public class ListBillControler extends HttpServlet {
+public class ExportControler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,17 +36,17 @@ public class ListBillControler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        
-        String raw_bname = request.getParameter("bname");
-        String bname = raw_bname;
+        String raw_bid = request.getParameter("bid");
+        int bid = Integer.parseInt(raw_bid);        
+        HttpSession session = request.getSession();
+        session.setAttribute("bid", bid);
+        WorkerDBContext workerDB = new WorkerDBContext();
+        ArrayList<Worker> workers = workerDB.getWorkers();
         
         BillDBContext billDB = new BillDBContext();
-        ArrayList<Bill> bills = billDB.getBillsByName(bname);
         
-        request.setAttribute("bills", bills);
-        request.getRequestDispatcher("../view/manufacture/listbill.jsp").forward(request, response);
-        
+        request.setAttribute("workers", workers);
+        request.getRequestDispatcher("../view/manufacture/insert.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,7 +61,17 @@ public class ListBillControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        
+        WorkerDBContext workerDB = new WorkerDBContext();
+        ArrayList<Worker> workers = workerDB.getWorkers();
+        
+        BillDBContext billDB = new BillDBContext();
+        
+        request.setAttribute("workers", workers);
+        request.getRequestDispatcher("../view/manufacture/insert.jsp").forward(request, response);
     }
 
     /**

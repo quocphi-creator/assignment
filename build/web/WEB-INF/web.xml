@@ -54,15 +54,19 @@
     </servlet>
     <servlet>
         <servlet-name>SearchManufactorControler</servlet-name>
-        <servlet-class>controler.manufactor.SearchControler</servlet-class>
+        <servlet-class>controler.manufacture.SearchControler</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListBillControler</servlet-name>
-        <servlet-class>controler.manufactor.ListBillControler</servlet-class>
+        <servlet-class>controler.manufacture.ListBillControler</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ExportBillControler</servlet-name>
-        <servlet-class>controler.manufactor.ExportControler</servlet-class>
+        <servlet-name>ExportDetailControler</servlet-name>
+        <servlet-class>controler.manufacture.ExportControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InsertDetailControler</servlet-name>
+        <servlet-class>controler.manufacture.InsertControler</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
@@ -118,15 +122,19 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchManufactorControler</servlet-name>
-        <url-pattern>/manufactor/search</url-pattern>
+        <url-pattern>/manufacture/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListBillControler</servlet-name>
         <url-pattern>/manufacture/list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ExportBillControler</servlet-name>
+        <servlet-name>ExportDetailControler</servlet-name>
         <url-pattern>/manufacture/export</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertDetailControler</servlet-name>
+        <url-pattern>/manufacture/insert</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -201,3 +201,19 @@ SELECT b.[bid]
 	  ,o.[password]
   FROM [dbo].[Bill] B INNER JOIN [owner] o ON b.oname = o.oname 
   WHERE cname LIKE '%Linh%'
+
+-- insert manufacture detail --
+INSERT INTO [dbo].[Manufactoring]
+           ([orderID]
+           ,[bid]
+           ,[wid]
+           ,[producted]
+           ,[removed]
+           ,[outputDate])
+     VALUES
+           (?
+           ,?
+           ,?
+           ,?
+           ,?
+           ,?)

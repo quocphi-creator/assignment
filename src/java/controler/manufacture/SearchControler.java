@@ -3,22 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler.manufactor;
+package controler.manufacture;
 
+import dao.ManufactureDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.YearMonth;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.Manufacture;
+import model.ManufactureDetail;
 
 /**
  *
  * @author ADMIN
  */
-public class ExportControler extends HttpServlet {
+public class SearchControler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,17 +35,21 @@ public class ExportControler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         
-        HttpSession session = request.getSession();
-        
-        Manufacture manu = (Manufacture) session.getAttribute("exportlist");
-        
-        if (manu == null) {
-            manu = new Manufacture();
-        } else {
-            
+        String raw_ym = request.getParameter("month");
+        if (raw_ym==null || raw_ym.length()==0) {
+            raw_ym = "0001-01";
         }
-        session.setAttribute(name, manu);
+        YearMonth ym = YearMonth.parse(raw_ym);
+        int year = ym.getYear();
+        int month = ym.getMonth().getValue();
+        
+        ManufactureDBContext manuDB = new ManufactureDBContext();
+        ArrayList<ManufactureDetail> manuList = manuDB.getManuList(month, year);
+        request.setAttribute("manuList", manuList);
+        request.setAttribute("ym", ym);
+        request.getRequestDispatcher("../view/manufacture/search.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

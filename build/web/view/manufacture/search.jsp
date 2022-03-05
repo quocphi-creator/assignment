@@ -42,7 +42,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Mã SX</th>
-                        <th scope="col">ID-Tên Sản Phẩm</th>
+                        <th scope="col">ID-Tên linh kiện</th>
                         <th scope="col">Thể loại</th>
                         <th scope="col">Số lượng nhập</th>
                         <th scope="col">Đơn giá</th>
@@ -73,7 +73,7 @@
         <%} else {%>
         <h2>No record to display</h2>
         <%}%>
-        <a href="insert">Insert
+        
         </div>
 </body>
 </html>

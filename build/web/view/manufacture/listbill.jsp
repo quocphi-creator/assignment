@@ -100,7 +100,7 @@
     </head>
     <body>
         <div class="topnav">
-            <a class="active" href="#">Home</a>
+            <a class="active" href="#">Tran chủ</a>
             <a href="list">Quản lý kho linh kiện</a>
             
             <div class="search-container">
