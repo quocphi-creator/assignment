@@ -217,3 +217,22 @@ INSERT INTO [dbo].[Manufactoring]
            ,?
            ,?
            ,?)
+
+-- get producted total by bid --
+SELECT [bid]
+      ,SUM(producted) AS [prductedTotal]
+	  
+  FROM [dbo].[Manufactoring] GROUP BY bid
+  having bid = 1
+
+-- report inventory --
+  SELECT b.[bid]
+	  ,MAX(b.[cname]) AS ComponentName
+	  ,MAX(b.[componentCategory]) as Category
+	  ,MAX(b.[quantity]) as Quantity
+	  ,MAX(b.unitprice) as Price
+	  ,SUM(m.[producted]) AS Producted
+	  ,SUM(m.[removed]) AS Removed
+  FROM [dbo].[Bill] b left join [Manufactoring] m on m.bid=b.bid
+  WHERE B.cname LIKE N'%Linh%'
+  GROUP BY B.bid

@@ -68,6 +68,14 @@
         <servlet-name>InsertDetailControler</servlet-name>
         <servlet-class>controler.manufacture.InsertControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReportInventoryControler</servlet-name>
+        <servlet-class>controler.report.ReportInventoryControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportWorkerSalary</servlet-name>
+        <servlet-class>controler.report.ReportWorkerSalary</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/owner/login</url-pattern>
@@ -135,6 +143,14 @@
     <servlet-mapping>
         <servlet-name>InsertDetailControler</servlet-name>
         <url-pattern>/manufacture/insert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportInventoryControler</servlet-name>
+        <url-pattern>/report/inventory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportWorkerSalary</servlet-name>
+        <url-pattern>/report/workersalary</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

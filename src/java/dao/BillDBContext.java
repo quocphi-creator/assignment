@@ -323,4 +323,8 @@ public class BillDBContext extends DBContext {
         }
         return bills;
     }
+
+    public ArrayList<Bill> getBills() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

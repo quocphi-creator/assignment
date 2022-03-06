@@ -86,7 +86,7 @@ public class InsertControler extends HttpServlet {
         manuDB.insertManuDetails(detail);
         
         
-        response.sendRedirect("list");
+        response.sendRedirect("search");
     }
 
     /**

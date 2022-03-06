@@ -3,27 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler.manufacture;
+package controler.report;
 
-import dao.BillDBContext;
-import dao.ManufactureDBContext;
-import dao.WorkerDBContext;
+import dao.ReportDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Bill;
-import model.Worker;
+import model.ReportInventory;
 
 /**
  *
  * @author ADMIN
  */
-public class ExportControler extends HttpServlet {
+public class ReportInventoryControler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,19 +34,18 @@ public class ExportControler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String raw_bid = request.getParameter("bid");
-        int bid = Integer.parseInt(raw_bid);
-        HttpSession session = request.getSession();
-        session.setAttribute("bid", bid);
-
-        WorkerDBContext workerDB = new WorkerDBContext();
-        ArrayList<Worker> workers = workerDB.getWorkers();
-
-        ManufactureDBContext manuDB = new ManufactureDBContext();
+        request.setCharacterEncoding("utf-8");
         
-        request.setAttribute("workers", workers);
+        String raw_cname = request.getParameter("cname");
+        String cname = raw_cname;
         
-        request.getRequestDispatcher("../view/manufacture/insert.jsp").forward(request, response);
+        ReportDBContext reportDB = new ReportDBContext();
+        ArrayList<ReportInventory> inventoryList = reportDB.getInventoryList();
+        ArrayList<ReportInventory> inventoryListByName = reportDB.getInventoryListByCname(cname);
+        
+        request.setAttribute("inventoryList", inventoryListByName);
+        request.getRequestDispatcher("../view/report/inventory.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -64,17 +60,7 @@ public class ExportControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        HttpSession session = request.getSession();
-
-        WorkerDBContext workerDB = new WorkerDBContext();
-        ArrayList<Worker> workers = workerDB.getWorkers();
-
-        BillDBContext billDB = new BillDBContext();
-
-        request.setAttribute("workers", workers);
-        request.getRequestDispatcher("../view/manufacture/insert.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

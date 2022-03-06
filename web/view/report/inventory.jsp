@@ -1,24 +1,23 @@
 <%-- 
-    Document   : listbill
-    Created on : Mar 4, 2022, 2:48:57 AM
+    Document   : inventory
+    Created on : Mar 6, 2022, 2:15:18 PM
     Author     : ADMIN
 --%>
 
-<%@page import="model.Bill"%>
-<%@page import="model.ManufactureDetail"%>
+<%@page import="model.ReportInventory"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bill list</title>
+        <title>Báo cáo | Kho linh kiện</title>
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
         <%
-            ArrayList<Bill> bills = (ArrayList<Bill>) request.getAttribute("bills");
-            
+            ArrayList<ReportInventory> inventoryList = (ArrayList<ReportInventory>) request.getAttribute("inventoryList");
         %>
         <style>
 
@@ -105,52 +104,50 @@
             <a href="list">Quản lý kho linh kiện</a>
 
             <div class="search-container">
-                <form action="list" method="POST">
-                    <input type="text" name="bname" placeholder="Search tên linh kiện.." name="search">
+                <form action="inventory" method="POST">
+                    <input type="text" name="cname" placeholder="Search tên linh kiện.." name="search">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
         </div>
     </div>
 
-    <%if (bills.size() > 0) {%>
+    <%if (inventoryList.size() > 0) {%>
     <div>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">Mã Đơn</th>
+                    <th scope="col">Mã LK</th>
                     <th scope="col">Tên linh kiện</th>
                     <th scope="col">Thể loại</th>
+                    <th scope="col">Số lượng đầu vào</th>
                     <th scope="col">Đơn giá</th>
-                    <th scope="col">Đầu vào</th>
                     <th scope="col">Đã SX</th>
-                    
+                    <th scope="col">Bị hỏng</th>
+                    <th scope="col">Tồn kho</th>
                 </tr>
             </thead>
             <tbody>
-                <%for (Bill b : bills) {%>
+                <%for (ReportInventory inventory : inventoryList) {%>
                 <tr>
-                    <td scope="col"><%=b.getBid()%></td>
-                    <td scope="col"><%=b.getCname()%></td>
-                    <td scope="col"><%=b.getCategory()%></td>
-                    <td scope="col"><%=b.getUnitPrice()%></td>
-                    <td scope="col"><%=b.getQuantity()%></td>
-                    
-                    <td scope="col">
-                        <form action="export" method="POST">
-                            <input type="hidden" name="bid" value="<%=b.getBid()%>">
-                            <input type="submit" value="Xuất kho">
-                        </form>
-                    </td>
+                    <th scope="col"><%=inventory.getBill().getBid()%></th>
+                    <th scope="col"><%=inventory.getBill().getCname()%></th>
+                    <th scope="col"><%=inventory.getBill().getCategory()%></th>
+                    <th scope="col"><%=inventory.getBill().getQuantity()%></th>
+                    <th scope="col"><%=inventory.getBill().getUnitPrice()%></th>
+                    <th scope="col"><%=inventory.getProducted()%></th>
+                    <th scope="col"><%=inventory.getRemoved()%></th>
+                    <th scope="col"><%=(inventory.getBill().getQuantity()- inventory.getProducted() - inventory.getRemoved())%></th>
                 </tr>
                 <%}%>
-
             </tbody>
         </table>
     </div>
     <%} else {%>
-    <h2>No record to display</h2>
+    Không có dữ liệu để hiển thị.
     <%}%>
 
+
+</div>
 </body>
 </html>

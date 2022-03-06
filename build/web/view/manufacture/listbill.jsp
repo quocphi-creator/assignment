@@ -18,9 +18,7 @@
 
         <%
             ArrayList<Bill> bills = (ArrayList<Bill>) request.getAttribute("bills");
-            Integer productedDetail = (Integer)session.getAttribute("productedDetail");
-            Integer removedDetail = (Integer)session.getAttribute("removedDetail");
-            Integer inventory = (Integer)session.getAttribute("inventory");
+            
         %>
         <style>
 
@@ -103,9 +101,9 @@
     </head>
     <body>
         <div class="topnav">
-            <a class="active" href="#">Tran chủ</a>
+            <a class="active" href="#">Trang chủ</a>
             <a href="list">Quản lý kho linh kiện</a>
-            
+
             <div class="search-container">
                 <form action="list" method="POST">
                     <input type="text" name="bname" placeholder="Search tên linh kiện.." name="search">
@@ -126,9 +124,6 @@
                     <th scope="col">Đơn giá</th>
                     <th scope="col">Đầu vào</th>
                     <th scope="col">Đã SX</th>
-                    <th scope="col">Bị hỏng</th>
-                    <th scope="col">Còn lại</th>
-                    <th scope="col">Thao tác</th>
                     
                 </tr>
             </thead>
@@ -140,9 +135,7 @@
                     <td scope="col"><%=b.getCategory()%></td>
                     <td scope="col"><%=b.getUnitPrice()%></td>
                     <td scope="col"><%=b.getQuantity()%></td>
-                    <td scope="col"><%=productedDetail%></td>
-                    <td scope="col"><%=removedDetail%></td>
-                    <td scope="col"><%=inventory%></td>
+                    
                     <td scope="col">
                         <form action="export" method="POST">
                             <input type="hidden" name="bid" value="<%=b.getBid()%>">
@@ -158,6 +151,6 @@
     <%} else {%>
     <h2>No record to display</h2>
     <%}%>
-    
+
 </body>
 </html>

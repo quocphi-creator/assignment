@@ -33,7 +33,7 @@
     </head>
     <body>
         <div class="topnav">
-            <p2 class="active" href="#home>Thông tin công nhân</p2>
+            <p2 class="active" href="#home">Thông tin công nhân</p2>
             
             <div class="search-container">
                 <form action="search" method="POST">
