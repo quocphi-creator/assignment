@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Bill;
+import model.Product;
 import model.ReportInventory;
+import model.ReportWorkerSalary;
+import model.Worker;
 
 /**
  *
@@ -56,7 +59,7 @@ public class ReportDBContext extends DBContext {
 
                 inventoryList.add(inventory);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ReportDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,9 +68,9 @@ public class ReportDBContext extends DBContext {
     }
 
     public ArrayList<ReportInventory> getInventoryListByCname(String cname) {
-        
+
         ArrayList<ReportInventory> inventoryList = new ArrayList<>();
-        
+
         try {
             String sql = "   SELECT b.[bid]\n"
                     + "	  ,MAX(b.[cname]) AS ComponentName\n"
@@ -76,13 +79,13 @@ public class ReportDBContext extends DBContext {
                     + "	  ,MAX(b.unitprice) as Price\n"
                     + "	  ,SUM(m.[producted]) AS Producted\n"
                     + "	  ,SUM(m.[removed]) AS Removed\n"
-                    + "  FROM [dbo].[Bill] b left join [Manufactoring] m on m.bid=b.bid";            
-            
+                    + "  FROM [dbo].[Bill] b left join [Manufactoring] m on m.bid=b.bid";
+
             if (cname != null) {
-                sql += "  WHERE B.cname LIKE N'%"+cname+"%'";
+                sql += "  WHERE B.cname LIKE N'%" + cname + "%'";
             }
             sql += "  GROUP BY B.bid";
-            
+
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -101,11 +104,57 @@ public class ReportDBContext extends DBContext {
 
                 inventoryList.add(inventory);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ReportDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return inventoryList;
+    }
+
+    public ArrayList<ReportWorkerSalary> getSalaries(int month, int year) {
+        ArrayList<ReportWorkerSalary> salaries = new ArrayList<>();
+        String whereStm = "";
+        try {
+            if (year > 1) {
+                whereStm = "  where YEAR(P.manufactureDate) = ? AND MONTH(p.manufactureDate) = ? ";
+            }
+            String sql = "SELECT w.[wid]\n"
+                    + "	,w.[wname]\n"
+                    + "	,w.[phoneNumber]\n"
+                    + "	,w.[monthSalary]\n"
+                    + "	,w.[productSalary]\n"
+                    + "	,COUNT(P.pid) AS [CountProduct]	  \n"
+                    + "FROM [dbo].[Worker] w inner join [Product] p on w.wid = p.wid "
+                    + whereStm
+                    + "   GROUP BY W.wid, W.wname, W.phoneNumber, W.monthSalary, W.productSalary";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            if (year > 1) {
+                stm.setInt(1, year);
+                stm.setInt(2, month);
+            }
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+
+                Worker w = new Worker();
+                w.setWid(rs.getInt("wid"));
+                w.setWname(rs.getNString("wname"));
+                w.setPhoneNumber(rs.getString("phoneNumber"));
+                w.setMonthSalary(rs.getInt("monthSalary"));
+                w.setProductSalary(rs.getInt("productSalary"));
+
+                ReportWorkerSalary salary = new ReportWorkerSalary();
+                salary.setCount(rs.getInt("CountProduct"));
+                salary.setWorker(w);
+                
+                salaries.add(salary);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReportDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return salaries;
     }
 
 }

@@ -5,18 +5,22 @@
  */
 package controler.report;
 
+import dao.ReportDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.YearMonth;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.ReportWorkerSalary;
 
 /**
  *
  * @author ADMIN
  */
-public class ReportWorkerSalary extends HttpServlet {
+public class ReportSalaryControler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,18 +34,21 @@ public class ReportWorkerSalary extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ReportWorkerSalary</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ReportWorkerSalary at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        String raw_ym = request.getParameter("month");
+        if (raw_ym==null || raw_ym.length()==0) {
+            raw_ym = "0001-01";
         }
+        YearMonth ym = YearMonth.parse(raw_ym);
+        int year = ym.getYear();
+        int month = ym.getMonth().getValue();
+        
+        ReportDBContext reportDB = new ReportDBContext();
+        ArrayList<ReportWorkerSalary> salary = reportDB.getSalaries(month, year);
+        
+        request.setAttribute("salary", salary);
+        request.setAttribute("ym", ym);
+        request.getRequestDispatcher("../view/report/salary.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

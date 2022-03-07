@@ -236,3 +236,15 @@ SELECT [bid]
   FROM [dbo].[Bill] b left join [Manufactoring] m on m.bid=b.bid
   WHERE B.cname LIKE N'%Linh%'
   GROUP BY B.bid
+  
+
+-- Report worker's salary --
+SELECT w.[wid]
+	,w.[wname]
+	,w.[phoneNumber]
+	,w.[monthSalary]
+	,w.[productSalary]
+	,COUNT(P.pid) AS [CountProduct]	  
+FROM [dbo].[Worker] w inner join [Product] p on w.wid = p.wid
+where YEAR(P.manufactureDate) = 2012 AND MONTH(p.manufactureDate) = 10
+GROUP BY W.wid, W.wname, W.phoneNumber, W.monthSalary, W.productSalary

@@ -76,6 +76,10 @@
         <servlet-name>ReportWorkerSalary</servlet-name>
         <servlet-class>controler.report.ReportWorkerSalary</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReportSalaryControler</servlet-name>
+        <servlet-class>controler.report.ReportSalaryControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/owner/login</url-pattern>
@@ -151,6 +155,10 @@
     <servlet-mapping>
         <servlet-name>ReportWorkerSalary</servlet-name>
         <url-pattern>/report/workersalary</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportSalaryControler</servlet-name>
+        <url-pattern>/report/salary</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
