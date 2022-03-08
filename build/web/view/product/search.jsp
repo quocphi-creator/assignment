@@ -86,7 +86,7 @@
         <%} else {%>
         <h2>No record to display</h2>
         <%}%>
-        <a href="insert">Insert
+        <a href="insert">Insert</a>
         </div>
 </body>
 </html>

@@ -17,10 +17,6 @@
         <servlet-class>controler.bill.EditControler</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeleteBillControler</servlet-name>
-        <servlet-class>controler.bill.DeleteControler</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SearchWorkerControler</servlet-name>
         <servlet-class>controler.worker.SearchControler</servlet-class>
     </servlet>
@@ -80,6 +76,14 @@
         <servlet-name>ReportSalaryControler</servlet-name>
         <servlet-class>controler.report.ReportSalaryControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteBillControler</servlet-name>
+        <servlet-class>controler.bill.DeleteControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditManuControler</servlet-name>
+        <servlet-class>controler.manufacture.EditControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/owner/login</url-pattern>
@@ -95,10 +99,6 @@
     <servlet-mapping>
         <servlet-name>EditBillControler</servlet-name>
         <url-pattern>/bill/edit</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DeleteBillControler</servlet-name>
-        <url-pattern>/bill/delete</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchWorkerControler</servlet-name>
@@ -159,6 +159,14 @@
     <servlet-mapping>
         <servlet-name>ReportSalaryControler</servlet-name>
         <url-pattern>/report/salary</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBillControler</servlet-name>
+        <url-pattern>/bill/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditManuControler</servlet-name>
+        <url-pattern>/manufacture/edit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

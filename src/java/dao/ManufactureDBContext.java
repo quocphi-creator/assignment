@@ -47,7 +47,7 @@ public class ManufactureDBContext extends DBContext {
                     + "	  ,W.[phoneNumber]\n"
                     + "	  ,W.[monthSalary]\n"
                     + "	  ,W.[productSalary]\n"
-                    + "  FROM [dbo].[Manufactoring] M INNER JOIN [Bill] B ON B.bid = M.bid LEFT JOIN [Worker] W ON W.wid = M.wid ";
+                    + "  FROM [dbo].[Manufactoring] M inner JOIN [Bill] B ON B.bid = M.bid LEFT JOIN [Worker] W ON W.wid = M.wid ";
             if (year > 1) {
                 sql += "   WHERE MONTH(outputDate) = ? AND YEAR(outputDate)=?";
             }
@@ -273,6 +273,123 @@ public class ManufactureDBContext extends DBContext {
             Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return RemovedDetail;
+    }
+
+    public ManufactureDetail getDetail(String mid) {
+        try {
+            String sql = "SELECT M.[orderID]\n"
+                    + "      ,M.[bid]\n"
+                    + "      ,M.[wid]\n"
+                    + "      ,M.[producted]\n"
+                    + "      ,M.[removed]\n"
+                    + "      ,M.[outputDate]\n"
+                    + "	  ,B.[cname]\n"
+                    + "	  ,B.[componentCategory]\n"
+                    + "	  ,B.[contact]\n"
+                    + "	  ,B.[inputDate]\n"
+                    + "	  ,B.[oname]\n"
+                    + "	  ,B.[origin]\n"
+                    + "	  ,B.[quantity]\n"
+                    + "	  ,B.[totalMoney]\n"
+                    + "	  ,b.[unitprice]\n"
+                    + "	  ,B.[address]\n"
+                    + "	  ,B.[contact]\n"
+                    + "	  ,B.[supplierName]\n"
+                    + "	  ,W.[wname]\n"
+                    + "	  ,W.[phoneNumber]\n"
+                    + "	  ,W.[monthSalary]\n"
+                    + "	  ,W.[productSalary]\n"
+                    + "  FROM [dbo].[Manufactoring] m INNER JOIN [Bill] B ON M.bid=B.bid LEFT JOIN [Worker] W ON M.wid = W.wid\n"
+                    + "  WHERE M.[orderID] = ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, mid);
+            ResultSet rs = stm.executeQuery();
+
+            if (rs.next()) {
+                Bill b = new Bill();
+                b.setBid(rs.getInt("bid"));
+                b.setCname(rs.getNString("cname"));
+                b.setCategory(rs.getNString("componentCategory"));
+                b.setUnitPrice(rs.getInt("unitprice"));
+                b.setQuantity(rs.getInt("quantity"));
+                b.setTotal(rs.getInt("totalMoney"));
+                b.setInputDate(rs.getDate("inputDate"));
+                b.setSupplierName(rs.getString("supplierName"));
+                b.setAddress(rs.getString("address"));
+                b.setContact(rs.getString("contact"));
+                b.setOrigin(rs.getString("origin"));
+
+                Owner o = new Owner();
+                o.setOname(rs.getString("oname"));
+                b.setOwner(o);
+
+                Worker w = new Worker();
+                w.setWid(rs.getInt("wid"));
+                w.setWname(rs.getNString("wname"));
+                w.setPhoneNumber(rs.getString("phoneNumber"));
+                w.setMonthSalary(rs.getInt("monthSalary"));
+                w.setProductSalary(rs.getInt("productSalary"));
+
+                ManufactureDetail detail = new ManufactureDetail();
+                detail.setOrderID(rs.getString("orderID"));
+                detail.setOutputDate(rs.getDate("outputDate"));
+                detail.setProducted(rs.getInt("producted"));
+                detail.setRemoved(rs.getInt("removed"));
+                detail.setBill(b);
+                detail.setWorker(w);
+
+                return detail;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+
+    public void updateDetail(ManufactureDetail m) {
+        String sql = "UPDATE [dbo].[Manufactoring]\n"
+                + "   SET [bid] = ?\n"
+                + "      ,[wid] = ?\n"
+                + "      ,[producted] = ?\n"
+                + "      ,[removed] = ?\n"
+                + "      ,[outputDate] = ?\n"
+                + " WHERE orderID = ?";
+        
+        PreparedStatement stm = null;
+        
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(6, m.getOrderID());
+            stm.setInt(1, m.getBill().getBid());
+            stm.setInt(2, m.getWorker().getWid());
+            stm.setInt(3, m.getProducted());
+            stm.setInt(4, m.getRemoved());
+            stm.setDate(5, m.getOutputDate());
+            
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
     }
 
 }

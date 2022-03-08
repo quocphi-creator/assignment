@@ -246,5 +246,45 @@ SELECT w.[wid]
 	,w.[productSalary]
 	,COUNT(P.pid) AS [CountProduct]	  
 FROM [dbo].[Worker] w inner join [Product] p on w.wid = p.wid
-where YEAR(P.manufactureDate) = 2012 AND MONTH(p.manufactureDate) = 10
+Where YEAR(P.manufactureDate) = 2012 AND MONTH(p.manufactureDate) = 10
 GROUP BY W.wid, W.wname, W.phoneNumber, W.monthSalary, W.productSalary
+
+
+-- Delete Bill --
+DELETE FROM [dbo].[Bill]
+      WHERE bid = ?
+
+-- get a manu detail --
+SELECT M.[orderID]
+      ,M.[bid]
+      ,M.[wid]
+      ,M.[producted]
+      ,M.[removed]
+      ,M.[outputDate]
+	  ,B.[cname]
+	  ,B.[componentCategory]
+	  ,B.[contact]
+	  ,B.[inputDate]
+	  ,B.[oname]
+	  ,B.[origin]
+	  ,B.[quantity]
+	  ,B.[totalMoney]
+	  ,b.[unitprice]
+	  ,B.[address]
+	  ,B.[contact]
+	  ,B.[supplierName]
+	  ,W.[wname]
+	  ,W.[phoneNumber]
+	  ,W.[monthSalary]
+	  ,W.[productSalary]
+  FROM [dbo].[Manufactoring] m INNER JOIN [Bill] B ON M.bid=B.bid LEFT JOIN [Worker] W ON M.wid = W.wid
+  WHERE M.[orderID] = ?
+
+-- Update a manu detail --
+UPDATE [dbo].[Manufactoring]
+   SET [bid] = ?
+      ,[wid] = ?
+      ,[producted] = ?
+      ,[removed] = ?
+      ,[outputDate] = ?
+ WHERE orderID = ?

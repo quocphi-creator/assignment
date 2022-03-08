@@ -238,9 +238,8 @@ public class BillDBContext extends DBContext {
 
     public void deleteBill(int bid) {
 
-        String sql = "UPDATE [Bill]\n"
-                + "   SET [quantity] = ?\n"
-                + " WHERE [bid] = ?";
+        String sql = "DELETE FROM [dbo].[Bill]\n"
+                + "      WHERE bid = ?";
 
         PreparedStatement stm = null;
 
@@ -290,7 +289,7 @@ public class BillDBContext extends DBContext {
                     + "  FROM [dbo].[Bill] B INNER JOIN [owner] o ON b.oname = o.oname ";
 
             if (bname != null) {
-                sql += "  WHERE cname LIKE N'%"+bname+"%'";
+                sql += "  WHERE cname LIKE N'%" + bname + "%'";
             }
             PreparedStatement stm = connection.prepareStatement(sql);
 
@@ -309,13 +308,13 @@ public class BillDBContext extends DBContext {
                 b.setAddress(rs.getNString("address"));
                 b.setContact(rs.getString("contact"));
                 b.setOrigin(rs.getNString("origin"));
-                
+
                 Owner o = new Owner();
                 o.setOname(rs.getString("oname"));
                 o.setPassword(rs.getString("password"));
-                
+
                 b.setOwner(o);
-                
+
                 bills.add(b);
             }
         } catch (SQLException ex) {
@@ -325,6 +324,41 @@ public class BillDBContext extends DBContext {
     }
 
     public ArrayList<Bill> getBills() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Bill> bills = new ArrayList<>();
+        try {
+
+            String sql = "SELECT B.bid, B.cname, B.componentCategory, B.unitprice, B.quantity, B.totalMoney, B.inputDate, B.supplierName, B.address, B.contact, B.origin, B.oname, O.[password] \n"
+                    + "FROM owner O INNER JOIN Bill B ON O.oname = B.oname ";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Bill b = new Bill();
+                b.setBid(rs.getInt("bid"));
+                b.setCname(rs.getString("cname"));
+                b.setCategory(rs.getString("componentCategory"));
+                b.setUnitPrice(rs.getInt("unitprice"));
+                b.setQuantity(rs.getInt("quantity"));
+                b.setTotal(rs.getInt("totalMoney"));
+                b.setInputDate(rs.getDate("inputDate"));
+                b.setSupplierName(rs.getString("supplierName"));
+                b.setAddress(rs.getString("address"));
+                b.setContact(rs.getString("contact"));
+                b.setOrigin(rs.getString("origin"));
+
+                Owner o = new Owner();
+                o.setOname(rs.getString("oname"));
+                o.setPassword(rs.getString("password"));
+
+                b.setOwner(o);
+
+                bills.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bills;
     }
 }

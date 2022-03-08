@@ -19,10 +19,18 @@
             ArrayList<Integer> monthList = (ArrayList<Integer>) request.getAttribute("monthList");
             int month = (Integer) request.getAttribute("month");
             int year = (Integer) request.getAttribute("year");
-
+            
         %>
 
-
+        <script>
+            function deleteBill(bid) {
+                var result = confirm("Bạn có chắc muốn xóa thông tin nguồn hàng ? Các thông tin liên quan trong sản xuất sẽ bị xóa.");
+                
+                if (result) {
+                    window.location.href = "delete?bid="+bid;
+                }    
+            }
+        </script>
     </head>
     <body>
         <div class="container-fluid">
@@ -90,7 +98,7 @@
                             <td scope="col"><%=b.getContact()%></td>
                             <td scope="col"><%=b.getOwner().getOname()%></td>
 
-                            <td scope="col"><a href="#">Xóa</a></td>
+                            <td scope="col"><a onclick="deleteBill(<%=b.getBid()%>)" href="#">Xóa</a></td>
                             <td scope="col"><a href="edit?bid=<%=b.getBid()%>">Chỉnh sửa</a></td>
 
                         </tr>
@@ -103,5 +111,7 @@
             <%}%>
             <a href="insert">Insert
         </div>
+
+
     </body>
 </html>

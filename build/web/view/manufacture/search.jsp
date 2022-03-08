@@ -35,9 +35,11 @@
                 </div>
             </form>
         </div>
-
+        
+                
         <%if (manuList.size() > 0) {%>
         <div>
+            
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -50,7 +52,7 @@
                         <th scope="col">Ngày xuất kho</th>
                         <th scope="col">Đã SX</th>
                         <th scope="col">Bị hỏng</th>
-                        
+                        <th scope="col" colspan="2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,6 +67,8 @@
                         <td scope="col"><%=m.getOutputDate()%></td>
                         <td scope="col"><%=m.getProducted()%></td>
                         <td scope="col"><%=m.getRemoved()%></td>
+                        <td scope="col"><a href="edit?mid=<%=m.getOrderID()%>">Edit</td>
+                        <td scope="col"><a href="#">Delete</td>
                     </tr>
                     <%}%>
                 </tbody>
