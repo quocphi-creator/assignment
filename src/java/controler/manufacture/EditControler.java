@@ -81,7 +81,7 @@ public class EditControler extends HttpServlet {
         String raw_outdate = request.getParameter("outputdate");
         String raw_wid = request.getParameter("wid");
         
-        
+        String mid = raw_mid;
         int bid = Integer.parseInt(raw_bid);
         int producted = Integer.parseInt(raw_producted);
         int removed = Integer.parseInt(raw_removed);
@@ -97,7 +97,7 @@ public class EditControler extends HttpServlet {
         ManufactureDetail m = new ManufactureDetail();
         m.setBill(b);
         m.setWorker(w);
-        m.setOrderID(raw_wid);
+        m.setOrderID(mid);
         m.setOutputDate(outdate);
         m.setProducted(producted);
         m.setRemoved(removed);

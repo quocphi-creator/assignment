@@ -320,10 +320,7 @@ public class ManufactureDBContext extends DBContext {
                 b.setContact(rs.getString("contact"));
                 b.setOrigin(rs.getString("origin"));
 
-                Owner o = new Owner();
-                o.setOname(rs.getString("oname"));
-                b.setOwner(o);
-
+                
                 Worker w = new Worker();
                 w.setWid(rs.getInt("wid"));
                 w.setWname(rs.getNString("wname"));

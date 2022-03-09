@@ -12,16 +12,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/asset/js/scripts.js</file>
             <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/product/search.jsp</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/manufacture/edit.jsp</file>
             <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/worker/DeleteControler.java</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/manufacture/ListBillControler.java</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/dao/ManufactureDBContext.java</file>
+            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/asset/css/style.css</file>
             <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/dao/BillDBContext.java</file>
             <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/bill/EditControler.java</file>
+            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/asset/js/datatables-simple-demo.js</file>
+            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/bill/search.jsp</file>
+            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/bill/test.jsp</file>
             <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/bill/edit.jsp</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/src/java/controler/manufacture/EditControler.java</file>
-            <file>file:/E:/FPT_Material/Semester4_SP22/PRJ301/ProductionManager/web/view/manufacture/search.jsp</file>
         </group>
     </open-files>
 </project-private>
