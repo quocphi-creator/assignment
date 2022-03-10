@@ -84,6 +84,10 @@
         <servlet-name>EditManuControler</servlet-name>
         <servlet-class>controler.manufacture.EditControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteManuDetailControler</servlet-name>
+        <servlet-class>controler.manufacture.DeleteControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/owner/login</url-pattern>
@@ -167,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>EditManuControler</servlet-name>
         <url-pattern>/manufacture/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteManuDetailControler</servlet-name>
+        <url-pattern>/manufacture/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

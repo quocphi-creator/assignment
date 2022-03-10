@@ -320,7 +320,6 @@ public class ManufactureDBContext extends DBContext {
                 b.setContact(rs.getString("contact"));
                 b.setOrigin(rs.getString("origin"));
 
-                
                 Worker w = new Worker();
                 w.setWid(rs.getInt("wid"));
                 w.setWname(rs.getNString("wname"));
@@ -354,9 +353,9 @@ public class ManufactureDBContext extends DBContext {
                 + "      ,[removed] = ?\n"
                 + "      ,[outputDate] = ?\n"
                 + " WHERE orderID = ?";
-        
+
         PreparedStatement stm = null;
-        
+
         try {
             stm = connection.prepareStatement(sql);
             stm.setString(6, m.getOrderID());
@@ -365,7 +364,7 @@ public class ManufactureDBContext extends DBContext {
             stm.setInt(3, m.getProducted());
             stm.setInt(4, m.getRemoved());
             stm.setDate(5, m.getOutputDate());
-            
+
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -386,7 +385,39 @@ public class ManufactureDBContext extends DBContext {
                 }
             }
         }
-        
+
+    }
+
+    public void deleteManuDetail(String mid) {
+        String sql = " DELETE FROM [dbo].[Manufactoring]\n"
+                + "      WHERE [orderID] = ?";
+
+        PreparedStatement stm = null;
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, mid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ManufactureDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
     }
 
 }

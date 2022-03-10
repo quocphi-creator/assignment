@@ -288,3 +288,8 @@ UPDATE [dbo].[Manufactoring]
       ,[removed] = ?
       ,[outputDate] = ?
  WHERE orderID = ?
+
+
+ -- Delete manufacture --
+ DELETE FROM [dbo].[Manufactoring]
+      WHERE [orderID] = ?

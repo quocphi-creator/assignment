@@ -15,6 +15,15 @@
         <title>Manufacturing | Search</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
+        <script>
+            function deleteManuDetail(mid) {
+                var result = confirm("Bạn có chắc muốn xóa chi tiết này ?");
+                if (result) {
+                    window.location.href = "delete?mid="+mid;
+                }
+            }
+        </script>
+        
         <%
             ArrayList<ManufactureDetail> manuList = (ArrayList<ManufactureDetail>) request.getAttribute("manuList");
             YearMonth ym = (YearMonth) request.getAttribute("ym");
@@ -68,7 +77,7 @@
                         <td scope="col"><%=m.getProducted()%></td>
                         <td scope="col"><%=m.getRemoved()%></td>
                         <td scope="col"><a href="edit?mid=<%=m.getOrderID()%>">Edit</td>
-                        <td scope="col"><a href="#">Delete</td>
+                        <td scope="col"><a href="#" onclick="deleteManuDetail(<%=m.getOrderID()%>)">Delete</td>
                     </tr>
                     <%}%>
                 </tbody>
