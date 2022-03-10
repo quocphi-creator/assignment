@@ -293,3 +293,13 @@ UPDATE [dbo].[Manufactoring]
  -- Delete manufacture --
  DELETE FROM [dbo].[Manufactoring]
       WHERE [orderID] = ?
+
+
+-- select decentralization function --
+SELECT COUNT(*) AS Total
+	FROM [owner] O 
+		INNER JOIN [Account-Group] AG ON O.[oname] = AG.[oname]
+		INNER JOIN [Group] G ON AG.[gid] = G.[gid]
+		INNER JOIN [Group-Feature] GF ON GF.[fid] = G.[gid]
+		INNER JOIN [Feature] F ON F.[fid] = GF.[fid]
+	WHERE O.[oname] = 'HOA' AND F.[url] = '/bill/insert'

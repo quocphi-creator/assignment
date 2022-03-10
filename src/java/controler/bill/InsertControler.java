@@ -5,6 +5,7 @@
  */
 package controler.bill;
 
+import controler.account.BaseAuthenticationControler;
 import dao.BillDBContext;
 import dao.OwnerDBContext;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Bill;
 import model.Owner;
 
@@ -22,8 +24,9 @@ import model.Owner;
  *
  * @author ADMIN
  */
-public class InsertControler extends HttpServlet {
+public class InsertControler extends BaseAuthenticationControler {
 
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -34,14 +37,16 @@ public class InsertControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         OwnerDBContext ownerDB = new OwnerDBContext();
         ArrayList<Owner> ownerList = ownerDB.getOwnerList();
         request.setAttribute("ownerList", ownerList);
         request.getRequestDispatcher("../view/bill/insert.jsp").forward(request, response);
+
     }
 
     /**
@@ -53,8 +58,9 @@ public class InsertControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         String raw_bid = request.getParameter("bid");
@@ -69,7 +75,7 @@ public class InsertControler extends HttpServlet {
         String raw_contact = request.getParameter("contact");
         String raw_address = request.getParameter("address");
         String raw_oname = request.getParameter("oname");
-        
+
         int bid = Integer.parseInt(raw_bid);
         String cname = raw_cname;
         String category = raw_category;
@@ -82,10 +88,10 @@ public class InsertControler extends HttpServlet {
         String contact = raw_contact;
         String address = raw_address;
         String oname = raw_oname;
-        
+
         Owner o = new Owner();
         o.setOname(oname);
-        
+
         Bill b = new Bill();
         b.setBid(bid);
         b.setCname(cname);
@@ -99,11 +105,12 @@ public class InsertControler extends HttpServlet {
         b.setContact(contact);
         b.setAddress(address);
         b.setOwner(o);
-        
+
         BillDBContext db = new BillDBContext();
         db.insertBill(b);
-        
+
         response.sendRedirect("search");
+
     }
 
     /**

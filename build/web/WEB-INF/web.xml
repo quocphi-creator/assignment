@@ -2,7 +2,7 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>OwnerLoginControler</servlet-name>
-        <servlet-class>controler.owner.OwnerLoginControler</servlet-class>
+        <servlet-class>controler.account.AccountLoginControler</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchControler</servlet-name>
@@ -89,10 +89,6 @@
         <servlet-class>controler.manufacture.DeleteControler</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>OwnerLoginControler</servlet-name>
-        <url-pattern>/owner/login</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>SearchControler</servlet-name>
         <url-pattern>/bill/search</url-pattern>
     </servlet-mapping>
@@ -175,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>DeleteManuDetailControler</servlet-name>
         <url-pattern>/manufacture/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OwnerLoginControler</servlet-name>
+        <url-pattern>/account/login</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

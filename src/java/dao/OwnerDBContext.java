@@ -41,16 +41,16 @@ public class OwnerDBContext extends DBContext {
         return null;
 
     }
-    
+
     public ArrayList<Owner> getOwnerList() {
-        
+
         ArrayList<Owner> ownerList = new ArrayList<>();
-            
-        try {          
+
+        try {
             String sql = "SELECT oname, [password] FROM [owner]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 Owner o = new Owner();
                 o.setOname(rs.getString("oname"));
                 o.setPassword(rs.getString("password"));
@@ -60,5 +60,32 @@ public class OwnerDBContext extends DBContext {
             Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ownerList;
+    }
+
+    public int checkRole(String username, String url) {
+        try {
+            String sql = "SELECT COUNT(*) AS Total\n"
+                    + "	FROM [owner] O \n"
+                    + "		INNER JOIN [Account-Group] AG ON O.[oname] = AG.[oname]\n"
+                    + "		INNER JOIN [Group] G ON AG.[gid] = G.[gid]\n"
+                    + "		INNER JOIN [Group-Feature] GF ON GF.[fid] = G.[gid]\n"
+                    + "		INNER JOIN [Feature] F ON F.[fid] = GF.[fid]\n"
+                    + "	WHERE O.[oname] = ? AND F.[url] = ? ";
+            
+            PreparedStatement stm = connection.prepareStatement(sql);
+            
+            stm.setString(1, username);
+            stm.setString(2, url);
+            
+            ResultSet rs = stm.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+        
     }
 }
