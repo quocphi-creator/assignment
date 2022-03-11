@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Trang quản trị</title>
+        <title>Trang Quản Trị | Nguồn Hàng</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../asset/css/style.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -99,15 +99,17 @@
                             <div class="sb-sidenav-menu-heading">Tác vụ</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Xuất / Nhập
+                                Xem danh sách
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="search">Danh sách nguồn hàng </a>
+                                    <a class="nav-link" href="http://localhost:8080/ProductionManager/bill/search">Danh sách nguồn hàng </a>
                                     <a class="nav-link" id="searchproduct" onclick="clickServlet()" href="http://localhost:8080/ProductionManager/product/search">Danh sách sản phẩm</a>
+                                    <a class="nav-link" href="http://localhost:8080/ProductionManager/worker/search">Danh sách công nhân</a>
                                 </nav>
                             </div>
+                            
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Báo cáo
@@ -121,9 +123,9 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.html">Báo cáo chi tiết</a>
-                                            <a class="nav-link" href="register.html">Tồn kho linh kiện</a>
-                                            <a class="nav-link" href="password.html">Xuất kho</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/manufacture/search">Báo cáo chi tiết</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/inventory">Tồn kho linh kiện</a>
+                                            <!--<a class="nav-link" href="password.html">Xuất kho</a>-->
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
@@ -132,7 +134,7 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">Chi phí nhân công</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/salary">Chi phí nhân công</a>
                                             <a class="nav-link" href="404.html">Chi phí đầu vào</a>
                                             <a class="nav-link" href="500.html">Giá trị thành phẩm</a>
                                         </nav>
@@ -152,9 +154,9 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Trang quản trị</h1>
+                        <h1 class="mt-4">Trang Quản trị</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">Báo cáo Tổng thể</li>
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
@@ -198,7 +200,7 @@
                         <div class="aaa" >
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Bảng dữ liệu
+                                Danh sách nguồn hàng
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple" class="table-bordered">

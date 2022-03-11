@@ -259,7 +259,7 @@ public class ProductDBContext extends DBContext {
             stm = connection.prepareStatement(sql);          
             stm.setInt(1, id);
 
-            stm.executeQuery();
+            stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
