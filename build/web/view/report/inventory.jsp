@@ -122,9 +122,9 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">Chi phí nhân công</a>
-                                            <a class="nav-link" href="404.html">Chi phí đầu vào</a>
-                                            <a class="nav-link" href="500.html">Giá trị thành phẩm</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/salary">Chi phí nhân công</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/cost">Chi phí đầu vào</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/assets">Giá trị thành phẩm</a>
                                         </nav>
                                     </div>
                                 </nav>
@@ -144,7 +144,7 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Trang quản trị</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Danh sách sản phẩm</li>
+                            <li class="breadcrumb-item active">Báo cáo tồn kho</li>
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
@@ -188,7 +188,7 @@
                         <div class="aaa" >
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Bảng dữ liệu
+                                Bảng dữ liệu linh kiện tồn kho
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple" class="table-bordered">

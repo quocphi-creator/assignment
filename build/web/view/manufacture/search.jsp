@@ -95,8 +95,8 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="http://localhost:8080/ProductionManager/bill/search">Danh sách nguồn hàng </a>
-                                    <a class="nav-link" id="searchproduct" onclick="clickServlet()" href="search">Danh sách sản phẩm</a>
-                                    <a class="nav-link" href="http://localhost:8080/ProductionManager/worker/search">Danh sách nguồn hàng </a>
+                                    <a class="nav-link" id="searchproduct" onclick="clickServlet()" href="http://localhost:8080/ProductionManager/product/search">Danh sách sản phẩm</a>
+                                    <a class="nav-link" href="http://localhost:8080/ProductionManager/worker/search">Danh sách nhân công </a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -124,8 +124,8 @@
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="http://localhost:8080/ProductionManager/report/salary">Chi phí nhân công</a>
-                                            <a class="nav-link" href="404.html">Chi phí đầu vào</a>
-                                            <a class="nav-link" href="500.html">Giá trị thành phẩm</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/cost">Chi phí đầu vào</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/assets">Giá trị thành phẩm</a>
                                         </nav>
                                     </div>
                                 </nav>
@@ -148,7 +148,7 @@
                             <li class="breadcrumb-item active">Tổng quan tài chính</li>
                         </ol>
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
+<!--                            <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body">Chi phí đầu vào</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
@@ -183,7 +183,7 @@
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
 
                         <div class="aaa" >
@@ -192,6 +192,10 @@
                                 Bảng thông tin chi tiết sản xuất
                             </div>
                             <div class="card-body">
+
+                                <%if (manuList.size() == 0) {%>
+                                <h3>Không có dữ liệu để hiển thị</h3>
+                                <%} else {%>
                                 <table id="datatablesSimple" class="table-bordered">
                                     <thead>
                                         <tr>
@@ -227,6 +231,8 @@
                                     </tbody>
 
                                 </table>
+                                <%}%>
+
                                 <a href="list"><button class="w3-button w3-teal">+</button></a>
                             </div>
                         </div>
@@ -249,12 +255,12 @@
         <script src="../asset/js/datatables-simple-demo.js"></script>
 
         <script>
-            function deleteManuDetail(mid) {
-                var result = confirm("Bạn có chắc muốn xóa chi tiết này ?");
-                if (result) {
-                    window.location.href = "delete?mid="+mid;
-                }
-            }
+                                                function deleteManuDetail(mid) {
+                                                    var result = confirm("Bạn có chắc muốn xóa chi tiết này ?");
+                                                    if (result) {
+                                                        window.location.href = "delete?mid=" + mid;
+                                                    }
+                                                }
         </script>
 
         <script type="text/javascript">

@@ -24,8 +24,15 @@
             ArrayList<Bill> bills = (ArrayList<Bill>) request.getAttribute("bills");
             ArrayList<Integer> monthList = (ArrayList<Integer>) request.getAttribute("monthList");
             int month = (Integer) request.getAttribute("month");
+            String monthStr;
+            if (month < 10) {
+                monthStr = "0"+month;
+            } else {
+                monthStr = String.valueOf(month);
+            }
             int year = (Integer) request.getAttribute("year");
-
+            int amount = (Integer) request.getAttribute("amount");
+            int money = (Integer) request.getAttribute("money");
         %>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -105,11 +112,11 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="http://localhost:8080/ProductionManager/bill/search">Danh sách nguồn hàng </a>
-                                    <a class="nav-link" id="searchproduct" onclick="clickServlet()" href="http://localhost:8080/ProductionManager/product/search">Danh sách sản phẩm</a>
+                                    <a class="nav-link" href="http://localhost:8080/ProductionManager/product/search">Danh sách sản phẩm</a>
                                     <a class="nav-link" href="http://localhost:8080/ProductionManager/worker/search">Danh sách công nhân</a>
                                 </nav>
                             </div>
-                            
+
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Báo cáo
@@ -135,8 +142,8 @@
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="http://localhost:8080/ProductionManager/report/salary">Chi phí nhân công</a>
-                                            <a class="nav-link" href="404.html">Chi phí đầu vào</a>
-                                            <a class="nav-link" href="500.html">Giá trị thành phẩm</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/cost">Chi phí đầu vào</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/assets">Giá trị thành phẩm</a>
                                         </nav>
                                     </div>
                                 </nav>
@@ -156,45 +163,63 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Trang Quản trị</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Báo cáo Tổng thể</li>
+                            <li class="breadcrumb-item active">Tổng thể nguồn hàng</li>
                         </ol>
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Chi phí đầu vào</div>
+                                    <%if (month == -1 || year == -1) {%>
+                                    <div class="card-body">Tổng số linh kiện nhập vào từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="#"><%=amount%> (Linh kiện)</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
+                                    <%} else {%>
+                                    <div class="card-body">Tổng số linh kiện nhập vào tháng <%=month%> năm <%=year%></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#" style="text-decoration: none"><%=amount%> (Linh kiện)</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                    <%}%>
+
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Chi phí nhân công</div>
+                                    <%if (month == -1 || year == -1) {%>
+                                    <div class="card-body">Tổng số tiền mua linh kiện từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost"><%=money%> (VNĐ)</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Tổng tài sản</div>
+                                    <%} else {%>
+                                    <div class="card-body">Tổng số tiền mua linh kiện tháng <%=month%> năm <%=year%></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost?month=<%=year%>-<%=monthStr%>"><%=money%> (VNĐ)</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
+                                    <%}%>
+
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Lãng phí</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!--                            <div class="col-xl-3 col-md-6">
+                                                            <div class="card bg-success text-white mb-4">
+                                                                <div class="card-body">Tổng tài sản</div>
+                                                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3 col-md-6">
+                                                            <div class="card bg-danger text-white mb-4">
+                                                                <div class="card-body">Lãng phí</div>
+                                                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
                         </div>
 
                         <div class="aaa" >
@@ -203,6 +228,9 @@
                                 Danh sách nguồn hàng
                             </div>
                             <div class="card-body">
+                                <%if (bills.isEmpty()) {%>
+                                <h3>Không có dữ liệu để hiển thị</h3>
+                                <%} else {%>
                                 <table id="datatablesSimple" class="table-bordered">
                                     <thead>
                                         <tr>
@@ -228,9 +256,9 @@
                                             <td scope="col"><%=b.getBid()%></td>
                                             <td scope="col"><%=b.getCname()%></td>
                                             <td scope="col"><%=b.getCategory()%></td>
-                                            <td scope="col"><%=b.getUnitPrice()%></td>
+                                            <td scope="col"><%=b.getUnitPrice()%> (VNĐ/LK)</td>
                                             <td scope="col"><%=b.getQuantity()%></td>
-                                            <td scope="col"><%=b.getTotal()%></td>
+                                            <td scope="col"><%=b.getTotal()%> (VNĐ)</td>
                                             <td scope="col"><%=b.getInputDate()%></td>
                                             <td scope="col"><%=b.getOrigin()%></td>
                                             <td scope="col"><%=b.getSupplierName()%></td>
@@ -246,6 +274,8 @@
                                     </tbody>
 
                                 </table>
+                                <%}%>
+
                                 <a href="insert"><button class="w3-button w3-teal">+</button></a>
                             </div>
                         </div>

@@ -51,10 +51,22 @@ public class SearchControler extends HttpServlet {
         for (int i = 1; i <= 12; i++) {
             monthList.add(i);
         }
+        
+        int totalAmount = 0;
+        int totalMoney = 0;
+        
+        for (Bill b : bills) {
+            totalAmount+=b.getQuantity();
+            totalMoney+=b.getTotal();
+        }
+        
         request.setAttribute("monthList", monthList);
         request.setAttribute("bills", bills);
         request.setAttribute("month", month);
         request.setAttribute("year", year);
+        request.setAttribute("amount", totalAmount);
+        request.setAttribute("money", totalMoney);
+        
         request.getRequestDispatcher("../view/bill/search.jsp").forward(request, response);
     }
 

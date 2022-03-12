@@ -3,25 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler.product;
+package controler.report;
 
+import dao.BillDBContext;
 import dao.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.Month;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Bill;
 import model.Product;
 
 /**
  *
  * @author ADMIN
  */
-public class SearchControler extends HttpServlet {
+public class ReportAssetsControler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,33 +36,34 @@ public class SearchControler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-        
+        YearMonth ym = null;
+        int getMonth;
+        int getYear;
         String raw_ym = request.getParameter("month");
-        if (raw_ym == null || raw_ym.length()==0) {
-            raw_ym = "0001-01";
+        if (raw_ym == null || raw_ym.length() == 0) {
+            ym = ym.parse("0001-01");
+            getMonth = -1;
+            getYear = -1;
+        } else {
+            ym = YearMonth.parse(raw_ym);
+            getYear = ym.getYear();
+            getMonth = ym.getMonth().getValue();
+
         }
-        YearMonth ym = YearMonth.parse(raw_ym);
-        
-        int year = ym.getYear();
-        int month = ym.getMonth().getValue();
-        
+
         ProductDBContext productDB = new ProductDBContext();
-        ArrayList<Product> products = productDB.getProducts(month, year);
-        
-        int totalProduct = 0;
+        ArrayList<Product> products = productDB.getProducts(getMonth, getYear);
+
         int totalAssets = 0;
-        
         for (Product product : products) {
-            totalProduct=products.size();
-            totalAssets+=product.getPrice();
+            totalAssets += product.getPrice();
         }
         
+        request.setAttribute("total", totalAssets);
         request.setAttribute("products", products);
         request.setAttribute("ym", ym);
-        request.setAttribute("product", totalProduct);
-        request.setAttribute("assets", totalAssets);
-        request.getRequestDispatcher("../view/product/search.jsp").forward(request, response);
+        
+        request.getRequestDispatcher("../view/report/assets.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

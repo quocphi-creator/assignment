@@ -88,6 +88,14 @@
         <servlet-name>DeleteManuDetailControler</servlet-name>
         <servlet-class>controler.manufacture.DeleteControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReportCost</servlet-name>
+        <servlet-class>controler.report.ReportCost</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportAssetsControler</servlet-name>
+        <servlet-class>controler.report.ReportAssetsControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SearchControler</servlet-name>
         <url-pattern>/bill/search</url-pattern>
@@ -175,6 +183,14 @@
     <servlet-mapping>
         <servlet-name>OwnerLoginControler</servlet-name>
         <url-pattern>/account/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportCost</servlet-name>
+        <url-pattern>/report/cost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportAssetsControler</servlet-name>
+        <url-pattern>/report/assets</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

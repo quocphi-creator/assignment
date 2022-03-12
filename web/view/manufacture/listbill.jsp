@@ -123,8 +123,8 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">Chi phí nhân công</a>
-                                            <a class="nav-link" href="404.html">Chi phí đầu vào</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/salary">Chi phí nhân công</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/cost">Chi phí đầu vào</a>
                                             <a class="nav-link" href="500.html">Giá trị thành phẩm</a>
                                         </nav>
                                     </div>

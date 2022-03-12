@@ -55,7 +55,7 @@
 
             <div class="form-agline">
 
-                <form action="search" method="POST" id="search-month">
+                <form action="salary" method="POST" id="search-month">
 
                     <div class="form-group" id="month-input">
                         <!--<p for="month">Tháng cần báo cáo:</p>-->
@@ -96,7 +96,7 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="http://localhost:8080/ProductionManager/bill/search">Danh sách nguồn hàng </a>
-                                    <a class="nav-link" id="searchproduct" onclick="clickServlet()" href="http://localhost:8080/ProductionManager/product/search">Danh sách sản phẩm</a>
+                                    <a class="nav-link" href="http://localhost:8080/ProductionManager/product/search">Danh sách sản phẩm</a>
                                     <a class="nav-link" href="http://localhost:8080/ProductionManager/worker/search">Danh sách nhân công</a>
                                 </nav>
                             </div>
@@ -125,8 +125,8 @@
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="http://localhost:8080/ProductionManager/report/salary">Chi phí nhân công</a>
-                                            <a class="nav-link" href="404.html">Chi phí đầu vào</a>
-                                            <a class="nav-link" href="500.html">Giá trị thành phẩm</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/cost">Chi phí đầu vào</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/assets">Giá trị thành phẩm</a>
                                         </nav>
                                     </div>
                                 </nav>
@@ -190,9 +190,17 @@
                         <div class="aaa" >
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Bảng báo cáo lương
+                                <%if (ym.getYear()!=1) {%>
+                                Bảng báo cáo lương tháng <%=ym.getMonth().getValue()%> năm <%=ym.getYear()%>
+                                <%} else {%>
+                                Bảng lương nhân công từ trước đến nay.
+                                <%}%>
+                                
                             </div>
                             <div class="card-body">
+                                <%if (salaries.size() == 0) {%>
+                                <h3>Không có dữ liệu để hiển thị.</h3>
+                                <%} else {%>
                                 <table id="datatablesSimple" class="table-bordered">
                                     <thead>
                                         <tr>
@@ -222,7 +230,9 @@
                                     </tbody>
 
                                 </table>
-                                <a href="list"><button class="w3-button w3-teal">+</button></a>
+                                <%}%>
+
+
                             </div>
                         </div>
                     </div>
@@ -244,12 +254,12 @@
         <script src="../asset/js/datatables-simple-demo.js"></script>
 
         <script>
-                                        function deleteManuDetail(mid) {
-                                            var result = confirm("Bạn có chắc muốn xóa chi tiết này ?");
-                                            if (result) {
-                                                window.location.href = "delete?mid=" + mid;
-                                            }
-                                        }
+            function deleteManuDetail(mid) {
+                var result = confirm("Bạn có chắc muốn xóa chi tiết này ?");
+                if (result) {
+                    window.location.href = "delete?mid=" + mid;
+                }
+            }
         </script>
 
         <script type="text/javascript">

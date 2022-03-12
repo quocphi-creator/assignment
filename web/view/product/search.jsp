@@ -23,10 +23,12 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../asset/css/style.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        
+
         <%
             ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("products");
             YearMonth ym = (YearMonth) request.getAttribute("ym");
+            int totalProduct = (Integer) request.getAttribute("product");
+            int assets = (Integer) request.getAttribute("assets");
         %>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -44,16 +46,16 @@
 
 
             <!-- Navbar Search-->
-<!--            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
-            </form>-->
+            <!--            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                            </div>
+                        </form>-->
 
             <div class="form-agline">
 
-                <form action="search" method="POST" id="search-month">
+                <form action="search" method="GET" id="search-month">
 
                     <div class="form-group" id="month-input">
                         <!--<p for="month">Tháng cần báo cáo:</p>-->
@@ -61,9 +63,9 @@
                         <input type="submit" value="Search">
                     </div>
 
-<!--                    <div class="form-group" id="search-btn">               
-                        <input type="submit" value="Search">
-                    </div>-->
+                    <!--                    <div class="form-group" id="search-btn">               
+                                            <input type="submit" value="Search">
+                                        </div>-->
                 </form>
             </div>
 
@@ -94,7 +96,7 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="http://localhost:8080/ProductionManager/bill/search">Danh sách nguồn hàng</a>
-                                    <a class="nav-link" id="searchproduct" onclick="clickServlet()" href="search">Danh sách sản phẩm</a>
+                                    <a class="nav-link" id="searchproduct" onclick="clickServlet()" href="http://localhost:8080/ProductionManager/product/search">Danh sách sản phẩm</a>
                                     <a class="nav-link" href="http://localhost:8080/ProductionManager/worker/search">Danh sách công nhân</a>
                                 </nav>
                             </div>
@@ -122,9 +124,9 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">Chi phí nhân công</a>
-                                            <a class="nav-link" href="404.html">Chi phí đầu vào</a>
-                                            <a class="nav-link" href="500.html">Giá trị thành phẩm</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/salary">Chi phí nhân công</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/cost">Chi phí đầu vào</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/assets">Giá trị thành phẩm</a>
                                         </nav>
                                     </div>
                                 </nav>
@@ -144,45 +146,70 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Trang quản trị</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Tổng Quan Tài Chính</li>
+                            <li class="breadcrumb-item active">Tổng Quan Sản Phẩm</li>
                         </ol>
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
+                            <%if (ym.getYear() == 1) {%>
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Chi phí đầu vào</div>
+                                    <div class="card-body">Số sản phẩm đã làm từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="#"><%=totalProduct%> (Đơn vị sản phẩm)</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+                            <%} else {%>
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body">Số sản phẩm đã làm tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#"><%=totalProduct%> (Đơn vị sản phẩm)</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
+                            <%if (ym.getYear() == 1) {%>
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Chi phí nhân công</div>
+                                    <div class="card-body">Tổng giá trị tài sản từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets"><%=assets%> (VNĐ)</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Tổng tài sản</div>
+                            <%} else {%>
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card bg-warning text-white mb-4">
+                                    <div class="card-body">Tổng giá trị tài sản tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets?month=<%=ym.getYear()%>-<%=ym.getMonthValue()%>"><%=assets%> (VNĐ)</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Lãng phí</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <%}%>
+                            
+                            <!--                            <div class="col-xl-3 col-md-6">
+                                                            <div class="card bg-success text-white mb-4">
+                                                                <div class="card-body">Tổng tài sản</div>
+                                                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3 col-md-6">
+                                                            <div class="card bg-danger text-white mb-4">
+                                                                <div class="card-body">Lãng phí</div>
+                                                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
                         </div>
 
                         <div class="aaa" >
@@ -250,12 +277,12 @@
         <script src="../asset/js/datatables-simple-demo.js"></script>
 
         <script>
-            function deleteProduct(pid) {
-                var result = confirm("Bạn có chắc muốn xóa sản phẩm này ?");
-                if (result) {
-                    window.location.href = "delete?pid="+pid;
-                }
-            }
+                                                function deleteProduct(pid) {
+                                                    var result = confirm("Bạn có chắc muốn xóa sản phẩm này ?");
+                                                    if (result) {
+                                                        window.location.href = "delete?pid=" + pid;
+                                                    }
+                                                }
         </script>
 
         <script type="text/javascript">
