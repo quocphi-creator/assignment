@@ -29,6 +29,10 @@
         <%
             ArrayList<ReportWorkerSalary> salaries = (ArrayList<ReportWorkerSalary>) request.getAttribute("salary");
             YearMonth ym = (YearMonth) request.getAttribute("ym");
+            String monthStr = "";
+            if (ym.getMonthValue()<10) {
+                monthStr="0"+ym.getMonthValue();
+            }
         %>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -55,7 +59,7 @@
 
             <div class="form-agline">
 
-                <form action="salary" method="POST" id="search-month">
+                <form action="salary" method="GET" id="search-month">
 
                     <div class="form-group" id="month-input">
                         <!--<p for="month">Tháng cần báo cáo:</p>-->
@@ -148,54 +152,96 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Báo cáo lương nhân công</li>
                         </ol>
+                        <%if (ym.getYear()==1) {%>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Chi phí đầu vào</div>
+                                    <div class="card-body">Chi phí đầu vào từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost">Xem chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Chi phí nhân công</div>
+                                    <div class="card-body">Lương nhân công từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/salary">Xem chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Tổng tài sản</div>
+                                    <div class="card-body">Tổng tài sản từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets">Xem chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Lãng phí</div>
+                                    <div class="card-body">Số tiền lãng phí từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/waste">Xem chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <%} else {%>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body">Chi phí đầu vào tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost?month=<%=ym.getYear()%>-<%=monthStr%>">Xem chi tiết</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-warning text-white mb-4">
+                                    <div class="card-body">Lương tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/salary?month=<%=ym.getYear()%>-<%=monthStr%>">Xem chi tiết</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-success text-white mb-4">
+                                    <div class="card-body">Tổng tài sản tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets?month=<%=ym.getYear()%>-<%=monthStr%>">Xem chi tiết</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-danger text-white mb-4">
+                                    <div class="card-body">Lãng phí tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/waste?month=<%=ym.getYear()%>-<%=monthStr%>">Xem chi tiết</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                        
 
                         <div class="aaa" >
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                <%if (ym.getYear()!=1) {%>
+                                <%if (ym.getYear() != 1) {%>
                                 Bảng báo cáo lương tháng <%=ym.getMonth().getValue()%> năm <%=ym.getYear()%>
                                 <%} else {%>
                                 Bảng lương nhân công từ trước đến nay.
                                 <%}%>
-                                
+
                             </div>
                             <div class="card-body">
                                 <%if (salaries.size() == 0) {%>

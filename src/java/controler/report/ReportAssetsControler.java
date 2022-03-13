@@ -5,6 +5,7 @@
  */
 package controler.report;
 
+import controler.account.BaseAuthenticationControler;
 import dao.BillDBContext;
 import dao.ProductDBContext;
 import java.io.IOException;
@@ -22,7 +23,7 @@ import model.Product;
  *
  * @author ADMIN
  */
-public class ReportAssetsControler extends HttpServlet {
+public class ReportAssetsControler extends BaseAuthenticationControler {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -76,7 +77,7 @@ public class ReportAssetsControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -90,7 +91,7 @@ public class ReportAssetsControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

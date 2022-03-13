@@ -147,7 +147,7 @@ public class ReportDBContext extends DBContext {
                 ReportWorkerSalary salary = new ReportWorkerSalary();
                 salary.setCount(rs.getInt("CountProduct"));
                 salary.setWorker(w);
-                
+
                 salaries.add(salary);
             }
 
@@ -155,6 +155,50 @@ public class ReportDBContext extends DBContext {
             Logger.getLogger(ReportDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return salaries;
+    }
+
+    public ArrayList<ReportInventory> getWastes(int month, int year) {
+        ArrayList<ReportInventory> wastes = new ArrayList<>();
+        String whereStm = "";
+        try {
+            if (year > 1) {
+                whereStm = "  WHERE MONTH(m.outputDate) = ? and YEAR(m.outputDate) = ?";
+            }
+            String sql = "SELECT b.[bid]\n"
+                    + "      ,b.[cname]\n"
+                    + "      ,b.[unitprice]\n"
+                    + "      ,SUM(m.producted) as producted\n"
+                    + "	  ,SUM(m.removed) as removed\n"
+                    + "  FROM [dbo].[Bill] b inner join [Manufactoring] m on b.bid=m.bid\n"
+                    + whereStm + "\n"
+                    + "  group by b.[bid], b.cname, m.producted, m.removed, b.unitprice";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            if (year > 1) {
+                stm.setInt(1, month);
+                stm.setInt(2, year);
+            }
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+
+                Bill b = new Bill();
+                b.setBid(rs.getInt("bid"));
+                b.setCname(rs.getNString("cname"));
+                b.setUnitPrice(rs.getInt("unitprice"));
+
+                ReportInventory r = new ReportInventory();
+                r.setBill(b);
+                r.setProducted(rs.getInt("producted"));
+                r.setRemoved(rs.getInt("removed"));
+
+                wastes.add(r);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReportDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return wastes;
     }
 
 }

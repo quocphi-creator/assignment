@@ -28,6 +28,10 @@
         <%
             ArrayList<ManufactureDetail> manuList = (ArrayList<ManufactureDetail>) request.getAttribute("manuList");
             YearMonth ym = (YearMonth) request.getAttribute("ym");
+            String monthStr = "";
+            if (ym.getMonthValue()<10) {
+                monthStr="0"+ym.getMonthValue();
+            }
         %>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -54,7 +58,7 @@
 
             <div class="form-agline">
 
-                <form action="search" method="POST" id="search-month">
+                <form action="search" method="GET" id="search-month">
 
                     <div class="form-group" id="month-input">
                         <!--<p for="month">Tháng cần báo cáo:</p>-->

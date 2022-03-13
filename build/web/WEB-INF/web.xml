@@ -96,6 +96,14 @@
         <servlet-name>ReportAssetsControler</servlet-name>
         <servlet-class>controler.report.ReportAssetsControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WasteReportControler</servlet-name>
+        <servlet-class>controler.report.WasteReportControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountRegisterControler</servlet-name>
+        <servlet-class>controler.account.AccountRegisterControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SearchControler</servlet-name>
         <url-pattern>/bill/search</url-pattern>
@@ -191,6 +199,14 @@
     <servlet-mapping>
         <servlet-name>ReportAssetsControler</servlet-name>
         <url-pattern>/report/assets</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WasteReportControler</servlet-name>
+        <url-pattern>/report/waste</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountRegisterControler</servlet-name>
+        <url-pattern>/account/register</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

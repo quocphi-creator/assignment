@@ -299,7 +299,25 @@ UPDATE [dbo].[Manufactoring]
 SELECT COUNT(*) AS Total
 	FROM [owner] O 
 		INNER JOIN [Account-Group] AG ON O.[oname] = AG.[oname]
+	
 		INNER JOIN [Group] G ON AG.[gid] = G.[gid]
 		INNER JOIN [Group-Feature] GF ON GF.[fid] = G.[gid]
+
 		INNER JOIN [Feature] F ON F.[fid] = GF.[fid]
-	WHERE O.[oname] = 'HOA' AND F.[url] = '/bill/insert'
+
+	WHERE O.[oname] = 'phi' AND F.[url]='/report/salary'
+
+SELECT COUNT(*) FROM [owner] O 
+	INNER JOIN [Account-Group] AG ON O.oname=AG.oname 
+	INNER JOIN [Group] G ON G.gid = AG.gid
+	INNER JOIN [Group-Feature] GF ON G.[gid]=GF.[gid]
+	INNER JOIN [Feature] F ON F.[fid] = GF.[fid]
+WHERE O.oname = 'PHI' AND F.url='/report/salary'
+
+SELECT b.[bid]
+      ,b.[cname]
+      ,SUM(m.producted) as producted
+	  ,SUM(m.removed) as removed
+  FROM [dbo].[Bill] b inner join [Manufactoring] m on b.bid=m.bid
+  WHERE MONTH(m.outputDate) = ? and YEAR(m.outputDate) = ?
+  group by b.[bid], b.cname, m.producted, m.removed

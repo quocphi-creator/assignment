@@ -5,6 +5,7 @@
  */
 package controler.manufacture;
 
+import controler.account.BaseAuthenticationControler;
 import dao.BillDBContext;
 import dao.ManufactureDBContext;
 import dao.WorkerDBContext;
@@ -25,7 +26,7 @@ import model.Worker;
  *
  * @author ADMIN
  */
-public class EditControler extends HttpServlet {
+public class EditControler extends BaseAuthenticationControler {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,7 +38,7 @@ public class EditControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
@@ -69,7 +70,7 @@ public class EditControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");

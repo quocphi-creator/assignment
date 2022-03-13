@@ -5,6 +5,7 @@
  */
 package controler.product;
 
+import controler.account.BaseAuthenticationControler;
 import dao.BillDBContext;
 import dao.OwnerDBContext;
 import dao.ProductDBContext;
@@ -26,7 +27,7 @@ import model.Worker;
  *
  * @author ADMIN
  */
-public class InsertControler extends HttpServlet {
+public class InsertControler extends BaseAuthenticationControler {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -38,7 +39,7 @@ public class InsertControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
@@ -57,7 +58,7 @@ public class InsertControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         response.setContentType("text/html;charset=UTF-8");

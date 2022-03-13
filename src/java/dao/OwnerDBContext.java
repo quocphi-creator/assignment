@@ -64,21 +64,20 @@ public class OwnerDBContext extends DBContext {
 
     public int checkRole(String username, String url) {
         try {
-            String sql = "SELECT COUNT(*) AS Total\n"
-                    + "	FROM [owner] O \n"
-                    + "		INNER JOIN [Account-Group] AG ON O.[oname] = AG.[oname]\n"
-                    + "		INNER JOIN [Group] G ON AG.[gid] = G.[gid]\n"
-                    + "		INNER JOIN [Group-Feature] GF ON GF.[fid] = G.[gid]\n"
-                    + "		INNER JOIN [Feature] F ON F.[fid] = GF.[fid]\n"
-                    + "	WHERE O.[oname] = ? AND F.[url] = ? ";
-            
+            String sql = "SELECT COUNT(*) AS Total FROM [owner] O \n"
+                    + "	INNER JOIN [Account-Group] AG ON O.oname=AG.oname \n"
+                    + "	INNER JOIN [Group] G ON G.gid = AG.gid\n"
+                    + "	INNER JOIN [Group-Feature] GF ON G.[gid]=GF.[gid]\n"
+                    + "	INNER JOIN [Feature] F ON F.[fid] = GF.[fid]\n"
+                    + "WHERE O.oname = ? AND F.url = ? ";
+
             PreparedStatement stm = connection.prepareStatement(sql);
-            
+
             stm.setString(1, username);
             stm.setString(2, url);
-            
+
             ResultSet rs = stm.executeQuery();
-            
+
             if (rs.next()) {
                 return rs.getInt("Total");
             }
@@ -86,6 +85,6 @@ public class OwnerDBContext extends DBContext {
             Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
-        
+
     }
 }

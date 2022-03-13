@@ -58,7 +58,7 @@ public class AccountLoginControler extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("account", account);
             
-            response.getWriter().println("Login Successfully!");
+            response.sendRedirect("http://localhost:8080/ProductionManager/bill/search");
         } else {
             response.getWriter().println("Login Failed!");
         }

@@ -5,6 +5,7 @@
  */
 package controler.manufacture;
 
+import controler.account.BaseAuthenticationControler;
 import dao.BillDBContext;
 import dao.ManufactureDBContext;
 import dao.WorkerDBContext;
@@ -23,7 +24,7 @@ import model.Worker;
  *
  * @author ADMIN
  */
-public class ExportControler extends HttpServlet {
+public class ExportControler extends BaseAuthenticationControler {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,7 +63,7 @@ public class ExportControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
@@ -86,7 +87,7 @@ public class ExportControler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

@@ -149,25 +149,25 @@
                             <li class="breadcrumb-item active">Danh sách nhân công</li>
                         </ol>
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Chi phí đầu vào</div>
+                                    <div class="card-body">Tổng số nhân công</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="#"><%=workers.size()%> (Công nhân)</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body">Chi phí nhân công</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/salary">Xem chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-6">
+<!--                            <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
                                     <div class="card-body">Tổng tài sản</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
@@ -184,7 +184,7 @@
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
 
                         <div class="aaa" >
@@ -215,7 +215,7 @@
                         <td scope="col"><%=w.getProductSalary()%>(VNĐ/SP)</td>
 
                         <td scope="col"><a href="#" onclick="deleteWorker(<%=w.getWid()%>);">Xóa</a></td>
-                        <td scope="col"><a href="edit?wid=<%=w.getWid()%>">Chỉnh sửa</a></td>
+                        <td scope="col"><a href="edit?wid=<%=w.getWid()%>">Sửa</a></td>
 
                     </tr>
                     <%}%>
