@@ -307,12 +307,12 @@ SELECT COUNT(*) AS Total
 
 	WHERE O.[oname] = 'phi' AND F.[url]='/report/salary'
 
-SELECT COUNT(*) FROM [owner] O 
+SELECT *  FROM [owner] O 
 	INNER JOIN [Account-Group] AG ON O.oname=AG.oname 
 	INNER JOIN [Group] G ON G.gid = AG.gid
 	INNER JOIN [Group-Feature] GF ON G.[gid]=GF.[gid]
 	INNER JOIN [Feature] F ON F.[fid] = GF.[fid]
-WHERE O.oname = 'PHI' AND F.url='/report/salary'
+WHERE O.oname = 'bbb' AND F.url='/report/salary'
 
 SELECT b.[bid]
       ,b.[cname]
@@ -321,3 +321,11 @@ SELECT b.[bid]
   FROM [dbo].[Bill] b inner join [Manufactoring] m on b.bid=m.bid
   WHERE MONTH(m.outputDate) = ? and YEAR(m.outputDate) = ?
   group by b.[bid], b.cname, m.producted, m.removed
+
+
+  INSERT INTO [dbo].[Account-Group]
+           ([oname]
+           ,[gid])
+     VALUES
+           ('rr'
+           ,1)

@@ -54,13 +54,14 @@
         }
     </style>
     <body>
-        <h3>Contact Form</h3>
+        
 
         <div class="container">
+            
             <form action="edit" method="POST">
-
+                
                 <div class="form-row">
-                    <h4 for="pid">Chỉnh sửa thông tin sản phẩm có mã: <%=product.getPid()%></h4>
+                    <h2 for="pid">Chỉnh sửa thông tin sản phẩm có mã: <%=product.getPid()%></h2>
                     <input type="hidden" name="pid" value="<%=product.getPid()%>" placeholder="Nhập mã sản phẩm">
                 </div>
 

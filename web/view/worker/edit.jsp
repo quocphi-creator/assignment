@@ -49,24 +49,24 @@
         </style>
     </head>
     <body >
-        <h3>Chỉnh Sửa Thông Tin Nhân Viên</h3>
+        <h2 style="text-align: center">Chỉnh Sửa Thông Tin Nhân Viên Có Mã: <%=worker.getWid()%></h2>
 
         <div>
             <form action="edit" method="POST">
-                <label for="wid">Worker ID: <%=worker.getWid()%></label>
+                <!--<label for="wid">Worker ID: <%--= //worker.getWid()--%></label>-->
                 <input type="hidden" name="wid" value="<%=worker.getWid()%>" placeholder="Nhập mã nhân viên">
             <br>
                 <label for="wname">Worker Name</label>
-                <input type="text" name="wname" placeholder="Nhập tên nhân viên">
+                <input type="text" name="wname" value="<%=worker.getWname()%>" placeholder="Nhập tên nhân viên">
 
                 <label for="phoneNumber">Phone number</label>
-                <input type="text" name="phoneNumber" placeholder="Nhập Số điện thoại">
+                <input type="text" name="phoneNumber" value="<%=worker.getPhoneNumber()%>" placeholder="Nhập Số điện thoại">
 
                 <label for="monthSalary">Month salary</label>
-                <input type="text" name="monthSalary" placeholder="Nhập lương/tháng">
+                <input type="text" name="monthSalary" value="<%=worker.getMonthSalary()%>" placeholder="Nhập lương/tháng">
                 
                 <label for="productSalary">Phone number</label>
-                <input type="text" name="productSalary" placeholder="Nhập lương/SP">
+                <input type="text" name="productSalary" value="<%=worker.getProductSalary()%>" placeholder="Nhập lương/SP">
                 <input type="submit" value="Submit">
             </form>
         </div>

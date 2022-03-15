@@ -34,6 +34,8 @@
             String monthStr = "";
             if (ym.getMonthValue()<10) {
                 monthStr="0"+ym.getMonthValue();
+            } else {
+                monthStr=String.valueOf(ym.getMonthValue());
             }
         %>
 

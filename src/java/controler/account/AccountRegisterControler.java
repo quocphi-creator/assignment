@@ -5,13 +5,17 @@
  */
 package controler.account;
 
+import dao.GroupDBContext;
 import dao.OwnerDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Group;
+import model.Owner;
 
 /**
  *
@@ -34,8 +38,10 @@ public class AccountRegisterControler extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         
-//        OwnerDBContext accountDB = new OwnerDBContext();
+        GroupDBContext db = new GroupDBContext();
+        ArrayList<Group> groups = db.getGroups();
         
+        request.setAttribute("groups", groups);
         request.getRequestDispatcher("../view/account/register.jsp").forward(request, response);
     }
 
@@ -51,6 +57,29 @@ public class AccountRegisterControler extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        
+        String raw_user = request.getParameter("username");
+        String raw_pass = request.getParameter("password");
+        String raw_email = request.getParameter("email");
+        String raw_group = request.getParameter("group");
+        
+        String username = raw_user;
+        String password = raw_pass;
+        String email = raw_email;
+        
+        int gid = Integer.parseInt(raw_group);
+        
+        Owner o = new Owner();
+        o.setOname(username);
+        o.setPassword(password);
+
+        GroupDBContext db = new GroupDBContext();
+        db.insertAccount(o);
+        db.insertAG(o, gid);
+        response.sendRedirect("login");
+//        response.sendRedirect("");
     }
 
     /**

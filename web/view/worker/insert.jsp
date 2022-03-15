@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Worker | Insert</title>
+        <title>Công nhân | Thêm mới</title>
         
         <style>
             input[type=text], select {
@@ -46,10 +46,12 @@
         </style>
     </head>
     <body >
-        <h3>Thêm nhân viên</h3>
-
+        
         <div>
+            <h2 style="text-align: center">Thêm nhân viên</h2>
+
             <form action="insert" method="POST">
+                
                 <label for="wid">Worker ID</label>
                 <input type="text" name="wid" placeholder="Nhập mã nhân viên">
 

@@ -62,16 +62,16 @@
 
 
         <div class="container">
-            <h3>Chỉnh sửa thông tin sản xuất.</h3>
+            <h3 style="text-align: center">Chỉnh Sửa Thông Tin Sản Xuất Có Mã: <%=m.getOrderID()%></h3>
             <form action="edit" method="POST">
 
                 <div class="form-row col-md-12">
-                    <label for="mid">Mã SX: <%=m.getOrderID()%></label>
+                    <!--<label for="mid">Mã SX: </label>-->
                     <input type="hidden" name="mid" value="<%=m.getOrderID()%>">
                 </div>
                 
                 <div class="form-row col-md-6">
-                    <label for="bid">Nguồn Hàng</label>
+                    <label for="bid">Tên linh kiện</label>
                     <select name="bid" class="form-control">
 
                         <%for (Bill b : bills) {%>

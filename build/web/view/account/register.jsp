@@ -4,40 +4,63 @@
     Author     : ADMIN
 --%>
 
+<%@page import="model.Group"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Tài khoản | Đăng ký</title>
-        <link rel="stylesheet" href="../asset/css/registerStyle.css"><link >
+        <!--<link rel="stylesheet" href="../asset/css/registerStyle.css"><link >-->
+        <link rel="stylesheet" href="../asset/css/FormStyle.css">        
+
+        <%
+            ArrayList<Group> groups = (ArrayList<Group>) request.getAttribute("groups");
+        %>
+
     </head>
     <body>
         <div class="container">
-        <form action="/action_page.php">
-            <div>
-                <h1>Register</h1>
-                <p>Please fill in this form to create an account.</p>
-                <hr>
+            <form action="register" method="POST">
+                <div>
+                    <h1>Đăng ký tài khoản</h1>
+                    <p>Vui lòng nhập thông tin vào các dòng sau.</p>
+                    <hr>
 
-                <label for="email"><b>Email</b></label>
-                <input type="text" placeholder="Enter Email" name="email" id="email" required>
+                    <div class="form-control">
+                        <label for="username"><b>Tên tài khoản</b></label>
+                        <input type="text" name="username" placeholder="Nhập tên tài khoản (không chứa ký tự đặc biệt và dấu cách)" name="psw" id="psw" required>
 
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+                    </div>
 
-                <label for="psw-repeat"><b>Repeat Password</b></label>
-                <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
-                <hr>
-                <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+                    <div class="form-control">
+                        <label for="password"><b>Mật khẩu</b></label>
+                        <input type="password" name="password" placeholder="Nhập mật khẩu" name="psw-repeat" id="psw-repeat" required>
+                    </div>
 
-                <button type="submit" class="registerbtn">Register</button>
-            </div>
+                    <div class="form-row form-control">
+                        <label for="group">Vai trò của của bạn:</label>
+                        <select name="group" class="form-control">
 
-            <div class="container signin">
-                <p>Already have an account? <a href="#">Sign in</a>.</p>
-            </div>
-        </form>
+                            <%for (Group g : groups) {%>
+                            <option value="<%=g.getGid()%>">
+                                <%=g.getGname()%>
+                            </option>
+                            <%}%>
+
+                        </select>
+                    </div>
+                    <hr>
+                    <p>Chú ý: Tên tài khoản phải là duy nhất</p>
+
+                    <button type="submit" class="registerbtn">Đăng ký</button>
+                </div>
+
+                <div class="container signin">
+                    <p>Bạn đã có tài khoản? <a href="http://localhost:8080/ProductionManager/account/login">Đăng nhập</a>.</p>
+                </div>
+            </form>
         </div>>
     </body>
 </html>

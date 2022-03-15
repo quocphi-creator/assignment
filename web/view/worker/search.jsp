@@ -222,7 +222,7 @@
                                     </tbody>
 
                                 </table>
-                                <a href="http://localhost:8080/ProductionManager/bill/insert"><button class="w3-button w3-teal">+</button></a>
+                                <a href="http://localhost:8080/ProductionManager/worker/insert"><button class="w3-button w3-teal">+</button></a>
                             </div>
                         </div>
                     </div>

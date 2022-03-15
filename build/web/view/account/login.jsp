@@ -33,10 +33,11 @@
                     <input type="checkbox" value="remember" name="remember">
                     <label> Remember me </label>
                 </div>
-
+                
                 <div class="form-group">
                     <input type="submit" value="Login">
                 </div>
+                <p>Bạn chưa có tài khoản? <a href="http://localhost:8080/ProductionManager/account/register">Đăng ký</a>.</p>
             </form>
         </div>
 

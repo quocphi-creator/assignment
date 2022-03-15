@@ -33,6 +33,8 @@
             String monthStr = "";
             if (ym.getMonthValue()<10) {
                 monthStr="0"+ym.getMonthValue();
+            } else {
+                monthStr=String.valueOf(ym.getMonthValue());
             }
         %>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>

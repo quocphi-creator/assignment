@@ -52,9 +52,10 @@
         }
     </style>
     <body>
-        <h3>Contact Form</h3>
+        
 
         <div class="container">
+            <h2>Contact Form</h2>
             <form action="insert" method="POST">
 
                 <div class="form-row">
