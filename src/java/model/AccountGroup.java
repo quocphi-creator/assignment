@@ -9,13 +9,9 @@ package model;
  *
  * @author ADMIN
  */
-public class Owner {
-
+public class AccountGroup {
     private String oname;
-    private String password;
-    
-    public Owner() {
-    }
+    private int gid;
 
     public String getOname() {
         return oname;
@@ -25,13 +21,13 @@ public class Owner {
         this.oname = oname;
     }
 
-    public String getPassword() {
-        return password;
+    public int getGid() {
+        return gid;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setGid(int gid) {
+        this.gid = gid;
     }
-
+    
     
 }

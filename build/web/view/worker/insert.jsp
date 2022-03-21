@@ -53,19 +53,19 @@
             <form action="insert" method="POST">
                 
                 <label for="wid">Worker ID</label>
-                <input type="text" name="wid" placeholder="Nhập mã nhân viên">
+                <input type="text" name="wid" placeholder="Nhập mã nhân viên" required="required">
 
                 <label for="wname">Worker Name</label>
-                <input type="text" name="wname" placeholder="Nhập tên nhân viên">
+                <input type="text" name="wname" placeholder="Nhập tên nhân viên" required="required">
 
                 <label for="phoneNumber">Phone number</label>
-                <input type="text" name="phoneNumber" placeholder="Nhập Số điện thoại">
+                <input type="text" name="phoneNumber" placeholder="Nhập Số điện thoại" required="required">
 
                 <label for="monthSalary">Month salary</label>
-                <input type="text" name="monthSalary" placeholder="Nhập lương/tháng">
+                <input type="text" name="monthSalary" placeholder="Nhập lương/tháng" required="required">
                 
                 <label for="productSalary">Phone number</label>
-                <input type="text" name="productSalary" placeholder="Nhập lương/SP">
+                <input type="text" name="productSalary" placeholder="Nhập lương/SP" required="required">
                 <input type="submit" value="Submit">
             </form>
         </div>

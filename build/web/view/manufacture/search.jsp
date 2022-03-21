@@ -12,6 +12,9 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,10 +32,10 @@
             ArrayList<ManufactureDetail> manuList = (ArrayList<ManufactureDetail>) request.getAttribute("manuList");
             YearMonth ym = (YearMonth) request.getAttribute("ym");
             String monthStr = "";
-            if (ym.getMonthValue()<10) {
-                monthStr="0"+ym.getMonthValue();
+            if (ym.getMonthValue() < 10) {
+                monthStr = "0" + ym.getMonthValue();
             } else {
-                monthStr=String.valueOf(ym.getMonthValue());
+                monthStr = String.valueOf(ym.getMonthValue());
             }
         %>
 
@@ -79,9 +82,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Sửa tài khoản</a></li>
+                        <li><a class="dropdown-item" href="#!">Tài khoản</a></li>
 
-                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/logout">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -154,42 +157,42 @@
                             <li class="breadcrumb-item active">Tổng quan tài chính</li>
                         </ol>
                         <div class="row">
-<!--                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Chi phí đầu vào</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Chi phí nhân công</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Tổng tài sản</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Lãng phí</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>-->
+                            <!--                            <div class="col-xl-3 col-md-6">
+                                                            <div class="card bg-primary text-white mb-4">
+                                                                <div class="card-body">Chi phí đầu vào</div>
+                                                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3 col-md-6">
+                                                            <div class="card bg-warning text-white mb-4">
+                                                                <div class="card-body">Chi phí nhân công</div>
+                                                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3 col-md-6">
+                                                            <div class="card bg-success text-white mb-4">
+                                                                <div class="card-body">Tổng tài sản</div>
+                                                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3 col-md-6">
+                                                            <div class="card bg-danger text-white mb-4">
+                                                                <div class="card-body">Lãng phí</div>
+                                                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
                         </div>
 
                         <div class="aaa" >
@@ -219,21 +222,23 @@
                                     </thead>
 
                                     <tbody>
-                                        <%for (ManufactureDetail m : manuList) {%>
-                                        <tr>
-                                            <td scope="col"><%=m.getOrderID()%></td>
-                                            <td scope="col">ID = <%=m.getBill().getBid()%> | <%=m.getBill().getCname()%></td>
-                                            <td scope="col"><%=m.getBill().getCategory()%></td>
-                                            <td scope="col"><%=m.getBill().getQuantity()%></td>
-                                            <td scope="col"><%=m.getBill().getUnitPrice()%></td>
-                                            <td scope="col"><%=m.getWorker().getWname()%></td>
-                                            <td scope="col"><%=m.getOutputDate()%></td>
-                                            <td scope="col"><%=m.getProducted()%></td>
-                                            <td scope="col"><%=m.getRemoved()%></td>
-                                            <td scope="col"><a href="edit?mid=<%=m.getOrderID()%>">Sửa</td>
-                                            <td scope="col"><a href="#" onclick="deleteManuDetail(<%=m.getOrderID()%>)">Xóa</td>
-                                        </tr>
-                                        <%}%>
+                                        <c:forEach items="${requestScope.manuList}" var="m">
+                                            <tr>
+                                                <td scope="col">${m.orderID}</td>
+                                                <td scope="col">ID = ${m.bill.bid} | ${m.bill.cname}</td>
+                                                <td scope="col">${m.bill.category}</td>
+                                                <td scope="col">${m.bill.quantity}</td>
+                                                <td scope="col">${m.bill.unitPrice}</td>
+                                                <td scope="col">${m.worker.wname}</td>
+                                                <td scope="col">
+                                                    <fmt:formatDate value="${m.outputDate}" pattern="dd/MM/yyyy" />
+                                                </td>
+                                                <td scope="col">${m.producted}</td>
+                                                <td scope="col">${m.removed}</td>
+                                                <td scope="col"><a href="edit?mid=${m.orderID}">Sửa</td>
+                                                <td scope="col"><a href="#" onclick="deleteManuDetail(${m.orderID})">Xóa</td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
 
                                 </table>
@@ -261,12 +266,12 @@
         <script src="../asset/js/datatables-simple-demo.js"></script>
 
         <script>
-                                                function deleteManuDetail(mid) {
-                                                    var result = confirm("Bạn có chắc muốn xóa chi tiết này ?");
-                                                    if (result) {
-                                                        window.location.href = "delete?mid=" + mid;
+                                                    function deleteManuDetail(mid) {
+                                                        var result = confirm("Bạn có chắc muốn xóa chi tiết này ?");
+                                                        if (result) {
+                                                            window.location.href = "delete?mid=" + mid;
+                                                        }
                                                     }
-                                                }
         </script>
 
         <script type="text/javascript">

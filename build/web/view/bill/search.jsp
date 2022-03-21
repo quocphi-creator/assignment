@@ -8,6 +8,9 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -26,7 +29,7 @@
             int month = (Integer) request.getAttribute("month");
             String monthStr;
             if (month < 10) {
-                monthStr = "0"+month;
+                monthStr = "0" + month;
             } else {
                 monthStr = String.valueOf(month);
             }
@@ -90,9 +93,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Sửa tài khoản</a></li>
+                        <li><a class="dropdown-item" href="#!">Tài khoản</a></li>
 
-                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/logout">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -189,13 +192,21 @@
                                     <%if (month == -1 || year == -1) {%>
                                     <div class="card-body">Tổng số tiền mua linh kiện từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost"><%=money%> (VNĐ)</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.money}" />
+
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                     <%} else {%>
                                     <div class="card-body">Tổng số tiền mua linh kiện tháng <%=month%> năm <%=year%></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost?month=<%=year%>-<%=monthStr%>"><%=money%> (VNĐ)</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost?month=<%=year%>-<%=monthStr%>">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.money}" />
+
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                     <%}%>
@@ -251,26 +262,35 @@
                                     </thead>
 
                                     <tbody>
-                                        <%for (Bill b : bills) {%>
-                                        <tr>
-                                            <td scope="col"><%=b.getBid()%></td>
-                                            <td scope="col"><%=b.getCname()%></td>
-                                            <td scope="col"><%=b.getCategory()%></td>
-                                            <td scope="col"><%=b.getUnitPrice()%> (VNĐ/LK)</td>
-                                            <td scope="col"><%=b.getQuantity()%></td>
-                                            <td scope="col"><%=b.getTotal()%> (VNĐ)</td>
-                                            <td scope="col"><%=b.getInputDate()%></td>
-                                            <td scope="col"><%=b.getOrigin()%></td>
-                                            <td scope="col"><%=b.getSupplierName()%></td>
-                                            <td scope="col"><%=b.getAddress()%></td>
-                                            <td scope="col"><%=b.getContact()%></td>
-                                            <td scope="col"><%=b.getOwner().getOname()%></td>
+                                        <c:forEach items="${requestScope.bills}" var="b">
+                                            <tr>
+                                                <td scope="col">${b.bid}</td>
+                                                <td scope="col">${b.cname}</td>
+                                                <td scope="col">${b.category}</td>
+                                                <td scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${b.unitPrice}" />
 
-                                            <td scope="col"><a onclick="deleteBill(<%=b.getBid()%>)" href="#">Xóa</a></td>
-                                            <td scope="col"><a href="edit?bid=<%=b.getBid()%>">Sửa</a></td>
+                                                </td>
+                                                <td scope="col">${b.quantity}</td>
+                                                <td scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${b.total}" />
+                                                </td>
+                                                <td scope="col">
+                                                    <fmt:formatDate value="${b.inputDate}" pattern="dd/MM/yyyy" />
+                                                </td>
+                                                <td scope="col">${b.origin}</td>
+                                                <td scope="col">${b.supplierName}</td>
+                                                <td scope="col">${b.address}</td>
+                                                <td scope="col">${b.contact}</td>
+                                                <td scope="col">${b.owner.oname}</td>
 
-                                        </tr>
-                                        <%}%>
+                                                <td scope="col"><a onclick="deleteBill(${b.bid})" href="#">Xóa</a></td>
+                                                <td scope="col"><a href="edit?bid=${b.bid}">Sửa</a></td>
+
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
 
                                 </table>
@@ -298,13 +318,13 @@
         <script src="../asset/js/datatables-simple-demo.js"></script>
 
         <script>
-                                                function deleteBill(bid) {
-                                                    var result = confirm("Bạn có chắc muốn xóa thông tin nguồn hàng ? Các thông tin liên quan trong sản xuất sẽ bị xóa.");
+                                                    function deleteBill(bid) {
+                                                        var result = confirm("Bạn có chắc muốn xóa thông tin nguồn hàng ? Các thông tin liên quan trong sản xuất sẽ bị xóa.");
 
-                                                    if (result) {
-                                                        window.location.href = "delete?bid=" + bid;
+                                                        if (result) {
+                                                            window.location.href = "delete?bid=" + bid;
+                                                        }
                                                     }
-                                                }
         </script>
 
         <script type="text/javascript">

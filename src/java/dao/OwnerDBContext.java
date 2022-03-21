@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.AccountGroup;
 import model.Owner;
 
 /**
@@ -47,7 +48,10 @@ public class OwnerDBContext extends DBContext {
         ArrayList<Owner> ownerList = new ArrayList<>();
 
         try {
-            String sql = "SELECT oname, [password] FROM [owner]";
+            String sql = "select O.[oname]\n"
+                    + "	,O.[password] \n"
+                    + "	from [owner] O inner join [Account-Group] ag ON O.oname=AG.oname inner join [group] g on G.gid = AG.gid\n"
+                    + " where G.gid = 1;";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -60,6 +64,28 @@ public class OwnerDBContext extends DBContext {
             Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ownerList;
+    }
+
+    public ArrayList<AccountGroup> getAGs() {
+        ArrayList<AccountGroup> ags = new ArrayList<>();
+        try {
+
+            String sql = "SELECT [oname]\n"
+                    + "      ,[gid]\n"
+                    + "  FROM [dbo].[Account-Group]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                AccountGroup ag = new AccountGroup();
+                ag.setOname(rs.getString("oname"));
+                ag.setGid(rs.getInt("gid"));
+                ags.add(ag);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ags;
     }
 
     public int checkRole(String username, String url) {

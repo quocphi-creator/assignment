@@ -3,6 +3,8 @@
     Created on : Feb 19, 2022, 2:42:30 PM
     Author     : ADMIN
 --%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@page import="model.ReportWorkerSalary"%>
 <%@page import="model.ManufactureDetail"%>
@@ -30,10 +32,10 @@
             ArrayList<ReportWorkerSalary> salaries = (ArrayList<ReportWorkerSalary>) request.getAttribute("salary");
             YearMonth ym = (YearMonth) request.getAttribute("ym");
             String monthStr = "";
-            if (ym.getMonthValue()<10) {
-                monthStr="0"+ym.getMonthValue();
+            if (ym.getMonthValue() < 10) {
+                monthStr = "0" + ym.getMonthValue();
             } else {
-                monthStr=String.valueOf(ym.getMonthValue());
+                monthStr = String.valueOf(ym.getMonthValue());
             }
         %>
 
@@ -80,9 +82,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Sửa tài khoản</a></li>
+                        <li><a class="dropdown-item" href="#!">Tài khoản</a></li>
 
-                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/logout">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -154,7 +156,7 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Báo cáo lương nhân công</li>
                         </ol>
-                        <%if (ym.getYear()==1) {%>
+                        <%if (ym.getYear() == 1) {%>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
@@ -233,7 +235,7 @@
                             </div>
                         </div>
                         <%}%>
-                        
+
 
                         <div class="aaa" >
                             <div class="card-header">
@@ -261,20 +263,42 @@
                                             <th scope="col">Lĩnh Lương</th>
 
                                         </tr>
+
                                     </thead>
 
                                     <tbody>
-                                        <%for (ReportWorkerSalary s : salaries) {%>
+                                        <c:forEach items="${requestScope.salary}" var="s">
+                                            <tr>
+                                                <td scope="col">${s.worker.wid}</td>
+                                                <td scope="col">${s.worker.wname}</td>
+                                                <td scope="col">${s.worker.phoneNumber}</td>
+                                                <td scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${s.worker.monthSalary}" />
+                                                </td>
+                                                <td scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${s.worker.productSalary}" />
+                                                </td>
+                                                <td scope="col">${s.count}</th>
+                                                <th scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${s.worker.monthSalary + s.worker.productSalary*s.count}" />
+                                                </th>
+                                            </tr>
+                                        </c:forEach>
                                         <tr>
-                                            <td scope="col"><%=s.getWorker().getWid()%></td>
-                                            <td scope="col"><%=s.getWorker().getWname()%></td>
-                                            <td scope="col"><%=s.getWorker().getPhoneNumber()%></td>
-                                            <td scope="col"><%=s.getWorker().getMonthSalary()%></td>
-                                            <td scope="col"><%=s.getWorker().getProductSalary()%></td>
-                                            <td scope="col"><%=s.getCount()%></th>
-                                            <td scope="col"><%=(s.getWorker().getMonthSalary() + s.getWorker().getProductSalary() * s.getCount())%> VNĐ</th>
+
+                                            <c:set var="total" value="${0}"/>
+                                            <c:forEach var="s" items="${requestScope.salary}">
+                                                <c:set var="total" value="${total + (s.worker.monthSalary + s.worker.productSalary*s.count)}" />
+                                            </c:forEach>
+
+
+                                            <th scope="col" style="text-align: center" colspan="7">
+                                                Tổng lương: <fmt:formatNumber type="currency" value="${total}" />
+                                            </th>
                                         </tr>
-                                        <%}%>
                                     </tbody>
 
                                 </table>

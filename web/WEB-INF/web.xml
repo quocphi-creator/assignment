@@ -104,6 +104,18 @@
         <servlet-name>AccountRegisterControler</servlet-name>
         <servlet-class>controler.account.AccountRegisterControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutControler</servlet-name>
+        <servlet-class>controler.account.LogoutControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountEditControler</servlet-name>
+        <servlet-class>controler.account.AccountEditControler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListControler</servlet-name>
+        <servlet-class>controler.account.ListControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SearchControler</servlet-name>
         <url-pattern>/bill/search</url-pattern>
@@ -207,6 +219,21 @@
     <servlet-mapping>
         <servlet-name>AccountRegisterControler</servlet-name>
         <url-pattern>/account/register</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>view/account/login.jsp</welcome-file>
+    </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>LogoutControler</servlet-name>
+        <url-pattern>/account/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountEditControler</servlet-name>
+        <url-pattern>/account/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListControler</servlet-name>
+        <url-pattern>/account/list</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

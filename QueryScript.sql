@@ -8,7 +8,10 @@ SELECT B.bid, B.cname, B.componentCategory, B.unitprice, B.quantity, B.totalMone
 FROM owner O INNER JOIN Bill B ON O.oname = B.oname WHERE YEAR(B.inputDate) = 2015 and MONTH(B.inputDate) = 1 ;
 
 -- get owner list --
-select oname, [password] from [owner];
+select O.[oname]
+	,O.[password] 
+	from [owner] O inner join [Account-Group] ag ON O.oname=AG.oname inner join [group] g on G.gid = AG.gid
+ 	where G.gid = 1;
 
 -- Insert new bill --
 INSERT INTO [Bill]([bid] ,[cname] ,[componentCategory] ,[unitprice] ,[quantity] ,[totalMoney] ,[inputDate] ,[supplierName] ,[address] ,[contact] ,[origin] ,[oname])
@@ -312,7 +315,7 @@ SELECT *  FROM [owner] O
 	INNER JOIN [Group] G ON G.gid = AG.gid
 	INNER JOIN [Group-Feature] GF ON G.[gid]=GF.[gid]
 	INNER JOIN [Feature] F ON F.[fid] = GF.[fid]
-WHERE O.oname = 'bbb' AND F.url='/report/salary'
+WHERE O.oname = 'phi' AND F.url='/manufacture/insert'
 
 SELECT b.[bid]
       ,b.[cname]

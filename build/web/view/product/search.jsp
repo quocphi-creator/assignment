@@ -4,6 +4,9 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@page import="java.time.YearMonth"%>
 <%@page import="model.Product"%>
 <%@page import="model.Product"%>
@@ -30,10 +33,10 @@
             int totalProduct = (Integer) request.getAttribute("product");
             int assets = (Integer) request.getAttribute("assets");
             String monthStr = "";
-            if (ym.getMonthValue()<10) {
-                monthStr="0"+ym.getMonthValue();
+            if (ym.getMonthValue() < 10) {
+                monthStr = "0" + ym.getMonthValue();
             } else {
-                monthStr=String.valueOf(ym.getMonthValue());
+                monthStr = String.valueOf(ym.getMonthValue());
             }
         %>
 
@@ -80,9 +83,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Sửa tài khoản</a></li>
+                        <li><a class="dropdown-item" href="#!">Tài khoản</a></li>
 
-                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/logout">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -181,7 +184,12 @@
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body">Tổng giá trị tài sản từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets"><%=assets%> (VNĐ)</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.assets}" />
+
+
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -191,13 +199,17 @@
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body">Tổng giá trị tài sản tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets?month=<%=ym.getYear()%>-<%=ym.getMonthValue()%>"><%=assets%> (VNĐ)</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets?month=<%=ym.getYear()%>-<%=ym.getMonthValue()%>">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.assets}" />
+
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <%}%>
-                            
+
                             <!--                            <div class="col-xl-3 col-md-6">
                                                             <div class="card bg-success text-white mb-4">
                                                                 <div class="card-body">Tổng tài sản</div>
@@ -242,22 +254,30 @@
                                     </thead>
 
                                     <tbody>
-                                        <%for (Product p : products) {%>
-                                        <tr>
-                                            <td scope="col"><%=p.getPid()%></td>
-                                            <td scope="col"><%=p.getPname()%></td>
-                                            <td scope="col"><%=p.getCategory()%></td>
-                                            <td scope="col"><%=p.getModel()%></td>
-                                            <td scope="col"><%=p.getPrice()%></td>
-                                            <td scope="col"><%=p.getManufactureDate()%></td>
-                                            <td scope="col"><%=p.getExpireDate()%></td>
-                                            <td scope="col"><%=p.getGuid()%></td>
-                                            <td scope="col"><%=p.getWorker().getWname()%></td>
-                                            <td scope="col"><a href="#" onclick="deleteProduct(<%=p.getPid()%>)">Xóa</a></td>
-                                            <td scope="col"><a href="edit?pid=<%=p.getPid()%>">Sửa</a></td>
+                                        <c:forEach items="${requestScope.products}" var="p">
+                                            <tr>
+                                                <td scope="col">${p.pid}</td>
+                                                <td scope="col">${p.pname}</td>
+                                                <td scope="col">${p.category}</td>
+                                                <td scope="col">${p.model}</td>
+                                                <td scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${p.price}" />
 
-                                        </tr>
-                                        <%}%>
+                                                </td>
+                                                <td scope="col">
+                                                    <fmt:formatDate value="${p.manufactureDate}" pattern="dd/MM/yyyy" />
+                                                </td>
+                                                <td scope="col">                          
+                                                    <fmt:formatDate value="${p.expireDate}" pattern="dd/MM/yyyy" />
+                                                </td>
+                                                <td scope="col">${p.guid}</td>
+                                                <td scope="col">${p.worker.wname}</td>
+                                                <td scope="col"><a href="#" onclick="deleteProduct(${p.pid})">Xóa</a></td>
+                                                <td scope="col"><a href="edit?pid=${p.pid}">Sửa</a></td>
+
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
 
                                 </table>
@@ -283,12 +303,12 @@
         <script src="../asset/js/datatables-simple-demo.js"></script>
 
         <script>
-                                                function deleteProduct(pid) {
-                                                    var result = confirm("Bạn có chắc muốn xóa sản phẩm này ?");
-                                                    if (result) {
-                                                        window.location.href = "delete?pid=" + pid;
+                                                    function deleteProduct(pid) {
+                                                        var result = confirm("Bạn có chắc muốn xóa sản phẩm này ?");
+                                                        if (result) {
+                                                            window.location.href = "delete?pid=" + pid;
+                                                        }
                                                     }
-                                                }
         </script>
 
         <script type="text/javascript">

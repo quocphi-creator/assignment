@@ -5,22 +5,38 @@
  */
 package controler.account;
 
-import dao.OwnerDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Owner;
 
 /**
  *
  * @author ADMIN
  */
-public class AccountLoginControler extends HttpServlet {
+public class LogoutControler extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.sendRedirect("http://localhost:8080/ProductionManager/");
+        
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -34,7 +50,7 @@ public class AccountLoginControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("../view/account/login.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -48,29 +64,7 @@ public class AccountLoginControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String oname = request.getParameter("oname");
-        String password = request.getParameter("password");
-        String remember = request.getParameter("remember");
-        
-        OwnerDBContext db = new OwnerDBContext();
-        Owner account = db.getOwner(oname, password);
-        
-        if (account!=null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("account", account);
-            if (remember != null) {
-                Cookie c_user = new Cookie("username", oname);
-                Cookie c_pass = new Cookie("password", password);
-                c_user.setMaxAge(24 * 3600 * 7);
-                c_pass.setMaxAge(24 * 3600 * 7);
-                response.addCookie(c_user);
-                response.addCookie(c_pass);
-            }
-            response.sendRedirect("http://localhost:8080/ProductionManager/bill/search");
-        } else {
-            response.getWriter().println("Login Failed!");
-        }
+        processRequest(request, response);
     }
 
     /**

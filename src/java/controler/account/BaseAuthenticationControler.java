@@ -55,7 +55,7 @@ public abstract class BaseAuthenticationControler extends HttpServlet {
             //process bussiness
             processGet(request, response);
         } else {
-            response.getWriter().println("Bạn không có quyền truy cập, xin vui lòng đăng nhập lại");
+            response.sendRedirect("http://localhost:8080/ProductionManager/");
         }
     }
 

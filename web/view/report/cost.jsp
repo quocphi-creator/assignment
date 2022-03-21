@@ -13,6 +13,9 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,12 +32,12 @@
         <%
             ArrayList<Bill> bills = (ArrayList<Bill>) request.getAttribute("bills");
             YearMonth ym = (YearMonth) request.getAttribute("ym");
-            int total = (Integer)request.getAttribute("total");
+            int total = (Integer) request.getAttribute("total");
             String monthStr = "";
-            if (ym.getMonthValue()<10) {
-                monthStr="0"+ym.getMonthValue();
+            if (ym.getMonthValue() < 10) {
+                monthStr = "0" + ym.getMonthValue();
             } else {
-                monthStr=String.valueOf(ym.getMonthValue());
+                monthStr = String.valueOf(ym.getMonthValue());
             }
         %>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -77,9 +80,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Sửa tài khoản</a></li>
+                        <li><a class="dropdown-item" href="#!">Tài khoản</a></li>
 
-                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/logout">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -151,7 +154,7 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Báo cáo tồn kho</li>
                         </ol>
-                        <%if (ym.getYear()==1) {%>
+                        <%if (ym.getYear() == 1) {%>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
@@ -251,34 +254,65 @@
                                             <th scope="col">Đơn giá</th>
                                             <th scope="col">Ước tính</th>
                                             <th scope="col">thực chi</th>
-                                            <th scope="col">Chênh lệch</th>
+                                            <th scope="col">Chiết khấu</th>
                                         </tr>
-                                        
+
                                     </thead>
 
                                     <tbody>
-                                        <%for (Bill b : bills) {%>
-                                        <tr>
-                                            <td scope="col"><%=b.getBid()%></td>
-                                            <td scope="col"><%=b.getCname()%></td>
-                                            <td scope="col"><%=b.getInputDate()%></td>
-                                            <td scope="col"><%=b.getCategory()%></td>
-                                            <td scope="col"><%=b.getQuantity()%></td>
-                                            <td scope="col"><%=b.getUnitPrice()%> (VNĐ)</td>
-                                            <td scope="col"><%=(b.getQuantity() * b.getUnitPrice())%></td>
-                                            <td scope="col"><%=b.getTotal()%> (VNĐ)</td>
-                                            <%if (b.getTotal() - (b.getQuantity() * b.getUnitPrice()) > 0) {%>
-                                            <td scope="col">Tăng <%=(b.getTotal() - (b.getQuantity() * b.getUnitPrice()))%> (VNĐ)</th>
-                                                <%} else {%>
-                                            <td scope="col">Giảm <%=((b.getQuantity() * b.getUnitPrice()) - b.getTotal())%> (VNĐ)</th>
-                                                <%}%>
-                                        </tr>
-                                        <%}%>
+                                        <c:forEach items="${requestScope.bills}" var="b">
+                                            <tr>
+                                                <td scope="col">${b.bid}</td>
+                                                <td scope="col">${b.cname}</td>
+                                                <td scope="col">
+                                                    <fmt:formatDate value="${b.inputDate}" pattern="dd/MM/yyyy" />
+                                                </td>
+                                                <td scope="col">${b.category}</td>
+                                                <td scope="col">${b.quantity}</td>
+                                                <td scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${b.unitPrice}" />
+
+                                                </td>
+                                                <td scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${b.quantity * b.unitPrice}" />
+
+                                                </td>
+
+                                                <th scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${b.total}" />
+
+                                                </th>
+                                                <c:if test="${(b.total - (b.quantity * b.unitPrice)> 0 )}">
+                                                    <td scope="col">
+                                                        <fmt:setLocale value = "vi_VN"/>
+                                                        <fmt:formatNumber type="currency" value="${b.total - (b.quantity * b.unitPrice)}" var="discount" />
+                                                        Tăng ${discount}
+                                                    </td>
+                                                </c:if>
+
+                                                <c:if test="${(b.total - (b.quantity * b.unitPrice)< 0)  }">
+                                                    <td scope="col">
+                                                        <fmt:setLocale value = "vi_VN"/>
+                                                        <fmt:formatNumber type="currency" value="${0-b.total + (b.quantity * b.unitPrice)}" var="discount" />
+                                                        giảm ${discount}
+                                                    </td> 
+                                                </c:if>
+
+
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
-                                    
-                                        <tr>
-                                            <th scope="col" colspan="9" style="text-align: center">Tổng chi: <%=total%> (VNĐ)</th>
-                                        </tr>
+
+                                    <tr>
+                                        <th scope="col" colspan="9" style="text-align: center">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${total}" var="total"/>
+                                            Tổng chi: ${total}
+                                        </th>
+                                    </tr>
                                 </table>
                                 <%}%>
 

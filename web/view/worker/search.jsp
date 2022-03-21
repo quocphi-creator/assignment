@@ -12,6 +12,9 @@
 <%@page import="model.Bill"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,9 +77,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Sửa tài khoản</a></li>
+                        <li><a class="dropdown-item" href="#!">Tài khoản</a></li>
 
-                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/logout">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -167,24 +170,24 @@
                                     </div>
                                 </div>
                             </div>
-<!--                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Tổng tài sản</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Lãng phí</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>-->
+                            <!--                            <div class="col-xl-3 col-md-6">
+                                                            <div class="card bg-success text-white mb-4">
+                                                                <div class="card-body">Tổng tài sản</div>
+                                                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3 col-md-6">
+                                                            <div class="card bg-danger text-white mb-4">
+                                                                <div class="card-body">Lãng phí</div>
+                                                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
+                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
                         </div>
 
                         <div class="aaa" >
@@ -206,19 +209,26 @@
                                     </thead>
 
                                     <tbody>
-                                        <%for (Worker w : workersByName) {%>
-                    <tr>
-                        <td scope="col"><%=w.getWid()%></td>
-                        <td scope="col"><%=w.getWname()%></td>
-                        <td scope="col"><%=w.getPhoneNumber()%></td>                          
-                        <td scope="col"><%=w.getMonthSalary()%>  (VNĐ/Tháng)</td>
-                        <td scope="col"><%=w.getProductSalary()%>(VNĐ/SP)</td>
+                                        <c:forEach items="${requestScope.workers}" var="w">
+                                            <tr>
+                                                <td scope="col">${w.wid}</td>
+                                                <td scope="col">${w.wname}</td>
+                                                <td scope="col">${w.phoneNumber}</td>                          
+                                                <td scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${w.monthSalary}" />
 
-                        <td scope="col"><a href="#" onclick="deleteWorker(<%=w.getWid()%>);">Xóa</a></td>
-                        <td scope="col"><a href="edit?wid=<%=w.getWid()%>">Sửa</a></td>
+                                                </td>
+                                                <td scope="col">
+                                                    <fmt:setLocale value = "vi_VN"/>
+                                                    <fmt:formatNumber type="currency" value="${w.productSalary}" />
+                                                </td>
 
-                    </tr>
-                    <%}%>
+                                                <td scope="col"><a href="#" onclick="deleteWorker(${w.wid});">Xóa</a></td>
+                                                <td scope="col"><a href="edit?wid=${w.wid}">Sửa</a></td>
+
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
 
                                 </table>
@@ -244,14 +254,14 @@
         <script src="../asset/js/datatables-simple-demo.js"></script>
 
         <script>
-                                        function deleteWorker(wid)
-                                        {
-                                            var result = confirm("Bạn có chắc muốn xóa nhân viên này?");
-                                            if (result)
-                                            {
-                                                window.location.href = "delete?wid=" + wid;
-                                            }
-                                        }
+                                                    function deleteWorker(wid)
+                                                    {
+                                                        var result = confirm("Bạn có chắc muốn xóa nhân viên này?");
+                                                        if (result)
+                                                        {
+                                                            window.location.href = "delete?wid=" + wid;
+                                                        }
+                                                    }
         </script>
 
         <script type="text/javascript">

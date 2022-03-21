@@ -21,7 +21,7 @@
 
         <div class="container">
             <form action="account/login" method="post">
-                <h1>Đăng nhập</h1>
+                <h1>Sửa thông tin tài khoản</h1>
                 <div class="form-group">
                     <lable for="oname">User Name</lable>
                     <input type="text" name="oname" value="${sessionScope.c_pass}" placeholder="Nhập user name" required="required">
@@ -29,18 +29,15 @@
 
                 <div class="form-group">
                     <lable for="password">Password</lable>
-                    <input type="password" name="password" value="${sessionScope.c_pass}" placeholder="Nhập Mật Khẩu" required="required">
+                    <input type="text" name="password" value="${sessionScope.c_pass}" placeholder="Nhập Mật Khẩu" required="required">
                 </div>
 
-                <div class="form-group">
-                    <input type="checkbox" value="remember" name="remember">
-                    <label> Nhớ mật khẩu </label>
-                </div>
+                
                 
                 <div class="form-group">
-                    <input type="submit" value="Login">
+                    <input type="submit" value="Save">
                 </div>
-                <p>Bạn chưa có tài khoản? <a href="http://localhost:8080/ProductionManager/account/register">Đăng ký</a>.</p>
+                
             </form>
         </div>
 

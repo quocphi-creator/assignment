@@ -4,7 +4,7 @@
     Author     : ADMIN
 --%>
 
-<%@page import="model.ReportInventory"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="model.ManufactureDetail"%>
 <%@page import="java.time.YearMonth"%>
 <%@page import="model.Product"%>
@@ -13,9 +13,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -24,15 +21,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Trang Quản Trị | Kho Linh Kiện</title>
+        <title>Tài khoản | Danh sách</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../asset/css/style.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-        <%
-            ArrayList<ReportInventory> inventoryList = (ArrayList<ReportInventory>) request.getAttribute("inventoryList");
 
-        %>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -78,7 +73,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#!">Tài khoản</a></li>
 
-                        <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/logout">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -98,8 +93,8 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="http://localhost:8080/ProductionManager/bill/search">Danh sách nguồn hàng </a>
-                                    <a class="nav-link" id="searchproduct" onclick="clickServlet()" href="http://localhost:8080/ProductionManager/product/search">Danh sách sản phẩm</a>
-                                    <a class="nav-link" id="searchproduct" onclick="clickServlet()" href="http://localhost:8080/ProductionManager/worker/search">Danh sách công nhân</a>
+                                    <a class="nav-link" id="searchproduct" onclick="clickServlet()" href="search">Danh sách sản phẩm</a>
+                                    <a class="nav-link" href="http://localhost:8080/ProductionManager/worker/search">Danh sách nhân công</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -116,7 +111,7 @@
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="http://localhost:8080/ProductionManager/manufacture/search">Báo cáo chi tiết</a>
-                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/inventory">Báo cáo tồn kho</a>
+                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/inventory">Quản lý Kho linh kiện</a>
                                             <!--<a class="nav-link" href="password.html">Xuất kho</a>-->
                                         </nav>
                                     </div>
@@ -128,7 +123,7 @@
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="http://localhost:8080/ProductionManager/report/salary">Chi phí nhân công</a>
                                             <a class="nav-link" href="http://localhost:8080/ProductionManager/report/cost">Chi phí đầu vào</a>
-                                            <a class="nav-link" href="http://localhost:8080/ProductionManager/report/assets">Giá trị thành phẩm</a>
+                                            <a class="nav-link" href="500.html">Giá trị thành phẩm</a>
                                         </nav>
                                     </div>
                                 </nav>
@@ -146,89 +141,45 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Trang quản trị</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Báo cáo tồn kho</li>
-                        </ol>
-                        <div class="row">
-                            <!--                            <div class="col-xl-3 col-md-6">
-                                                            <div class="card bg-primary text-white mb-4">
-                                                                <div class="card-body">Chi phí đầu vào</div>
-                                                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-3 col-md-6">
-                                                            <div class="card bg-warning text-white mb-4">
-                                                                <div class="card-body">Chi phí nhân công</div>
-                                                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-3 col-md-6">
-                                                            <div class="card bg-success text-white mb-4">
-                                                                <div class="card-body">Tổng tài sản</div>
-                                                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-3 col-md-6">
-                                                            <div class="card bg-danger text-white mb-4">
-                                                                <div class="card-body">Lãng phí</div>
-                                                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                                                    <a class="small text-white stretched-link" href="#">Xem chi tiết</a>
-                                                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>-->
-                        </div>
+                        <h1 class="mt-4">Sản xuất linh kiện</h1>
+                        <!--                        <ol class="breadcrumb mb-4">
+                                                    <li class="breadcrumb-item active">Danh sách sản phẩm</li>
+                                                </ol>-->
 
                         <div class="aaa" >
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Bảng dữ liệu linh kiện tồn kho
+                                Danh sách tài khoản
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple" class="table-bordered">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Mã LK</th>
-                                            <th scope="col">Tên linh kiện</th>
-                                            <th scope="col">Thể loại</th>
-                                            <th scope="col">Số lượng đầu vào</th>
-                                            <th scope="col">Đơn giá</th>
-                                            <th scope="col">Đã SX</th>
-                                            <th scope="col">Bị hỏng</th>
-                                            <th scope="col">Tồn kho</th>
+                                            <th scope="col">Tên tài khoản</th>                                            
+                                            <th scope="col">Vai trò</th>
+                                            <th scope="col" colspan="3">Thao tác tài khoản</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        <c:forEach items="${requestScope.inventoryList}" var="i">
+                                        <c:forEach items="${requestScope.ags}" var="ag">
                                             <tr>
-                                                <td scope="col">${i.bill.bid}</td>
-                                                <td scope="col">${i.bill.cname}</td>
-                                                <td scope="col">${i.bill.category}</td>
-                                                <td scope="col">${i.bill.quantity}</td>
-                                                <td scope="col">
-                                                    <fmt:setLocale value = "vi_VN"/>
-                                                    <fmt:formatNumber type="currency" value="${i.bill.unitPrice}" />
-                                                </td>
-                                                <td scope="col">${i.producted}</td>
-                                                <td scope="col">${i.removed}</td>
-                                                <td scope="col">${i.bill.quantity - i.producted - i.removed}</th>
+                                                <td scope="col">${ag.oname}</td>      
+                                                <c:if test="${ag.gid == 1}">
+                                                    <td scope="col">Quản lý</td>
+                                                </c:if>
+                                                <c:if test="${ag.gid == 2}">
+                                                    <td scope="col">Nhân viên</td>
+                                                </c:if>
+                                                <td scope="col">sửa vai trò</td>
+                                                <td scope="col">Xóa</td>
+                                                <td scope="col">Chi tiết</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
 
                                 </table>
-                                <a href="http://localhost:8080/ProductionManager/bill/insert"><button class="w3-button w3-teal">+</button></a>
+
                             </div>
                         </div>
                     </div>

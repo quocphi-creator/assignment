@@ -14,7 +14,8 @@
         <title>Tài khoản | Đăng ký</title>
         <!--<link rel="stylesheet" href="../asset/css/registerStyle.css"><link >-->
         <link rel="stylesheet" href="../asset/css/FormStyle.css">        
-
+        <!--<link rel="stylesheet" href="../asset/css/registerStyle.css">-->
+        <link rel="stylesheet" href="../asset/css/loginStyle.css">
         <%
             ArrayList<Group> groups = (ArrayList<Group>) request.getAttribute("groups");
         %>
@@ -58,9 +59,9 @@
                 </div>
 
                 <div class="container signin">
-                    <p>Bạn đã có tài khoản? <a href="http://localhost:8080/ProductionManager/account/login">Đăng nhập</a>.</p>
+                    <p>Bạn đã có tài khoản? <a href="http://localhost:8080/ProductionManager/">Đăng nhập</a>.</p>
                 </div>
             </form>
-        </div>>
+        </div>
     </body>
 </html>

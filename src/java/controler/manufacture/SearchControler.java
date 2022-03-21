@@ -45,6 +45,8 @@ public class SearchControler extends HttpServlet {
         int year = ym.getYear();
         int month = ym.getMonth().getValue();
         
+        
+        
         ManufactureDBContext manuDB = new ManufactureDBContext();
         ArrayList<ManufactureDetail> manuList = manuDB.getManuList(month, year);
         request.setAttribute("manuList", manuList);
