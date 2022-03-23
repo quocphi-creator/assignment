@@ -7,6 +7,7 @@ package controler.report;
 
 import controler.account.BaseAuthenticationControler;
 import dao.BillDBContext;
+import dao.ProductDBContext;
 import dao.ReportDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Bill;
+import model.Product;
 import model.ReportInventory;
+import model.ReportWorkerSalary;
 
 /**
  *
@@ -55,14 +58,45 @@ public class WasteReportControler extends BaseAuthenticationControler {
 
         ReportDBContext inventoryDB = new ReportDBContext();
         ArrayList<ReportInventory> wastes = inventoryDB.getWastes(getMonth, getYear);
-
+        request.setAttribute("wastes", wastes);
+        
         int totalWaste = 0;
         for (ReportInventory waste : wastes) {
             totalWaste+=waste.getRemoved()*waste.getBill().getUnitPrice();
         }
-        
         request.setAttribute("total", totalWaste);
-        request.setAttribute("wastes", wastes);
+        
+        BillDBContext billDB = new BillDBContext();
+        ArrayList<Bill> bills = billDB.getBills(getMonth, getYear);
+        request.setAttribute("bills", bills);
+
+        ProductDBContext productDB = new ProductDBContext();
+        ArrayList<Product> products = productDB.getProducts(getMonth, getYear);
+        request.setAttribute("products", products);
+
+        ReportDBContext reportDB = new ReportDBContext();
+        ArrayList<ReportWorkerSalary> salaries = reportDB.getSalaries(getMonth, getYear);
+        request.setAttribute("salaries", salaries);
+
+        int totalCost = 0;
+        for (Bill bill : bills) {
+            totalCost += bill.getTotal();
+        }
+        request.setAttribute("totalCost", totalCost);
+        
+        int totalProduct = 0;
+        for (Product p : products) {
+            totalProduct += p.getPrice();
+        }
+        request.setAttribute("totalProduct", totalProduct);
+
+        int totalSalary = 0;
+        for (ReportWorkerSalary w : salaries) {
+            totalSalary += w.getWorker().getMonthSalary() + w.getWorker().getProductSalary() + w.getCount();
+        }
+        request.setAttribute("totalSalaries", totalSalary);
+        
+        
         request.setAttribute("ym", ym);
         
         request.getRequestDispatcher("../view/report/waste.jsp").forward(request, response);

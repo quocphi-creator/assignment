@@ -78,7 +78,7 @@ public class AccountRegisterControler extends HttpServlet {
         GroupDBContext db = new GroupDBContext();
         db.insertAccount(o);
         db.insertAG(o, gid);
-        response.sendRedirect("login");
+        response.sendRedirect("http://localhost:8080/ProductionManager/");
 //        response.sendRedirect("");
     }
 

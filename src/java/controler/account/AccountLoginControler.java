@@ -34,6 +34,8 @@ public class AccountLoginControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         request.getRequestDispatcher("../view/account/login.jsp").forward(request, response);
     }
 
@@ -48,7 +50,8 @@ public class AccountLoginControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         String oname = request.getParameter("oname");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
@@ -67,9 +70,9 @@ public class AccountLoginControler extends HttpServlet {
                 response.addCookie(c_user);
                 response.addCookie(c_pass);
             }
-            response.sendRedirect("http://localhost:8080/ProductionManager/bill/search");
+            response.sendRedirect("http://localhost:8080/ProductionManager/report/inventory");
         } else {
-            response.getWriter().println("Login Failed!");
+            response.getWriter().println("Đăng nhập thất bại");
         }
     }
 

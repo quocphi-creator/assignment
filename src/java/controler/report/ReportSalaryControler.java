@@ -6,6 +6,8 @@
 package controler.report;
 
 import controler.account.BaseAuthenticationControler;
+import dao.BillDBContext;
+import dao.ProductDBContext;
 import dao.ReportDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +17,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Bill;
+import model.Product;
+import model.ReportInventory;
 import model.ReportWorkerSalary;
 
 /**
@@ -36,18 +41,60 @@ public class ReportSalaryControler extends BaseAuthenticationControler {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        YearMonth ym = null;
+        int getMonth;
+        int getYear;
         String raw_ym = request.getParameter("month");
-        if (raw_ym==null || raw_ym.length()==0) {
-            raw_ym = "0001-01";
+        if (raw_ym == null || raw_ym.length() == 0) {
+            ym = ym.parse("0001-01");
+            getMonth = -1;
+            getYear = -1;
+        } else {
+            ym = YearMonth.parse(raw_ym);
+            getYear = ym.getYear();
+            getMonth = ym.getMonth().getValue();
+
         }
-        YearMonth ym = YearMonth.parse(raw_ym);
-        int year = ym.getYear();
-        int month = ym.getMonth().getValue();
         
         ReportDBContext reportDB = new ReportDBContext();
-        ArrayList<ReportWorkerSalary> salary = reportDB.getSalaries(month, year);
-        
+        ArrayList<ReportWorkerSalary> salary = reportDB.getSalaries(getMonth, getYear);
         request.setAttribute("salary", salary);
+        
+        int totalSalary = 0;
+        for (ReportWorkerSalary w : salary) {
+            totalSalary += w.getWorker().getMonthSalary() + w.getWorker().getProductSalary() + w.getCount();
+        }
+        request.setAttribute("totalSalary", totalSalary);
+        
+        BillDBContext billDB = new BillDBContext();
+        ArrayList<Bill> bills = billDB.getBills(getMonth, getYear);
+        request.setAttribute("bills", bills);
+        
+        int totalCost = 0;
+        for (Bill bill : bills) {
+            totalCost += bill.getTotal();
+        } 
+        request.setAttribute("totalCost", totalCost);
+        
+        
+        ProductDBContext productDB = new ProductDBContext();
+        ArrayList<Product> products = productDB.getProducts(getMonth, getYear);
+        request.setAttribute("products", products);
+        
+        int totalProduct = 0;
+        for (Product p : products) {
+            totalProduct += p.getPrice();
+        }
+        request.setAttribute("totalProduct", totalProduct);
+        
+        ArrayList<ReportInventory> wastes = reportDB.getWastes(getMonth, getYear);
+        request.setAttribute("wastes", wastes);
+        int totalWaste = 0;
+        for (ReportInventory waste : wastes) {
+            totalWaste += waste.getRemoved() * waste.getBill().getUnitPrice();
+        }
+        request.setAttribute("totalWaste", totalWaste);
+        
         request.setAttribute("ym", ym);
         request.getRequestDispatcher("../view/report/salary.jsp").forward(request, response);
     }

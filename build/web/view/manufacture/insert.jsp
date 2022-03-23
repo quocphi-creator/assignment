@@ -8,6 +8,10 @@
 <%@page import="model.Worker"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,8 +21,9 @@
         <link rel="stylesheet" href="../asset/css/FormStyle.css">
         <%
             ArrayList<Worker> workers = (ArrayList<Worker>) request.getAttribute("workers");
-            
+
         %>
+
     </head>
     <style>
         body {font-family: Arial, Helvetica, sans-serif;}
@@ -56,7 +61,7 @@
     </style>
     <body>
 
-        
+
         <div class="container">
             <h3>Nhập Thông Tin Sản Xuất</h3>
             <form action="insert" method="POST">
@@ -68,12 +73,13 @@
 
                 <div class="form-row">
                     <label for="producted">Số linh kiện đã sản xuất</label>
-                    <input type="text" name="producted" placeholder="Nhập số lượng linh kiện đã được sản xuất.." required="required">
+                    <input type="text" id="producted" name="producted" placeholder="Nhập số lượng linh kiện đã được sản xuất.." required="required">
+
                 </div>
 
                 <div class="form-row">
                     <label for="removed">Số linh kiện bị loại bỏ</label>
-                    <input type="text" name="removed" placeholder="Nhập số lượng linh kiện đã bị hỏng.." required="required">
+                    <input type="text" id="removed" name="removed" placeholder="Nhập số lượng linh kiện đã bị hỏng.." required="required">
                 </div>
 
 
@@ -109,5 +115,6 @@
 
             </form>
         </div>
+
     </body>
 </html>

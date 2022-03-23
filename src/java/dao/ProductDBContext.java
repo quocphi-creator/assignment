@@ -225,7 +225,7 @@ public class ProductDBContext extends DBContext {
             stm.setInt(8, p.getWorker().getWid());
             stm.setInt(9, p.getPid());
 
-            stm.executeQuery();
+            stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

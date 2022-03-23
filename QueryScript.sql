@@ -4,8 +4,21 @@
 SELECT oname, [password] from Owner WHERE oname = N'phi' and password='123456789'
 
 -- get bill list --
-SELECT B.bid, B.cname, B.componentCategory, B.unitprice, B.quantity, B.totalMoney, B.inputDate, B.supplierName, B.address, B.contact, B.origin, B.oname, o.[password]
-FROM owner O INNER JOIN Bill B ON O.oname = B.oname WHERE YEAR(B.inputDate) = 2015 and MONTH(B.inputDate) = 1 ;
+SELECT B.[bid]
+      ,B.[cname]
+      ,B.[componentCategory]
+      ,B.[unitprice]
+      ,B.[quantity]
+      ,B.[totalMoney]
+      ,B.[inputDate]
+      ,B.[supplierName]
+      ,B.[address]
+      ,B.[contact]
+      ,B.[origin]
+      ,B.[oname]
+	  ,O.[password]
+  FROM [dbo].[Bill] B LEFT JOIN [owner] O ON B.oname = O.oname
+  Where YEAR(B.inputDate) = 2022 AND MONTH(B.inputDate)=3
 
 -- get owner list --
 select O.[oname]
@@ -230,15 +243,16 @@ SELECT [bid]
 
 -- report inventory --
   SELECT b.[bid]
-	  ,MAX(b.[cname]) AS ComponentName
-	  ,MAX(b.[componentCategory]) as Category
-	  ,MAX(b.[quantity]) as Quantity
-	  ,MAX(b.unitprice) as Price
+	  ,b.[cname] AS ComponentName
+	  ,b.[componentCategory] as Category
+	  ,b.[inputDate] as InputDate
+	  ,b.[quantity] as Quantity
+	  ,b.unitprice as Price
 	  ,SUM(m.[producted]) AS Producted
 	  ,SUM(m.[removed]) AS Removed
   FROM [dbo].[Bill] b left join [Manufactoring] m on m.bid=b.bid
   WHERE B.cname LIKE N'%Linh%'
-  GROUP BY B.bid
+  GROUP BY B.bid, b.cname,b.[inputDate], b.componentCategory, b.quantity, b.unitprice
   
 
 -- Report worker's salary --
@@ -332,3 +346,12 @@ SELECT b.[bid]
      VALUES
            ('rr'
            ,1)
+
+--Edit Account--
+UPDATE [dbo].[owner]
+   SET [oname] = 'Phii'
+      ,[password] = '22012001'
+ WHERE [oname]='Phii'
+
+
+      WHERE oname='Nguyen Anh tuan'

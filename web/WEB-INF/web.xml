@@ -116,6 +116,10 @@
         <servlet-name>ListControler</servlet-name>
         <servlet-class>controler.account.ListControler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteAccountControler</servlet-name>
+        <servlet-class>controler.account.DeleteAccountControler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SearchControler</servlet-name>
         <url-pattern>/bill/search</url-pattern>
@@ -234,6 +238,10 @@
     <servlet-mapping>
         <servlet-name>ListControler</servlet-name>
         <url-pattern>/account/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAccountControler</servlet-name>
+        <url-pattern>/account/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

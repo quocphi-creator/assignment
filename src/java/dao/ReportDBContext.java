@@ -73,18 +73,19 @@ public class ReportDBContext extends DBContext {
 
         try {
             String sql = "   SELECT b.[bid]\n"
-                    + "	  ,MAX(b.[cname]) AS ComponentName\n"
-                    + "	  ,MAX(b.[componentCategory]) as Category\n"
-                    + "	  ,MAX(b.[quantity]) as Quantity\n"
-                    + "	  ,MAX(b.unitprice) as Price\n"
+                    + "	  ,b.[cname] AS ComponentName\n"
+                    + "	  ,b.[componentCategory] as Category\n"
+                    + "	  ,b.[inputDate] as InputDate\n"
+                    + "	  ,b.[quantity] as Quantity\n"
+                    + "	  ,b.unitprice as Price\n"
                     + "	  ,SUM(m.[producted]) AS Producted\n"
                     + "	  ,SUM(m.[removed]) AS Removed\n"
-                    + "  FROM [dbo].[Bill] b left join [Manufactoring] m on m.bid=b.bid";
+                    + "  FROM [dbo].[Bill] b left join [Manufactoring] m on m.bid=b.bid ";
 
             if (cname != null) {
                 sql += "  WHERE B.cname LIKE N'%" + cname + "%'";
             }
-            sql += "  GROUP BY B.bid";
+            sql += "  GROUP BY B.bid, b.cname,b.[inputDate], b.componentCategory, b.quantity, b.unitprice";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
@@ -96,6 +97,7 @@ public class ReportDBContext extends DBContext {
                 Bill b = new Bill();
                 b.setBid(rs.getInt("bid"));
                 b.setCname(rs.getNString("ComponentName"));
+                b.setInputDate(rs.getDate("InputDate"));
                 b.setCategory(rs.getNString("Category"));
                 b.setQuantity(rs.getInt("Quantity"));
                 b.setUnitPrice(rs.getInt("Price"));

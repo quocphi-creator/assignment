@@ -45,7 +45,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Trang Quản trị</a>
+            <a class="navbar-brand ps-3" href="http://localhost:8080/ProductionManager/report/inventory">Trang Quản trị</a>
 
 
 
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
+                        <div class="small">Đăng nhập bằng: ${sessionScope.account.oname}</div>
 
                     </div>
                 </nav>
@@ -152,7 +152,7 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Trang quản trị</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Báo cáo tồn kho</li>
+                            <li class="breadcrumb-item active">Tóm tắt tài chính</li>
                         </ol>
                         <%if (ym.getYear() == 1) {%>
                         <div class="row">
@@ -160,7 +160,12 @@
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body">Chi phí đầu vào từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.total}" />
+
+                                            
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -169,7 +174,12 @@
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body">Lương nhân công từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/salary">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/salary">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.totalSalary}" />
+                                            
+
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -178,7 +188,12 @@
                                 <div class="card bg-success text-white mb-4">
                                     <div class="card-body">Tổng tài sản từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.totalProduct}" />
+                                            
+                                            
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -187,7 +202,11 @@
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">Số tiền lãng phí từ trước đến nay</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/waste">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/waste">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.totalWaste}" />
+                                            
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -199,16 +218,24 @@
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body">Chi phí đầu vào tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost?month=<%=ym.getYear()%>-<%=monthStr%>">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/cost?month=<%=ym.getYear()%>-<%=monthStr%>">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.total}" />
+                                            
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">:Lương nhân công tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
+                                    <div class="card-body">Lương tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/salary?month=<%=ym.getYear()%>-<%=monthStr%>">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/salary?month=<%=ym.getYear()%>-<%=monthStr%>">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.totalSalary}" />
+                                            
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -217,7 +244,11 @@
                                 <div class="card bg-success text-white mb-4">
                                     <div class="card-body">Tổng tài sản tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets?month=<%=ym.getYear()%>-<%=monthStr%>">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/assets?month=<%=ym.getYear()%>-<%=monthStr%>">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.totalProduct}" />
+                                            
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -226,7 +257,11 @@
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">Lãng phí tháng <%=ym.getMonthValue()%> năm <%=ym.getYear()%></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/waste?month=<%=ym.getYear()%>-<%=monthStr%>">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" href="http://localhost:8080/ProductionManager/report/waste?month=<%=ym.getYear()%>-<%=monthStr%>">
+                                            <fmt:setLocale value = "vi_VN"/>
+                                            <fmt:formatNumber type="currency" value="${requestScope.totalWaste}" />
+                                            
+                                        </a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -293,7 +328,7 @@
                                                     </td>
                                                 </c:if>
 
-                                                <c:if test="${(b.total - (b.quantity * b.unitPrice)< 0)  }">
+                                                <c:if test="${(b.total - (b.quantity * b.unitPrice)<= 0)  }">
                                                     <td scope="col">
                                                         <fmt:setLocale value = "vi_VN"/>
                                                         <fmt:formatNumber type="currency" value="${0-b.total + (b.quantity * b.unitPrice)}" var="discount" />

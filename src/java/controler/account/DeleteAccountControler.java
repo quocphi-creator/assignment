@@ -8,19 +8,35 @@ package controler.account;
 import dao.OwnerDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.jms.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Owner;
 
 /**
  *
  * @author ADMIN
  */
-public class AccountEditControler extends HttpServlet {
+public class DeleteAccountControler extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        String oname = request.getParameter("oname");
+        OwnerDBContext ownerDB = new OwnerDBContext();
+        ownerDB.deleteAccount(oname);
+        response.sendRedirect("http://localhost:8080/ProductionManager/");
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -34,8 +50,7 @@ public class AccountEditControler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.getRequestDispatcher("../view/account/edit.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -49,25 +64,7 @@ public class AccountEditControler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-
-        HttpSession session = request.getSession();
-        Owner oldAcc = (Owner) session.getAttribute("account");
-        String oldUserName = oldAcc.getOname();
-        
-        String oname = request.getParameter("oname");
-        String password = request.getParameter("password");
-
-        Owner o = new Owner();
-        o.setOname(oname);
-        o.setPassword(password);
-
-        OwnerDBContext ownerDB = new OwnerDBContext();
-
-        ownerDB.updateOwner(oldUserName, o);
-
-        response.sendRedirect("http://localhost:8080/ProductionManager/");
+        processRequest(request, response);
     }
 
     /**

@@ -26,10 +26,22 @@ public class BillDBContext extends DBContext {
         ArrayList<Bill> bills = new ArrayList<>();
         try {
 
-            String sql = "SELECT B.bid, B.cname, B.componentCategory, B.unitprice, B.quantity, B.totalMoney, B.inputDate, B.supplierName, B.address, B.contact, B.origin, B.oname, O.[password] \n"
-                    + "FROM owner O INNER JOIN Bill B ON O.oname = B.oname ";
+            String sql = "SELECT B.[bid]\n"
+                    + "      ,B.[cname]\n"
+                    + "      ,B.[componentCategory]\n"
+                    + "      ,B.[unitprice]\n"
+                    + "      ,B.[quantity]\n"
+                    + "      ,B.[totalMoney]\n"
+                    + "      ,B.[inputDate]\n"
+                    + "      ,B.[supplierName]\n"
+                    + "      ,B.[address]\n"
+                    + "      ,B.[contact]\n"
+                    + "      ,B.[origin]\n"
+                    + "      ,B.[oname]\n"
+                    + "	  ,O.[password]\n"
+                    + "  FROM [dbo].[Bill] B LEFT JOIN [owner] O ON B.oname = O.oname";
             //check if Owner search one year
-            if (year>0) {
+            if (year > 0) {
                 sql += " WHERE YEAR(B.inputDate) = ? ";
                 //check if Owner search data in the year
                 if (month > 0) {

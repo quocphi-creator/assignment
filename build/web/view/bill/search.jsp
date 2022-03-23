@@ -43,7 +43,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Trang Quản trị</a>
+            <a class="navbar-brand ps-3" href="http://localhost:8080/ProductionManager/report/inventory">Trang Quản trị</a>
 
 
 
@@ -156,7 +156,7 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
+                        <div class="small">Đăng nhập bằng:${sessionScope.account.oname}</div>
 
                     </div>
                 </nav>
@@ -284,7 +284,13 @@
                                                 <td scope="col">${b.supplierName}</td>
                                                 <td scope="col">${b.address}</td>
                                                 <td scope="col">${b.contact}</td>
-                                                <td scope="col">${b.owner.oname}</td>
+                                                <c:if test="${b.owner.oname == null}">
+                                                    <td scope="col">Đã xóa</td>
+                                                </c:if>
+                                                <c:if test="${b.owner.oname != null}">
+                                                    <td scope="col">${b.owner.oname}</td>
+                                                </c:if>
+                                                
 
                                                 <td scope="col"><a onclick="deleteBill(${b.bid})" href="#">Xóa</a></td>
                                                 <td scope="col"><a href="edit?bid=${b.bid}">Sửa</a></td>

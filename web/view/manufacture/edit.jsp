@@ -77,6 +77,7 @@
                         <%for (Bill b : bills) {%>
                         <option 
                             <%=(b.getBid() == m.getBill().getBid())?"selected=\"selected\"":""%>
+                            selected="selected"
                             value="<%=b.getBid()%>">
                             <%=b.getCname()%>
                         </option>

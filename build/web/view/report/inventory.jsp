@@ -38,7 +38,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Trang Quản trị</a>
+            <a class="navbar-brand ps-3" href="http://localhost:8080/ProductionManager/report/inventory">Trang Quản trị</a>
 
 
 
@@ -48,9 +48,9 @@
 
 
             <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="inventory" method="GET">
                 <div class="input-group">
-                    <input class="form-control" name="bname" type="text" placeholder="Search tên linh kiện..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <input class="form-control" name="cname" type="text" checked="checked" placeholder="Search tên linh kiện..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                     <button class="btn btn-primary" id="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
@@ -76,8 +76,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Tài khoản</a></li>
-
+                        <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/edit">Tài khoản</a></li>
                         <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/logout">Đăng xuất</a></li>
                     </ul>
                 </li>
@@ -138,7 +137,7 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
+                        <div class="small">Đăng nhập bằng:${sessionScope.account.oname}</div>
 
                     </div>
                 </nav>
@@ -201,11 +200,13 @@
                                             <th scope="col">Mã LK</th>
                                             <th scope="col">Tên linh kiện</th>
                                             <th scope="col">Thể loại</th>
+                                            <th scope="col">Ngày Nhập</th>
                                             <th scope="col">Số lượng đầu vào</th>
                                             <th scope="col">Đơn giá</th>
                                             <th scope="col">Đã SX</th>
                                             <th scope="col">Bị hỏng</th>
                                             <th scope="col">Tồn kho</th>
+                                            <th scope="col">Xuất kho</th>
                                         </tr>
                                     </thead>
 
@@ -215,6 +216,10 @@
                                                 <td scope="col">${i.bill.bid}</td>
                                                 <td scope="col">${i.bill.cname}</td>
                                                 <td scope="col">${i.bill.category}</td>
+                                                <td scope="col">
+                                                    <fmt:formatDate value="${i.bill.inputDate}" pattern="dd/MM/yyyy" />
+
+                                                </td>
                                                 <td scope="col">${i.bill.quantity}</td>
                                                 <td scope="col">
                                                     <fmt:setLocale value = "vi_VN"/>
@@ -222,7 +227,21 @@
                                                 </td>
                                                 <td scope="col">${i.producted}</td>
                                                 <td scope="col">${i.removed}</td>
-                                                <td scope="col">${i.bill.quantity - i.producted - i.removed}</th>
+
+                                                <td scope="col">${i.bill.quantity - i.producted - i.removed}</td>
+                                                <td scope="col">
+                                                    <c:if test="${(i.bill.quantity - i.producted - i.removed) <=0 }" var="inventory">
+                                                        Hết hàng
+                                                    </c:if>
+
+                                                    <c:if test="${(i.bill.quantity - i.producted - i.removed) > 0 }" var="inventory">
+                                                        <form action="../manufacture/export" method="POST">
+                                                            <input type="hidden" name="bid" value="${i.bill.bid}">
+                                                            <input type="submit" value="Xuất kho">
+                                                        </form>
+                                                    </c:if>
+
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

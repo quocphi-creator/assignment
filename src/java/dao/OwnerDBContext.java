@@ -113,4 +113,86 @@ public class OwnerDBContext extends DBContext {
         return -1;
 
     }
+
+    public void updateOwner(String oldUser, Owner o) {
+        String sql = "UPDATE [dbo].[owner]\n"
+                + "   SET [oname] = ?\n"
+                + "      ,[password] = ?\n"
+                + " WHERE [oname]=?";
+        PreparedStatement stm = null;
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, o.getOname());
+            stm.setString(2, o.getPassword());
+            stm.setString(3, oldUser);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+    }
+
+    public void deleteOwner(Owner o) {
+        String sql = "DELETE FROM [dbo].[owner]\n"
+                + "      WHERE [oname] = ?";
+        PreparedStatement stm = null;
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, o.getOname());
+
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteAccount(String oname) {
+        String sql = "DELETE FROM [dbo].[owner]\n"
+                + "      WHERE oname=?";
+
+        PreparedStatement stm = null;
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, oname);
+
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(OwnerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
 }

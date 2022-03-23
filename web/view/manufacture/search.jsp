@@ -44,7 +44,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Trang Quản trị</a>
+            <a class="navbar-brand ps-3" href="http://localhost:8080/ProductionManager/report/inventory">Trang Quản trị</a>
 
 
 
@@ -229,14 +229,20 @@
                                                 <td scope="col">${m.bill.category}</td>
                                                 <td scope="col">${m.bill.quantity}</td>
                                                 <td scope="col">${m.bill.unitPrice}</td>
-                                                <td scope="col">${m.worker.wname}</td>
+                                                <c:if test="${m.worker.wname == null}">
+                                                    <td scope="col">Đã Xóa</td>
+                                                </c:if>
+                                                <c:if test="${m.worker.wname != null}">
+                                                    <td scope="col">${m.worker.wname}</td>
+                                                </c:if>
+
                                                 <td scope="col">
                                                     <fmt:formatDate value="${m.outputDate}" pattern="dd/MM/yyyy" />
                                                 </td>
                                                 <td scope="col">${m.producted}</td>
                                                 <td scope="col">${m.removed}</td>
                                                 <td scope="col"><a href="edit?mid=${m.orderID}">Sửa</td>
-                                                <td scope="col"><a href="#" onclick="deleteManuDetail(${m.orderID})">Xóa</td>
+                                                <td scope="col"><a href="delete?mid=${m.orderID}" onclick="return confirm('Bạn có chắc muốn xóa chi tiết này ?')">Xóa</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
@@ -244,7 +250,7 @@
                                 </table>
                                 <%}%>
 
-                                <a href="list"><button class="w3-button w3-teal">+</button></a>
+                                <a href="../report/inventory"><button class="w3-button w3-teal">+</button></a>
                             </div>
                         </div>
                     </div>
@@ -266,10 +272,12 @@
         <script src="../asset/js/datatables-simple-demo.js"></script>
 
         <script>
+
+
                                                     function deleteManuDetail(mid) {
                                                         var result = confirm("Bạn có chắc muốn xóa chi tiết này ?");
                                                         if (result) {
-                                                            window.location.href = "delete?mid=" + mid;
+                                                            window.location.href = +mid;
                                                         }
                                                     }
         </script>
