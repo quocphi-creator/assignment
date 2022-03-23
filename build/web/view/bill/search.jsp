@@ -63,15 +63,15 @@
             <div class="form-agline">
 
                 <form action="search" method="POST">
-                    <div class="form-row">
+                    <div class="form-row yearinput">
                         <lable for="year">Year</lable>
-                        <input class="row-1" type="text" name="year" selected="selected" placeholder="Nhập năm cần báo cáo">
+                        <input style="width: 157px" class="row-1" type="text" name="year" selected="selected" placeholder="Nhập năm">
                     </div>
 
-                    <div class="form-row">
+                    <div class="form-row monthinput">
                         <lable for="month">Month</lable>
                         <select name="month" class="row-2">
-                            <option value="-1">Báo cáo năm</option>
+                            <option value="-1">Nhập tháng</option>
 
                             <%for (Integer item : monthList) {%>
                             <option
@@ -93,7 +93,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Tài khoản</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/edit">Tài khoản</a></li>
 
                         <li><a class="dropdown-item" href="http://localhost:8080/ProductionManager/account/logout">Đăng xuất</a></li>
                     </ul>
